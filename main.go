@@ -1,7 +1,7 @@
 package main
 
 import (
-	"TastyBites/cmd"
+	"github.com/Fluffy-Bean/TastyBites/cmd"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module TastyBites
+module github.com/Fluffy-Bean/TastyBites
 
 go 1.22.1
 

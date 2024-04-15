@@ -1,19 +1,18 @@
 package cmd
 
 import (
+    "github.com/Fluffy-Bean/TastyBites/front"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func Serve() {
-	e := echo.New()
+	r := echo.New()
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
+	r.Use(middleware.Logger())
+	r.Use(middleware.Recover())
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(200, "Hello, World!")
-	})
+	r.StaticFS("/", front.DistDir)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	r.Logger.Fatal(r.Start(":8080"))
 }
