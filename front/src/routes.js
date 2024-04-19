@@ -1,5 +1,6 @@
 import { wrap } from "svelte-spa-router/wrap";
 import PageLoading from "./routes/PageLoading.svelte";
+import Page404 from "./routes/Page404.svelte";
 
 const routes = {
     "/": wrap({
@@ -20,6 +21,11 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true },
     }),
+    '*': wrap({
+        component: Page404,
+        conditions: [],
+        userData: { showNavBar: false },
+    })
 }
 
 export default routes;

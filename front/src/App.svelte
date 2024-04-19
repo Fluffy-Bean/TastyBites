@@ -1,6 +1,6 @@
 <script>
     import Router from 'svelte-spa-router';
-    import { replace, link, location } from 'svelte-spa-router';
+    import { replace, link } from 'svelte-spa-router';
     import active from 'svelte-spa-router/active'
     import routes from './routes';
 
@@ -22,13 +22,15 @@
 
 {#if showNavBar }
     <nav>
-        <p>TastyBites</p>
         <ul>
             <li><a href="/" use:link use:active>Home</a></li>
             <li><a href="/contact" use:link use:active>Contact Us</a></li>
+        </ul>
+        <span>TastyBites</span>
+        <ul>
+            <li><a href="/orders" use:link use:active>Orders</a></li>
             <li><a href="/cart" use:link use:active>Shopping Cart</a></li>
         </ul>
-        <p>Location: {$location}</p>
     </nav>
 {/if}
 <Router
@@ -41,5 +43,22 @@
     <p>TastyBites is a fake restaurant</p>
 </footer>
 
-<style>
+<style lang="sass">
+    nav
+        display: flex
+        justify-content: center
+        align-items: center
+        padding: 1rem
+        background-color: #f8f9fa
+        border-bottom: 1px solid #e9ecef
+        ul
+            padding: 0
+            margin: 0
+            display: flex
+            list-style: none
+            li
+                margin: 0 1rem
+        span
+            margin: 0 1rem
+            font-weight: bolder
 </style>
