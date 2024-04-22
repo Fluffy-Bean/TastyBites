@@ -4,13 +4,19 @@ import Page404 from "%/pages/Page404.svelte";
 
 const routes = {
     "/": wrap({
-        asyncComponent: () => import("%/pages/index/PageIndex.svelte"),
+        asyncComponent: () => import("%/pages/PageIndex.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true },
     }),
     "/contact": wrap({
         asyncComponent: () => import("%/pages/PageContact.svelte"),
+        loadingComponent: PageLoading,
+        conditions: [],
+        userData: { showNavBar: true },
+    }),
+    "/about": wrap({
+        component: PageLoading,
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true },

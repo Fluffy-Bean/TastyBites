@@ -1,11 +1,12 @@
 <script>
     import Router from 'svelte-spa-router';
-    import { replace, link } from 'svelte-spa-router';
-    import active from 'svelte-spa-router/active'
+    import { replace } from 'svelte-spa-router';
     import routes from '%/routes.js';
+    import NavigationBar from "%/pages/components/NavigationBar.svelte";
 
     let oldLocation = undefined;
     let showNavBar = false;
+    let scrollY = 0;
 
     function routeLoading(event) {
         if (event.detail.location === oldLocation) {
@@ -20,24 +21,14 @@
     }
 </script>
 
+<svelte:window bind:scrollY={scrollY} />
+
 {#if showNavBar }
-    <nav>
-        <ul style="justify-content: flex-end">
-            <li><a href="/" use:link use:active>Home</a></li>
-            <li><a href="/contact" use:link use:active>Contact Us</a></li>
-        </ul>
-
-        <span>TastyBites</span>
-
-        <ul style="justify-content: flex-start">
-            <li><a href="/orders" use:link use:active>Orders</a></li>
-            <li><a href="/cart" use:link use:active>Cart</a></li>
-        </ul>
-    </nav>
+    <NavigationBar scrolled={scrollY > 0} />
 {/if}
-<main>
+<main class:nav-space={showNavBar}>
     <Router
-        {routes}
+        routes={routes}
         restoreScrollState={true}
         on:routeLoading={routeLoading}
         on:conditionsFailed={conditionFailure}
@@ -48,30 +39,13 @@
 </footer>
 
 <style lang="scss">
-    nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #e9ecef;
-        ul {
-            width: 300px;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            list-style: none;
-            li {
-                margin: 0 1rem;
-            }
-            span {
-                margin: 0 1rem;
-                font-weight: bolder;
-            }
-        }
-    }
     main {
+        position: relative;
         padding: 1rem;
         flex-grow: 1;
+
+        &.nav-space {
+          margin-top: 55px;
+        }
     }
 </style>

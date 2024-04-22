@@ -1,0 +1,14 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body, #app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: $color-light;
+}

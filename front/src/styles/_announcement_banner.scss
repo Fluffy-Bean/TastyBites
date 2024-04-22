@@ -1,0 +1,17 @@
+.announcement-banner {
+    height: 400px;
+    background-color: $color-light;
+    padding: 10px;
+    border: 1px solid $color-dark;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+
+    img{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+    }
+}

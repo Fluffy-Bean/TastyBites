@@ -1,9 +1,8 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-}
-body, #app {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+$color-primary: #6A9343;
+$color-dark: #443023;
+$color-light: #fffbf4; // #ccc2ae;
+
+@import "reset";
+@import "loading_bar";
+@import "navigation_bar";
+@import "announcement_banner";
