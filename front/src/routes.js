@@ -1,22 +1,22 @@
 import { wrap } from "svelte-spa-router/wrap";
-import PageLoading from "./routes/PageLoading.svelte";
-import Page404 from "./routes/Page404.svelte";
+import PageLoading from "%/pages/PageLoading.svelte";
+import Page404 from "%/pages/Page404.svelte";
 
 const routes = {
     "/": wrap({
-        asyncComponent: () => import("./routes/PageIndex.svelte"),
+        asyncComponent: () => import("%/pages/index/PageIndex.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true },
     }),
     "/contact": wrap({
-        asyncComponent: () => import("./routes/PageContact.svelte"),
+        asyncComponent: () => import("%/pages/PageContact.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true },
     }),
     "/cart": wrap({
-        asyncComponent: () => import("./routes/PageShoppingCart.svelte"),
+        asyncComponent: () => import("%/pages/PageShoppingCart.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true },
