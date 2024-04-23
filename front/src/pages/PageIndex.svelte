@@ -9,7 +9,7 @@
         {name: "Brick", price: 0},
         {name: "Toast", price: 4382749832743},
         {name: "water", price: 1},
-        {name: "half eaten mouldy bread", price: -9999}
+        {name: "half eaten mouldy bread", price: -9999},
     ];
 </script>
 
@@ -29,6 +29,9 @@
 <a href="/about" use:link style="float: right">Continue reading</a>
 
 <style lang="scss">
+    h2 {
+        margin-bottom: 16px;
+    }
     .spacer {
         height: 100px;
     }

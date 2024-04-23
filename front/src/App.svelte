@@ -22,6 +22,9 @@
 </script>
 
 <svelte:window bind:scrollY={scrollY} />
+<svelte:head>
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&display=swap">
+</svelte:head>
 
 {#if showNavBar }
     <NavigationBar scrolled={scrollY > 0} />
@@ -37,15 +40,3 @@
 <footer>
     <p>TastyBites is a fake restaurant</p>
 </footer>
-
-<style lang="scss">
-    main {
-        position: relative;
-        padding: 1rem;
-        flex-grow: 1;
-
-        &.nav-space {
-          margin-top: 55px;
-        }
-    }
-</style>

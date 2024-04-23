@@ -1,5 +1,7 @@
 *, *::before, *::after {
     box-sizing: border-box;
+    font-family: 'Erode', serif;
+    font-weight: 600;
     margin: 0;
 }
 
@@ -10,5 +12,21 @@ body, #app {
 }
 
 body {
-    background-color: $color-light;
+    background-color: $color-background;
+}
+
+main {
+    margin-left: auto;
+    margin-right: auto;
+    padding: $spacing-normal;
+
+    width: 100%;
+    max-width: $sizing-default-width;
+
+    position: relative;
+    flex-grow: 1;
+
+    &.nav-space {
+        margin-top: $sizing-navigation-height;
+    }
 }

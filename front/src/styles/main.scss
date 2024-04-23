@@ -1,8 +1,35 @@
-$color-primary: #6A9343;
+// COLORS
+$color-background: #e8e1ce; // #ccc2ae;
+$color-on-background: #33251a;
 $color-dark: #443023;
-$color-light: #fffbf4; // #ccc2ae;
+$color-on-dark: #e1dcd3;
+$color-light: #fffbf4;
+$color-on-light: #33251a;
+$color-primary: #6A9343;
+$color-on-primary: #ccc2ae;
+
+$color-vegan: #75a446;
+$color-fish: #487fa6;
+$color-nut: #5c4130;
+$color-spicy: #c75e32;
+
+// BORDERS
+$border-radius-normal: 5px;
+$border-radius-large: 10px;
+$border-radius-circle: 99999px;
+
+// SIZING
+$sizing-default-width: 1000px;
+$sizing-navigation-height: 55px;
+
+// PADDING/MARGIN
+$spacing-small: 14px;
+$spacing-normal: 16px;
+$spacing-large: 24px;
+
 
 @import "reset";
 @import "loading_bar";
 @import "navigation_bar";
 @import "announcement_banner";
+@import "menu_item";

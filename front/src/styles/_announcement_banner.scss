@@ -1,9 +1,12 @@
 .announcement-banner {
+    padding: $spacing-large;
+
     height: 400px;
+
     background-color: $color-light;
-    padding: 10px;
-    border: 1px solid $color-dark;
-    border-radius: 5px;
+    color: $color-on-light;
+    //border: 1px solid $color-dark;
+    border-radius: $border-radius-normal;
     position: relative;
     overflow: hidden;
 
