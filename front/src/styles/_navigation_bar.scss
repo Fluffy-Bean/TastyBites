@@ -13,8 +13,10 @@ nav {
     justify-content: center;
     align-items: center;
 
+    border-bottom: 2px solid $color-primary;
     background-color: $color-dark;
     color: $color-light;
+
     z-index: 9999999;
 
     ul {

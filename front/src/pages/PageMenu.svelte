@@ -1,7 +1,4 @@
 <script>
-    import { link } from 'svelte-spa-router';
-    import { ArrowUpRight } from "phosphor-svelte";
-    import AnnouncementBanner from "%/pages/components/AnnouncementBanner.svelte";
     import MenuList from "%/pages/components/MenuList.svelte";
 
     const items = [
@@ -43,20 +40,16 @@
     ];
 </script>
 
-<div>
-    <AnnouncementBanner />
-    <a href="/annoucements" use:link style="float: right">Learn More <ArrowUpRight /></a>
-    <div class="spacer"></div>
+<h2>Menu</h2>
+<MenuList {items} />
+<div class="spacer"></div>
 
-    <h2>Popular Today</h2>
-    <MenuList {items} />
-    <a href="/menu" use:link style="float: right">See All <ArrowUpRight /></a>
-    <div class="spacer"></div>
+<h2>Menu</h2>
+<MenuList {items} />
+<div class="spacer"></div>
 
-    <h2>About Us</h2>
-    <p>Want to know the story of the restaurant?</p>
-    <a href="/about" use:link style="float: right">Continue reading <ArrowUpRight /></a>
-</div>
+<h2>Menu</h2>
+<MenuList {items} />
 
 <style lang="scss">
     h2 {

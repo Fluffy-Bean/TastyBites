@@ -1,21 +1,21 @@
 <script>
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, Leaf, Flame } from "phosphor-svelte"
+    import {Acorn, Fish, Leaf, Flame, ArrowUpRight } from "phosphor-svelte"
     import LoadingImage from '/MenuItemLoadingAlt.svg';
 
     export let id;
-    export let labels = [
-        "vegan",
-        "fish",
-        "nut",
-        "spicy",
-    ]
     export let name;
     export let price;
+    export let image;
+    export let labels = []
 </script>
 
 <div class="menu-item">
-    <img src={LoadingImage} alt="" class="menu-item-image">
+    {#if !image}
+        <img src={LoadingImage} alt="" class="menu-item-image">
+    {:else}
+        <img src={image} alt="" class="menu-item-image">
+    {/if}
 
     <div class="menu-item-header">
         <ul>
@@ -34,7 +34,7 @@
                 {/if}
             {/each}
         </ul>
-        <a href="/item/{id}" use:link>View</a>
+        <a href="/item/{id}" use:link>View <ArrowUpRight /></a>
     </div>
 
     <ul class="menu-item-detail">
@@ -42,3 +42,4 @@
         <li>£{price}</li>
     </ul>
 </div>
+

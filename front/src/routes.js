@@ -9,6 +9,12 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true },
     }),
+    "/menu": wrap({
+        asyncComponent: () => import("%/pages/PageMenu.svelte"),
+        loadingComponent: PageLoading,
+        conditions: [],
+        userData: { showNavBar: true },
+    }),
     "/contact": wrap({
         asyncComponent: () => import("%/pages/PageContact.svelte"),
         loadingComponent: PageLoading,
@@ -22,7 +28,7 @@ const routes = {
         userData: { showNavBar: true },
     }),
     "/cart": wrap({
-        asyncComponent: () => import("%/pages/PageShoppingCart.svelte"),
+        asyncComponent: () => import("%/pages/PageCart.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true },

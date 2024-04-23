@@ -3,6 +3,7 @@
     import { replace } from 'svelte-spa-router';
     import routes from '%/routes.js';
     import NavigationBar from "%/pages/components/NavigationBar.svelte";
+    import FooterBar from "%/pages/components/FooterBar.svelte";
 
     let oldLocation = undefined;
     let showNavBar = false;
@@ -37,6 +38,4 @@
         on:conditionsFailed={conditionFailure}
     />
 </main>
-<footer>
-    <p>TastyBites is a fake restaurant</p>
-</footer>
+<FooterBar />
