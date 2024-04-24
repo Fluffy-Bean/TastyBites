@@ -140,6 +140,12 @@
                             Hide Unavailable
                         </label>
                     </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Hog
+                        </label>
+                    </li>
                 </ul>
             </DropDown>
         </div>

@@ -21,7 +21,7 @@
 
     <div class="menu-filter-section">
         <DropDown name="Deez nuts">
-            <p>Gotten</p>
+            <p>Gottem</p>
         </DropDown>
     </div>
 </div>

@@ -37,5 +37,17 @@ export default Items = [
         price: "Priceless",
         labels: ["nut"],
         image: "/dab.jpg",
-    }
+    },
+    {
+        name: "Hogermellon",
+        price: "balls",
+        labels: ["fish"],
+        image: "/wathog.jpg",
+    },
+    {
+        name: "Blue HOGGGGG",
+        price: "ARUGH",
+        labels: ["nut", "gluten", "spicy"],
+        image: "/sonichog.jpg",
+    },
 ];
