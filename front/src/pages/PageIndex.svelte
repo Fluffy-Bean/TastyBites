@@ -38,7 +38,7 @@
             name: "GwaGwa",
             price: "Priceless",
             labels: ["nut"],
-            image: "/dab.jpg",
+            // image: "/dab.jpg",
         }
     ];
 </script>

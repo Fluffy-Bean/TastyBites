@@ -7,6 +7,7 @@
 
     let oldLocation = undefined;
     let showNavBar = false;
+    let fullWidth = false;
     let scrollY = 0;
 
     function routeLoading(event) {
@@ -14,6 +15,7 @@
             return; // not an actual change
         }
         showNavBar = event.detail.userData.showNavBar;
+        fullWidth = event.detail.userData.fullWidth;
         oldLocation = event.detail.location;
     }
 
@@ -28,9 +30,14 @@
 </svelte:head>
 
 {#if showNavBar }
-    <NavigationBar scrolled={scrollY > 0} />
+    <NavigationBar
+        scrolled={scrollY > 0}
+    />
 {/if}
-<main class:nav-space={showNavBar}>
+<main
+    class:nav-space={showNavBar}
+    class:full-width={fullWidth}
+>
     <Router
         routes={routes}
         restoreScrollState={true}

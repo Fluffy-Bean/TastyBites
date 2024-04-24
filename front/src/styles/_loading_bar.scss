@@ -15,7 +15,6 @@
 
     .bar {
         position: absolute;
-        background-color: $color-primary;
         transition: transform .2s linear;
         left: 0;
         top: 0;
@@ -24,10 +23,12 @@
         width: 100%;
 
         &.bar-1 {
+            background-color: $color-dark;
             animation: growBar1 2.5s infinite, moveBar1 2.5s infinite;
         }
 
         &.bar-2 {
+            background-color: $color-primary;
             animation: growBar2 2.5s infinite, moveBar2 2.5s infinite;
         }
     }
