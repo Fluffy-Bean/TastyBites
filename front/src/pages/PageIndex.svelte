@@ -5,20 +5,19 @@
     import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
     import Items from '%/testData.js';
-    import L from 'leaflet';
+    import { map, tileLayer} from 'leaflet';
 
     let items = Items;
 
-    let map;
     onMount(() => {
-        map = L.map('map').setView([51.505, -0.09], 13);
-        L.tileLayer(
+        let Map = map('map').setView([51.505, -0.09], 13);
+        tileLayer(
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
             {
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }
-        ).addTo(map);
+        ).addTo(Map);
     })
 </script>
 

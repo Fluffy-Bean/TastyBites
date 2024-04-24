@@ -15,6 +15,12 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true, fullWidth: true, },
     }),
+    "/item/:name": wrap({
+        asyncComponent: () => import("%/pages/PageItem.svelte"),
+        loadingComponent: PageLoading,
+        conditions: [],
+        userData: { showNavBar: true, fullWidth: true, },
+    }),
     "/contact": wrap({
         asyncComponent: () => import("%/pages/PageContact.svelte"),
         loadingComponent: PageLoading,

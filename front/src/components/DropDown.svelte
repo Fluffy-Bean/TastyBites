@@ -12,9 +12,11 @@
             <CaretDown />
         </button>
     </div>
-    <div class="dropdown-content">
-        <slot></slot>
-    </div>
+    {#if open }
+        <div class="dropdown-content">
+            <slot></slot>
+        </div>
+    {/if}
 </div>
 
 <style lang="scss">

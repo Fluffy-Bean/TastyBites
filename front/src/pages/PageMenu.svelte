@@ -181,8 +181,6 @@
     }
 
     .menu-filter {
-        padding: $spacing-normal;
-
         width: 100%;
         max-width: calc(300px - $spacing-normal);
 
@@ -202,8 +200,6 @@
         }
 
         hr {
-            margin-left: -$spacing-normal;
-            margin-right: -$spacing-normal;
             height: 1px;
             border: 0 transparent;
             background-color: rgba($color-dark, 0.1);
@@ -232,7 +228,7 @@
         }
 
         .menu-filter-header {
-            padding-bottom: $spacing-normal;
+            padding: $spacing-normal;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -240,12 +236,7 @@
         }
 
         .menu-filter-section {
-            padding-bottom: $spacing-small;
-            padding-top: $spacing-small;
-
-            &:last-of-type {
-                margin-bottom: -$spacing-normal;
-            }
+            padding: $spacing-normal;
         }
     }
 
