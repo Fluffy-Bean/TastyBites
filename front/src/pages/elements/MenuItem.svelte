@@ -1,6 +1,6 @@
 <script>
     import { link } from 'svelte-spa-router';
-    import {Acorn, Fish, Leaf, Flame, ArrowUpRight } from "phosphor-svelte"
+    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from "phosphor-svelte"
     import LoadingImage from '/MenuItemLoadingAlt.svg';
 
     export let id;
@@ -29,8 +29,11 @@
                 {#if label === "nut"}
                     <li class="nut"><Acorn weight="fill" /></li>
                 {/if}
+                {#if label === "gluten"}
+                    <li class="gluten"><GrainsSlash weight="fill" /></li>
+                {/if}
                 {#if label === "spicy"}
-                    <li class="spicy"><Flame weight="fill" /></li>
+                    <li class="spicy"><Pepper weight="fill" /></li>
                 {/if}
             {/each}
         </ul>

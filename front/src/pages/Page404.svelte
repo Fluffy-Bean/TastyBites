@@ -9,15 +9,19 @@
     <p>Could not find resource you've searched for. <a href="/" use:link>Go Back</a></p>
 </div>
 
-<style>
+<style lang="scss">
+    @import "%/styles/vars";
+
     div {
-        padding: 16px;
+        padding: $spacing-large;
+
         height: 100%;
+
         display: flex;
         flex-direction: column;
-        flex-grow: 1;
     }
     h1 {
+        font-size: 50px;
         text-align: center;
     }
     p {
@@ -25,7 +29,7 @@
     }
     a {
         text-decoration: none;
-        color: #6A9343;
+        color: $color-primary;
 
         &:hover {
             text-decoration: underline;

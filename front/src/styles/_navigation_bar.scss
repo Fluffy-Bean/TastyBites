@@ -1,17 +1,17 @@
 nav {
-    padding: 1rem;
+    padding: $spacing-normal;
 
     width: 100%;
     height: $sizing-navigation-height;
 
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
     position: fixed;
     top: 0;
     left: 0;
-    justify-content: center;
-    align-items: center;
 
     border-bottom: 2px solid $color-primary;
     background-color: $color-dark;
@@ -20,13 +20,21 @@ nav {
     z-index: 9999999;
 
     ul {
-        width: 300px;
         padding: 0;
-        margin: 0;
+
+        width: 300px;
+
         display: flex;
+        flex-direction: row;
+        align-items: center;
+
         list-style: none;
+
         li {
-            margin: 0 1rem;
+            padding: 0 $spacing-small;
+
+            font-weight: $font-weight-normal;
+            font-size: $font-size-h6;
 
             a {
                 text-decoration: none;
@@ -40,12 +48,12 @@ nav {
     }
 
     span {
-        margin: 0 1rem;
-        font-weight: bolder;
-        font-size: 25px;
+        padding: 0 $spacing-normal;
+        font-weight: $font-weight-black;
+        font-size: $font-size-h1;
     }
 
     &.scrolled {
-        //box-shadow: 0 0 10px 1px $color-dark;
+        //box-shadow: 0 0 15px 1px $color-background;
     }
 }

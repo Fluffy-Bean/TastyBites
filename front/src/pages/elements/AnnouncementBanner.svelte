@@ -1,5 +1,5 @@
 <script>
-    import LoadingBar from "%/pages/components/LoadingBar.svelte";
+    import LoadingBar from "%/pages/elements/LoadingBar.svelte";
     import LoadingImage from '/BannerLoading.svg';
 </script>
 

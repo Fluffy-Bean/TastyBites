@@ -1,5 +1,5 @@
 <script>
-    import MenuItem from "%/pages/components/MenuItem.svelte";
+    import MenuItem from "%/pages/elements/MenuItem.svelte";
 
     export let items = [];
 </script>

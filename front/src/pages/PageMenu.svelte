@@ -1,13 +1,14 @@
 <script>
     import { ArrowClockwise } from "phosphor-svelte";
-    import MenuList from "%/pages/components/MenuList.svelte";
-    import LoadingBar from "%/pages/components/LoadingBar.svelte";
+    import MenuList from "%/pages/elements/MenuList.svelte";
+    import LoadingBar from "%/pages/elements/LoadingBar.svelte";
+    import DropDown from "%/components/DropDown.svelte";
 
     const items = [
         {
             name: "Breakfast",
             price: 69.99,
-            labels: ["vegan", "spicy",],
+            labels: ["vegan", "spicy", "gluten"],
         },
         {
             name: "Dinner",
@@ -37,70 +38,148 @@
             name: "GwaGwa",
             price: "Priceless",
             labels: ["nut"],
-            // image: "/dab.jpg",
+            image: "/MenuItemLoading.svg",
         }
     ];
 </script>
 
 <div class="menu">
     <div class="menu-filter">
-        <LoadingBar />
-
+<!--        <LoadingBar />-->
         <div class="menu-filter-header">
-            <h2>Filter</h2>
+            <h2>Filters</h2>
             <button><ArrowClockwise /></button>
+        </div>
+        <hr>
+
+        <div class="menu-filter-section">
+            <DropDown name="Meal Prefrences" open={true}>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Vegan
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Vegetarian
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Pescatarian
+                        </label>
+                    </li>
+                </ul>
+            </DropDown>
         </div>
 
         <hr>
 
-        <h3>Meal Preferences</h3>
-        <ul>
-            <li>Vegan</li>
-            <li>Vegetarian</li>
-            <li>Pescatarian</li>
-        </ul>
-
-        <hr>
-
-        <h3>Allergies</h3>
-        <ul>
-            <li>Nut</li>
-            <li>Sea</li>
-            <li>Dairy</li>
-        </ul>
-
-        <hr>
-
-        <h3>Types</h3>
-        <ul>
-            <li>Breakfast</li>
-            <li>Main</li>
-            <li>Dinner</li>
-            <li>
-                Drinks
+        <div class="menu-filter-section">
+            <DropDown name="Allergies" open={true}>
                 <ul>
-                    <li>Alcoholic</li>
-                    <li>Non-Alcoholic</li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Deez Nut
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Sea
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Dairy
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Gluten
+                        </label>
+                    </li>
                 </ul>
-            </li>
-            <li>Sides</li>
-            <li>Sweet</li>
-        </ul>
+            </DropDown>
+        </div>
 
         <hr>
 
-        <h3>Other</h3>
-        <ul>
-            <li>Hide Seasonal</li>
-            <li>Hide Unavailable</li>
-        </ul>
-
+        <div class="menu-filter-section">
+            <DropDown name="Meal Types" open={true}>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Breakfast
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Main
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Dinner
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Alcoholic Drinks
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Non-Alcoholic Drinks
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Sides
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Sweet
+                        </label>
+                    </li>
+                </ul>
+            </DropDown>
+        </div>
         <hr>
 
-        <label>
-            Price
-            <input type="range" min="0" max="999">
-        </label>
+        <div class="menu-filter-section">
+            <DropDown name="Other">
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Hide Seasonal
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox">
+                            Hide Unavailable
+                        </label>
+                    </li>
+                </ul>
+            </DropDown>
+        </div>
     </div>
 
     <div class="menu-list">
@@ -118,11 +197,13 @@
 </div>
 
 <style lang="scss">
+    @import "%/styles/vars";
+
     h2 {
-        margin-bottom: 16px;
+        margin-bottom: $spacing-small;
     }
     .spacer {
-        height: 32px;
+        height: $spacing-large;
     }
 
     .menu {
@@ -133,36 +214,36 @@
     }
 
     .menu-list {
-        //padding-left: 300px;
-        padding-left: 16px;
+        padding-left: $spacing-normal;
     }
 
     .menu-filter {
-        padding: 16px;
+        padding: $spacing-normal;
 
         width: 100%;
-        max-width: calc(300px - 16px);
+        max-width: calc(300px - $spacing-normal);
 
         position: sticky;
-        top: calc(55px + 16px);
+        top: calc($sizing-navigation-height + $spacing-normal);
 
-        //position: absolute;
-        //top: 16px;
-        //left: 16px;
-
-        border-radius: 5px;
-        background-color: #fffbf4;
-        color: #33251a;
+        border-radius: $border-radius-normal;
+        background-image: url('/BackgroundTextureAlt.svg');
+        background-repeat: no-repeat;
+        background-size: 200px 250px;
+        background-position: 5px -43px;
+        background-color: $color-light;
+        color: $color-on-light;
 
         h2 {
             margin-bottom: 0;
         }
 
         hr {
-            margin: 16px -16px;
+            margin-left: -$spacing-normal;
+            margin-right: -$spacing-normal;
             height: 1px;
             border: 0 transparent;
-            background-color: rgba(#443023, 0.1);
+            background-color: rgba($color-dark, 0.1);
         }
 
         button {
@@ -173,29 +254,51 @@
             justify-content: center;
             align-items: center;
 
-            //position: absolute;
-            //top: 12px;
-            //right: 12px;
-
             text-decoration: none;
-            font-size: 16px;
+            font-size: $font-size-p;
 
-            border-radius: 99999px;
+            border-radius: $border-radius-circle;
             border: 0 solid transparent;
-            background-color: #443023;
-            color: #e1dcd3;
+            background-color: $color-dark;
+            color: $color-on-dark;
 
             &:hover {
-                background-color: #6A9343;
-                color: #fffbf4;
+                background-color: $color-primary;
+                color: $color-on-primary;
+            }
+        }
+
+        .menu-filter-header {
+            padding-bottom: $spacing-normal;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-filter-section {
+            padding-bottom: $spacing-small;
+            padding-top: $spacing-small;
+
+            &:last-of-type {
+                margin-bottom: -$spacing-normal;
             }
         }
     }
 
-    .menu-filter-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
+    @media only screen and (max-width: 670px) {
+        .menu {
+            flex-direction: column;
+        }
+
+        .menu-list {
+            padding-left: 0;
+            padding-top: $spacing-normal;
+        }
+
+        .menu-filter {
+            max-width: unset;
+            position: unset;
+        }
     }
 </style>

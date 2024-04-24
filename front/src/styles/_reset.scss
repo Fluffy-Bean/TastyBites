@@ -1,8 +1,12 @@
 *, *::before, *::after {
     box-sizing: border-box;
-    font-family: 'Erode', serif;
-    font-weight: 600;
     margin: 0;
+}
+
+html {
+    font-size: 100%;
+    font-weight: $font-weight-normal;
+    font-family: $font-family;
 }
 
 body, #app {
@@ -15,6 +19,40 @@ body {
     background-color: $color-background;
     color: $color-on-background;
 }
+
+h1 {
+    font-size: $font-size-h1;
+    font-weight: $font-weight-bolder;
+}
+h2 {
+    font-size: $font-size-h2;
+    font-weight: $font-weight-bold;
+}
+h3 {
+    font-size: $font-size-h3;
+    font-weight: $font-weight-normal;
+}
+h4 {
+    font-size: $font-size-h4;
+    font-weight: $font-weight-normal;
+}
+h5 {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-normal;
+}
+h6 {
+    font-size: $font-size-h6;
+    font-weight: $font-weight-normal;
+}
+p {
+    font-size: $font-size-p;
+    font-weight: $font-weight-normal;
+}
+small {
+    font-size: $font-size-small;
+    font-weight: $font-weight-thin;
+}
+
 
 main {
     margin-left: auto;

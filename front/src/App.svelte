@@ -2,8 +2,8 @@
     import Router from 'svelte-spa-router';
     import { replace } from 'svelte-spa-router';
     import routes from '%/routes.js';
-    import NavigationBar from "%/pages/components/NavigationBar.svelte";
-    import FooterBar from "%/pages/components/FooterBar.svelte";
+    import NavigationBar from "%/pages/elements/NavigationBar.svelte";
+    import FooterBar from "%/pages/elements/FooterBar.svelte";
 
     let oldLocation = undefined;
     let showNavBar = false;

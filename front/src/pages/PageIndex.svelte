@@ -1,8 +1,8 @@
 <script>
     import { link } from 'svelte-spa-router';
     import { ArrowUpRight } from "phosphor-svelte";
-    import AnnouncementBanner from "%/pages/components/AnnouncementBanner.svelte";
-    import MenuList from "%/pages/components/MenuList.svelte";
+    import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
+    import MenuList from "%/pages/elements/MenuList.svelte";
 
     const items = [
         {
@@ -38,7 +38,7 @@
             name: "GwaGwa",
             price: "Priceless",
             labels: ["nut"],
-            // image: "/dab.jpg",
+            image: "/dab.jpg",
         }
     ];
 </script>
