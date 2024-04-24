@@ -1,5 +1,4 @@
 <script>
-    import { ArrowClockwise } from "phosphor-svelte";
     import DropDown from "%/components/DropDown.svelte";
 </script>
 
@@ -58,28 +57,6 @@
             height: 1px;
             border: 0 transparent;
             background-color: rgba($color-dark, 0.1);
-        }
-
-        button {
-            height: 32px;
-            width: 32px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            text-decoration: none;
-            font-size: $font-size-p;
-
-            border-radius: $border-radius-circle;
-            border: 0 solid transparent;
-            background-color: $color-dark;
-            color: $color-on-dark;
-
-            &:hover {
-                background-color: $color-primary;
-                color: $color-on-primary;
-            }
         }
 
         .menu-filter-header {
