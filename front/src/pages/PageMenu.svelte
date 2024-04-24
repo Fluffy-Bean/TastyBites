@@ -1,51 +1,14 @@
 <script>
     import { ArrowClockwise } from "phosphor-svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
-    import LoadingBar from "%/pages/elements/LoadingBar.svelte";
     import DropDown from "%/components/DropDown.svelte";
+    import Items from '%/testData.js';
 
-    const items = [
-        {
-            name: "Breakfast",
-            price: 69.99,
-            labels: ["vegan", "spicy", "gluten"],
-        },
-        {
-            name: "Dinner",
-            price: 21,
-            labels: ["vegan", "fish", "nut", "spicy",],
-        },
-        {
-            name: "Brick",
-            price: 0,
-            labels: ["spicy",],
-        },
-        {
-            name: "Toast",
-            price: 4382749832743,
-        },
-        {
-            name: "water",
-            price: 1,
-            labels: ["fish"],
-        },
-        {
-            name: "half eaten mouldy bread",
-            price: -9999,
-            labels: ["nut"],
-        },
-        {
-            name: "GwaGwa",
-            price: "Priceless",
-            labels: ["nut"],
-            image: "/MenuItemLoading.svg",
-        }
-    ];
+    let items = Items;
 </script>
 
 <div class="menu">
     <div class="menu-filter">
-<!--        <LoadingBar />-->
         <div class="menu-filter-header">
             <h2>Filters</h2>
             <button><ArrowClockwise /></button>

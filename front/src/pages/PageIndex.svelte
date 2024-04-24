@@ -1,51 +1,45 @@
 <script>
+    import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
     import { ArrowUpRight } from "phosphor-svelte";
     import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
+    import Items from '%/testData.js';
+    import L from 'leaflet';
 
-    const items = [
-        {
-            name: "Breakfast",
-            price: 69.99,
-            labels: ["vegan", "spicy",],
-        },
-        {
-            name: "Dinner",
-            price: 21,
-            labels: ["vegan", "fish", "nut", "spicy",],
-        },
-        {
-            name: "Brick",
-            price: 0,
-            labels: ["spicy",],
-        },
-        {
-            name: "Toast",
-            price: 4382749832743,
-        },
-        {
-            name: "water",
-            price: 1,
-            labels: ["fish"],
-        },
-        {
-            name: "half eaten mouldy bread",
-            price: -9999,
-            labels: ["nut"],
-        },
-        {
-            name: "GwaGwa",
-            price: "Priceless",
-            labels: ["nut"],
-            image: "/dab.jpg",
-        }
-    ];
+    let items = Items;
+
+    let map;
+    onMount(() => {
+        map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer(
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }
+        ).addTo(map);
+    })
 </script>
+
+<svelte:head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+</svelte:head>
 
 <div>
     <AnnouncementBanner />
     <a href="/annoucements" use:link style="float: right">Learn More <ArrowUpRight /></a>
+    <div class="spacer"></div>
+
+    <h2>Where to find us</h2>
+    <div class="contact">
+        <div id="map"></div>
+        <div class="contact-detail">
+            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis dolore maiores, dolorem unde, illo vero dolores magnam omnis, explicabo vel eos voluptatem libero ullam ipsa molestias laboriosam voluptas nisi sunt.</p>
+        </div>
+    </div>
     <div class="spacer"></div>
 
     <h2>Popular Today</h2>
@@ -59,12 +53,29 @@
 </div>
 
 <style lang="scss">
+    @import "%/styles/vars";
+
     h2 {
-        margin-bottom: 16px;
+        margin-bottom: $spacing-small;
+    }
+    .spacer {
+        height: $spacing-large;
     }
 
-    .spacer {
-        height: 100px;
+    .contact {
+        display: flex;
+        flex-direction: row;
+
+        #map {
+            min-width: 600px;
+            height: 400px;
+
+            border-radius: $border-radius-normal;
+        }
+
+        .contact-detail {
+            padding-left: $spacing-normal;
+        }
     }
 
     a {
@@ -83,11 +94,11 @@
 
         border-radius: 9999px;
         background-color: transparent;
-        color: #33251a;
+        color: $color-on-background;
 
         &:hover {
-            background-color: #fffbf4;
-            color: #33251a;
+            background-color: $color-light;
+            color: $color-on-light;
         }
     }
 </style>
