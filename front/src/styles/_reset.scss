@@ -20,6 +20,10 @@ body {
     color: $color-on-background;
 }
 
+
+h1, h2, h3, h4, h5, h6 {
+    padding-bottom: $spacing-small;
+}
 h1 {
     font-size: $font-size-h1;
     font-weight: $font-weight-bolder;
@@ -53,6 +57,15 @@ small {
     font-weight: $font-weight-thin;
 }
 
+hr {
+    height: 1px;
+    border: 0 transparent;
+    background-color: rgba($color-dark, 0.1);
+}
+
+.spacer {
+    height: $spacing-large;
+}
 
 main {
     margin-left: auto;

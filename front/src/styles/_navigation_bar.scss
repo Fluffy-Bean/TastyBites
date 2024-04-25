@@ -1,5 +1,5 @@
 nav {
-    padding: $spacing-normal;
+    padding: $spacing-small;
 
     width: 100%;
     height: $sizing-navigation-height;
@@ -51,6 +51,13 @@ nav {
         padding: 0 $spacing-normal;
         font-weight: $font-weight-black;
         font-size: $font-size-h1;
+
+        > img {
+            height: calc($sizing-navigation-height - calc(2 * $spacing-small));
+
+            display: block;
+        }
+
     }
 
     &.scrolled {

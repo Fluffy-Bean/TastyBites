@@ -1,6 +1,7 @@
 <script>
     import { link } from 'svelte-spa-router';
     import active from 'svelte-spa-router/active'
+    import Logo from '/LogoAlt.svg';
 
     export let scrolled = false;
 </script>
@@ -15,7 +16,7 @@
         </li>
     </ul>
 
-    <span>TastyBites</span>
+    <span><img src={Logo} alt="TastyBites"></span>
 
     <ul style="justify-content: flex-start">
         <li use:active={{path: '/contact', className: 'active'}}>

@@ -29,13 +29,14 @@
 
 <div>
     <AnnouncementBanner />
-    <a href="/annoucements" use:link style="float: right">Learn More <ArrowUpRight /></a>
+    <a href="/annoucements" use:link>Learn More <ArrowUpRight /></a>
     <div class="spacer"></div>
 
     <h2>Where to find us</h2>
-    <div class="contact">
+    <div id="contact">
         <div id="map"></div>
-        <div class="contact-detail">
+        <div class="container">
+            <h2>Some Title</h2>
             <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis dolore maiores, dolorem unde, illo vero dolores magnam omnis, explicabo vel eos voluptatem libero ullam ipsa molestias laboriosam voluptas nisi sunt.</p>
         </div>
     </div>
@@ -43,39 +44,16 @@
 
     <h2>Popular Today</h2>
     <MenuList {items} />
-    <a href="/menu" use:link style="float: right">See All <ArrowUpRight /></a>
+    <a href="/menu" use:link>See All <ArrowUpRight /></a>
     <div class="spacer"></div>
 
-    <h2>About Us</h2>
+    <h2>About Us</h2>contact
     <p>Want to know the story of the restaurant?</p>
-    <a href="/about" use:link style="float: right">Continue reading <ArrowUpRight /></a>
+    <a href="/about" use:link>Continue reading <ArrowUpRight /></a>
 </div>
 
 <style lang="scss">
     @import "%/styles/vars";
-
-    h2 {
-        margin-bottom: $spacing-small;
-    }
-    .spacer {
-        height: $spacing-large;
-    }
-
-    .contact {
-        display: flex;
-        flex-direction: row;
-
-        #map {
-            min-width: 600px;
-            height: 400px;
-
-            border-radius: $border-radius-normal;
-        }
-
-        .contact-detail {
-            padding-left: $spacing-normal;
-        }
-    }
 
     a {
         margin-top: 8px;
@@ -89,6 +67,8 @@
         justify-content: center;
         align-items: center;
 
+        float: right;
+
         text-decoration: none;
 
         border-radius: 9999px;
@@ -98,6 +78,45 @@
         &:hover {
             background-color: $color-light;
             color: $color-on-light;
+        }
+    }
+
+    #contact {
+        display: flex;
+        flex-direction: row;
+
+        .container {
+            margin-left: $spacing-normal;
+            padding: $spacing-normal;
+        }
+    }
+
+    #map {
+        min-width: 550px;
+        height: 350px;
+
+        border-radius: $border-radius-normal;
+    }
+
+    @media only screen and (max-width: 900px) {
+        #map {
+            min-width: 400px;
+            height: 300px;
+        }
+    }
+    @media only screen and (max-width: 750px) {
+        #contact {
+            display: flex;
+            flex-direction: column;
+
+            .container {
+                margin-left: 0;
+                margin-top: $spacing-normal;
+            }
+        }
+        #map {
+            min-width: unset;
+            height: 350px;
         }
     }
 </style>

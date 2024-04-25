@@ -1,0 +1,25 @@
+.container {
+    border-radius: $border-radius-normal;
+    background-image: url('/BackgroundTextureAlt.svg');
+    background-repeat: no-repeat;
+    background-size: 200px 250px;
+    background-position: 5px -43px;
+    background-color: $color-light;
+    color: $color-on-light;
+
+    .header {
+        padding: $spacing-normal;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        h2 {
+            padding-bottom: 0;
+        }
+    }
+
+    .section {
+        padding: $spacing-normal;
+    }
+}
