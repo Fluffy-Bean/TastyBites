@@ -42,7 +42,7 @@ const routes = {
     '*': wrap({
         component: Page404,
         conditions: [],
-        userData: { showNavBar: false, fullWidth: false, },
+        userData: { showNavBar: true, fullWidth: false, },
     })
 }
 

@@ -9,24 +9,18 @@
         <h2>Commonly Asked Questions</h2>
     </div>
     <hr>
-    <div class="section">
-        <DropDown name="Can I refund my order?">
-            <p>If you ordered online, if we haven't started making your food yet, a refund is possible.</p>
-            <p>If you reserved a table, you can refund upto 1 hour before your time.</p>
-        </DropDown>
-    </div>
+    <DropDown name="Can I refund my order?">
+        <p>If you ordered online, if we haven't started making your food yet, a refund is possible.</p>
+        <p>If you reserved a table, you can refund upto 1 hour before your time.</p>
+    </DropDown>
     <hr>
-    <div class="section">
-        <DropDown name="Where can I find my past orders!">
-            <p>Email....</p>
-        </DropDown>
-    </div>
+    <DropDown name="Where can I find my past orders!">
+        <p>Email....</p>
+    </DropDown>
     <hr>
-    <div class="section">
-        <DropDown name="Deez nuts">
-            <p>Gottem</p>
-        </DropDown>
-    </div>
+    <DropDown name="Deez nuts">
+        <p>Gottem</p>
+    </DropDown>
 </div>
 
 <div class="spacer"></div>

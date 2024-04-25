@@ -14,135 +14,127 @@
             <button><ArrowClockwise /></button>
         </div>
         <hr>
-        <div class="section">
-            <DropDown name="Meal Prefrences" open={true}>
-                <ul>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Vegan
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Vegetarian
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Pescatarian
-                        </label>
-                    </li>
-                </ul>
-            </DropDown>
-        </div>
+        <DropDown name="Meal Prefrences" open={true}>
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Vegan
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Vegetarian
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Pescatarian
+                    </label>
+                </li>
+            </ul>
+        </DropDown>
         <hr>
-        <div class="section">
-            <DropDown name="Allergies" open={true}>
-                <ul>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Deez Nut
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Sea
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Dairy
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Gluten
-                        </label>
-                    </li>
-                </ul>
-            </DropDown>
-        </div>
+        <DropDown name="Allergies" open={true}>
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Deez Nut
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Sea
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Dairy
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Gluten
+                    </label>
+                </li>
+            </ul>
+        </DropDown>
         <hr>
-        <div class="section">
-            <DropDown name="Meal Types" open={true}>
-                <ul>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Breakfast
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Main
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Dinner
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Alcoholic Drinks
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Non-Alcoholic Drinks
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Sides
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Sweet
-                        </label>
-                    </li>
-                </ul>
-            </DropDown>
-        </div>
+        <DropDown name="Meal Types" open={true}>
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Breakfast
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Main
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Dinner
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Alcoholic Drinks
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Non-Alcoholic Drinks
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Sides
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Sweet
+                    </label>
+                </li>
+            </ul>
+        </DropDown>
         <hr>
-        <div class="section">
-            <DropDown name="Other">
-                <ul>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Hide Seasonal
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Hide Unavailable
-                        </label>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox">
-                            Hog
-                        </label>
-                    </li>
-                </ul>
-            </DropDown>
-        </div>
+        <DropDown name="Other">
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Hide Seasonal
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Hide Unavailable
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox">
+                        Hog
+                    </label>
+                </li>
+            </ul>
+        </DropDown>
     </div>
 
     <div id="menu-list">

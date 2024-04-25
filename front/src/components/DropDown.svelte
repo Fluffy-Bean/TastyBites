@@ -12,24 +12,24 @@
             <CaretDown />
         </button>
     </div>
-    {#if open }
-        <div class="dropdown-content">
-            <slot></slot>
-        </div>
-    {/if}
+    <div class="dropdown-content">
+        <slot></slot>
+    </div>
 </div>
 
 <style lang="scss">
     @import "%/styles/vars";
 
     .dropdown {
-        //padding: $spacing-normal;
         border-bottom: 1px solid transparent;
 
-        //background-color: $color-light;
         color: $color-on-light;
 
         .dropdown-header {
+            padding: $spacing-normal;
+
+            position: relative;
+
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -41,8 +41,14 @@
             }
 
             button {
-                height: 25px;
-                width: 30px;
+                padding: 0;
+
+                height: 100%;
+                width: 60px;
+
+                position: absolute;
+                top: 0;
+                right: 0;
 
                 display: flex;
                 justify-content: center;
@@ -64,14 +70,13 @@
         }
 
         .dropdown-content {
-            //padding-top: $spacing-small;
+            padding: 0 $spacing-normal $spacing-normal;
             display: none;
         }
 
         &.open {
             .dropdown-header {
-                padding-bottom: $spacing-small;
-                //border-bottom: 1px solid rgba($color-dark, 0.1);
+                //padding: $spacing-normal $spacing-normal $spacing-small;
 
                 button {
                     transform: rotate(-180deg);

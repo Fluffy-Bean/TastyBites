@@ -1,12 +1,12 @@
 <script>
-    import { link } from 'svelte-spa-router';
+    import { SmileySad } from "phosphor-svelte";
 
     export let params = {};
 </script>
 
 <div>
-    <h1>404</h1>
-    <p>Could not find resource you've searched for. <a href="/" use:link>Go Back</a></p>
+    <h1>You're lost!&nbsp;<SmileySad weight="fill" /></h1>
+    <p>Error 404</p>
 </div>
 
 <style lang="scss">
@@ -21,18 +21,14 @@
         flex-direction: column;
     }
     h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         font-size: 50px;
         text-align: center;
     }
     p {
         text-align: center;
-    }
-    a {
-        text-decoration: none;
-        color: $color-primary;
-
-        &:hover {
-            text-decoration: underline;
-        }
     }
 </style>

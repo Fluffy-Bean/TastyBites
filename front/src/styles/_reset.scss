@@ -51,6 +51,15 @@ h6 {
 p {
     font-size: $font-size-p;
     font-weight: $font-weight-normal;
+
+    a {
+        text-decoration: none;
+        color: $color-primary;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 small {
     font-size: $font-size-small;
