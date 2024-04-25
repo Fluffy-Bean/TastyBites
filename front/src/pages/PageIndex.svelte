@@ -27,30 +27,29 @@
           crossorigin=""/>
 </svelte:head>
 
-<div>
-    <AnnouncementBanner />
-    <a href="/annoucements" use:link>Learn More <ArrowUpRight /></a>
-    <div class="spacer"></div>
+<AnnouncementBanner />
+<a href="/annoucements" use:link>Learn More <ArrowUpRight /></a>
+<div class="spacer" />
 
-    <h2>Where to find us</h2>
-    <div id="contact">
-        <div id="map"></div>
-        <div class="container">
-            <h2>Some Title</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis dolore maiores, dolorem unde, illo vero dolores magnam omnis, explicabo vel eos voluptatem libero ullam ipsa molestias laboriosam voluptas nisi sunt.</p>
-        </div>
+<h2>Where to find us</h2>
+<div id="contact">
+    <div id="map"></div>
+    <div class="container">
+        <h2>Some Title</h2>
+        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis dolore maiores, dolorem unde, illo vero dolores magnam omnis, explicabo vel eos voluptatem libero ullam ipsa molestias laboriosam voluptas nisi sunt.</p>
     </div>
-    <div class="spacer"></div>
-
-    <h2>Popular Today</h2>
-    <MenuList {items} />
-    <a href="/menu" use:link>See All <ArrowUpRight /></a>
-    <div class="spacer"></div>
-
-    <h2>About Us</h2>contact
-    <p>Want to know the story of the restaurant?</p>
-    <a href="/about" use:link>Continue reading <ArrowUpRight /></a>
 </div>
+<div class="spacer" />
+
+<h2>Popular Today</h2>
+<MenuList {items} />
+<a href="/menu" use:link>See All <ArrowUpRight /></a>
+<div class="spacer" />
+
+<h2>About Us</h2>contact
+<p>Want to know the story of the restaurant?</p>
+<a href="/about" use:link>Continue reading <ArrowUpRight /></a>
+
 
 <style lang="scss">
     @import "%/styles/vars";

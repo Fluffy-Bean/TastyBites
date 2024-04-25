@@ -23,7 +23,7 @@
     </DropDown>
 </div>
 
-<div class="spacer"></div>
+<div class="spacer" />
 
 <h2>Contact From</h2>
 <form>

@@ -3,19 +3,19 @@
 let Items;
 export default Items = [
     {
-        name: "Breakfast",
+        name: "Bar of Soap",
         price: 69.99,
-        labels: ["vegan", "spicy",],
+        labels: ["vegan", "spicy"],
     },
     {
-        name: "Dinner",
+        name: "Sock",
         price: 21,
-        labels: ["vegan", "fish", "nut", "spicy",],
+        labels: ["vegan", "fish", "nut", "spicy"],
     },
     {
         name: "Brick",
         price: 0,
-        labels: ["spicy",],
+        labels: ["spicy"],
     },
     {
         name: "Toast",
