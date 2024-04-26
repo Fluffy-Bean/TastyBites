@@ -1,0 +1,16 @@
+-- SQL is designed for the SQLite database
+-- Moshpit of shit
+
+CREATE TABLE IF NOT EXISTS annoucements(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    description TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS menu_item(
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    description TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+)
+
+-- FUCK
