@@ -31,9 +31,9 @@
 <h1>Contact us</h1>
 
 <div class="container">
-    <div class="header">
-        <h2>Commonly Asked Questions</h2>
-    </div>
+<!--    <div class="header">-->
+<!--        <h2>Commonly Asked Questions</h2>-->
+<!--    </div>-->
     <hr>
     <DropDown name="Can I refund my order?">
         <p>If you ordered online, if we haven't started making your food yet, a refund is possible.</p>

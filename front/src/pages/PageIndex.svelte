@@ -146,6 +146,7 @@
     #timetable {
         border-radius: $border-radius-normal;
         border: 1px solid rgba(#000, 0.1);
+        background-color: $color-light;
 
         overflow: hidden;
 
