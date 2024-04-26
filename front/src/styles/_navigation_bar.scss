@@ -17,6 +17,7 @@ nav {
     background-color: $color-dark;
     color: $color-light;
 
+    //transition: box-shadow 0.05s ease-in-out;
     z-index: 9999999;
 
     ul {
@@ -39,6 +40,7 @@ nav {
                 padding: $spacing-xsmall $spacing-normal;
                 display: block;
                 text-decoration: none;
+                text-shadow: 0 1px 0.5px rgba(#000, 0.8);
                 color: inherit;
             }
 
@@ -66,7 +68,7 @@ nav {
     }
 
     &.scrolled {
-        //box-shadow: 0 0 15px 1px $color-background;
+        box-shadow: 0 0 3px 1px rgba(#000, 0.8);
     }
 
     &.mobile {

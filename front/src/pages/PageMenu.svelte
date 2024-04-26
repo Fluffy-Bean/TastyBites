@@ -2,9 +2,9 @@
     import { ArrowClockwise } from "phosphor-svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
     import DropDown from "%/components/DropDown.svelte";
-    import Items from '%/testData.js';
+    import { getMenuItems } from "%/lib/APIDEV.js";
 
-    let items = Items;
+    let items = getMenuItems();
 </script>
 
 <div class="menu">
@@ -138,16 +138,15 @@
     </div>
 
     <div id="menu-list">
-        <h2>Main Menu</h2>
-        <MenuList items={items} />
-        <div class="spacer"></div>
-
-        <h2>Pies</h2>
-        <MenuList items={items} />
-        <div class="spacer"></div>
-
-        <h2>Drinks</h2>
-        <MenuList items={items} />
+        {#each items as section}
+            <h2>{section.name}</h2>
+            {#if section.items.length > 0}
+                <MenuList items={section.items} />
+            {:else}
+                <p>No results</p>
+            {/if}
+            <div class="spacer" />
+        {/each}
     </div>
 </div>
 

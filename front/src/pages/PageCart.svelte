@@ -13,6 +13,3 @@
 <div class="spacer"></div>
 
 <p>Looking past orders? Check out the <a href="/contact" use:link>commonly asked questions</a></p>
-
-<style>
-</style>

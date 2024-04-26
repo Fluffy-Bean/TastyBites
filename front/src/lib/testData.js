@@ -32,22 +32,22 @@ export default Items = [
         price: -9999,
         labels: ["nut"],
     },
-    {
-        name: "GwaGwa",
-        price: "Priceless",
-        labels: ["nut"],
-        // image: "/dab.jpg",
-    },
+    // {
+    //     name: "GwaGwa",
+    //     price: "Priceless",
+    //     labels: ["nut"],
+    //     image: "/dab.jpg",
+    // },
     {
         name: "Hogermellon",
-        price: "balls",
+        price: "1111",
         labels: ["fish"],
         image: "/wathog.jpg",
     },
-    {
-        name: "Blue HOGGGGG",
-        price: "ARUGH",
-        labels: ["nut", "gluten", "spicy"],
-        image: "/sonichog.jpg",
-    },
+    // {
+    //     name: "Blue HOGGGGG",
+    //     price: "ARUGH",
+    //     labels: ["nut", "gluten", "spicy"],
+    //     image: "/sonichog.jpg",
+    // },
 ];

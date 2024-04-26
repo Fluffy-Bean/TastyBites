@@ -4,10 +4,12 @@
     import { ArrowUpRight } from "phosphor-svelte";
     import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
-    import Items from '%/testData.js';
+    import { getPopularToday } from "%/lib/APIDEV.js";
     import { map, tileLayer} from 'leaflet';
 
-    let items = Items;
+
+    let items = getPopularToday();
+
 
     onMount(() => {
         let Map = map('map').setView([51.505, -0.09], 13);
@@ -57,8 +59,7 @@
     a {
         margin-top: 8px;
 
-        padding-left: 10px;
-        padding-right: 10px;
+        padding: 0 $spacing-small;
 
         height: 30px;
 
@@ -80,16 +81,6 @@
         }
     }
 
-    #contact {
-        display: flex;
-        flex-direction: row;
-
-        .container {
-            margin-left: $spacing-normal;
-            padding: $spacing-normal;
-        }
-    }
-
     #map {
         min-width: 550px;
         height: 350px;
@@ -97,25 +88,42 @@
         border-radius: $border-radius-normal;
     }
 
+    #contact {
+        display: flex;
+        flex-direction: row;
+
+        .container {
+            margin-left: $spacing-small;
+            padding: $spacing-normal;
+        }
+    }
+
     @media only screen and (max-width: 900px) {
         #map {
             min-width: 400px;
             height: 300px;
+            border-radius: $border-radius-normal 0 0 $border-radius-normal;
+        }
+        #contact {
+            .container {
+                margin-left: 0;
+                border-radius: 0 $border-radius-normal $border-radius-normal 0;
+            }
         }
     }
     @media only screen and (max-width: 750px) {
+        #map {
+            min-width: unset;
+            height: 350px;
+            border-radius: $border-radius-normal $border-radius-normal 0 0;
+        }
         #contact {
             display: flex;
             flex-direction: column;
 
             .container {
-                margin-left: 0;
-                margin-top: $spacing-normal;
+                border-radius: 0 0 $border-radius-normal $border-radius-normal;
             }
-        }
-        #map {
-            min-width: unset;
-            height: 350px;
         }
     }
 </style>
