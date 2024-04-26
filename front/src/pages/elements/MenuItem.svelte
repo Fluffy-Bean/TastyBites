@@ -37,7 +37,7 @@
                 {/if}
             {/each}
         </ul>
-        <a href="/item/{id}" use:link>View <ArrowUpRight /></a>
+        <a href="/item/{id}" use:link>View&nbsp;<ArrowUpRight /></a>
     </div>
 
     <ul class="menu-item-detail">

@@ -2,24 +2,22 @@
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
     import { ArrowUpRight } from "phosphor-svelte";
+    import { map, tileLayer, marker } from 'leaflet';
+    import { getPopularToday } from "%/lib/APIDEV.js";
     import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
-    import { getPopularToday } from "%/lib/APIDEV.js";
-    import { map, tileLayer} from 'leaflet';
 
 
     let items = getPopularToday();
 
 
     onMount(() => {
-        let Map = map('map').setView([51.505, -0.09], 13);
+        let Map = map('map').setView([50.82304922105467, -0.432780150496344], 13);
         tileLayer(
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }
+            {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
         ).addTo(Map);
+        marker([50.82304922105467, -0.432780150496344]).addTo(Map);
     })
 </script>
 
@@ -38,7 +36,51 @@
     <div id="map"></div>
     <div class="container">
         <h2>Some Title</h2>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis dolore maiores, dolorem unde, illo vero dolores magnam omnis, explicabo vel eos voluptatem libero ullam ipsa molestias laboriosam voluptas nisi sunt.</p>
+        <p>Example text</p>
+        <div id="timetable">
+            <table>
+                <tr>
+                    <th>Day</th>
+                    <th>Opening</th>
+                    <th>Closing</th>
+                </tr>
+                <tr>
+                    <td>Monday</td>
+                    <td>9am</td>
+                    <td>12pm</td>
+                </tr>
+                <tr>
+                    <td>Tuesday</td>
+                    <td>9am</td>
+                    <td>12pm</td>
+                </tr>
+                <tr>
+                    <td>Wednesday</td>
+                    <td>9am</td>
+                    <td>12pm</td>
+                </tr>
+                <tr>
+                    <td>Thursday</td>
+                    <td>9am</td>
+                    <td>12pm</td>
+                </tr>
+                <tr>
+                    <td>Friday</td>
+                    <td>9am</td>
+                    <td>12pm</td>
+                </tr>
+                <tr>
+                    <td>Saturday</td>
+                    <td>11am</td>
+                    <td>2am</td>
+                </tr>
+                <tr>
+                    <td>Sunday</td>
+                    <td>11am</td>
+                    <td>2am</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 <div class="spacer" />
@@ -58,7 +100,6 @@
 
     a {
         margin-top: 8px;
-
         padding: 0 $spacing-small;
 
         height: 30px;
@@ -83,8 +124,6 @@
 
     #map {
         min-width: 550px;
-        height: 350px;
-
         border-radius: $border-radius-normal;
     }
 
@@ -95,13 +134,54 @@
         .container {
             margin-left: $spacing-small;
             padding: $spacing-normal;
+
+            width: 100%;
+
+            h2, p {
+                padding-bottom: $spacing-xsmall;
+            }
+        }
+    }
+
+    #timetable {
+        border-radius: $border-radius-normal;
+        border: 1px solid rgba(#000, 0.1);
+
+        overflow: hidden;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            tr {
+                border-bottom: 1px solid rgba(#000, 0.1);
+
+                &:last-of-type {
+                    border: 0 solid transparent;
+                }
+
+                th, td {
+                    padding: $spacing-xsmall $spacing-small;
+                    border-right: 1px solid rgba(#000, 0.1);
+
+                    &:last-of-type {
+                        border: 0 solid transparent;
+                    }
+                }
+
+                th {
+                    font-weight: $font-weight-bolder;
+                }
+                td {
+                    font-weight: $font-weight-normal;
+                }
+            }
         }
     }
 
     @media only screen and (max-width: 900px) {
         #map {
             min-width: 400px;
-            height: 300px;
             border-radius: $border-radius-normal 0 0 $border-radius-normal;
         }
         #contact {

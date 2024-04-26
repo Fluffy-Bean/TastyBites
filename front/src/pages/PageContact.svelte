@@ -1,5 +1,7 @@
 <script>
+    import { PaperPlaneRight } from "phosphor-svelte";
     import DropDown from "%/components/DropDown.svelte";
+    import { expandOnTyping } from "%/lib/utils.js";
 
     const minMessageLength = 150;
 
@@ -11,9 +13,14 @@
     let emailValid = true;
     let messageValid = false;
 
-    function expandTextAera(event) {
-        event.target.style.height = "";
-        event.target.style.height = (event.target.scrollHeight + 5) + "px";
+    function validateName() {
+        nameValid = name.length > 1
+    }
+    function validateEmail() {
+        emailValid = email.length > 1
+    }
+    function validateMessage() {
+        messageValid = message.length > minMessageLength
     }
 
     function onSubmit(event) {
@@ -50,7 +57,8 @@
         <label class="form-label" for="name">Name</label>
         <input
             bind:value={name}
-            on:blur={() => {nameValid = name.length > 1}}
+            on:blur={validateName}
+            on:input={validateName}
             type="text"
             id="name"
             name="name"
@@ -65,7 +73,8 @@
         <label class="form-label" for="email">Email</label>
         <input
             bind:value={email}
-            on:blur={() => {emailValid = email.length > 1}}
+            on:blur={validateEmail}
+            on:input={validateEmail}
             type="text"
             id="email"
             name="email"
@@ -80,8 +89,10 @@
         <label class="form-label" for="message">Message</label>
         <textarea
             bind:value={message}
-            on:input={expandTextAera}
-            on:input={() => {messageValid = message.length > minMessageLength}}
+            on:input={validateMessage}
+            use:expandOnTyping
+            rows="1"
+            cols="50"
             id="message"
             name="message"
             class="form-input"
@@ -91,61 +102,11 @@
         </span>
     </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit">Submit&nbsp;&nbsp;<PaperPlaneRight /></button>
 </form>
 
 <style lang="scss">
     @import "%/styles/vars";
-
-    .form-element {
-        margin-bottom: $spacing-normal;
-
-        width: fit-content;
-
-        overflow: hidden;
-
-        .form-label {
-            padding: $spacing-xsmall;
-
-            display: block;
-            font-size: $font-size-small;
-
-            color: $color-on-background;
-        }
-
-        .form-input {
-            padding: $spacing-small;
-
-            display: block;
-
-            font-family: $font-family;
-            font-size: $font-size-p;
-
-            border: 1px solid rgba($color-dark, 0.2);
-            border-radius: $border-radius-normal;
-            background-color: $color-light;
-            color: $color-on-light;
-
-            &:hover {
-                border: 1px solid rgba($color-dark, 0.4);
-            }
-            &:focus {
-                border: 1px solid rgba($color-primary, 0.9);
-                outline: 0 solid transparent;
-            }
-        }
-
-        .form-notice {
-            padding: 0 $spacing-xsmall;
-            display: block;
-            font-size: $font-size-xsmall;
-            color: rgba($color-on-background, 0.7);
-
-            &.error {
-                color: $color-error;
-            }
-        }
-    }
 
     #name, #email {
         width: 300px;
@@ -156,7 +117,7 @@
     #message {
         min-width: 250px;
         max-width: calc(100vw - calc(2 * $spacing-normal));
-        resize: horizontal;
+        resize: none;
     }
 
     button {
