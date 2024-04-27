@@ -1,22 +1,23 @@
 <script>
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
-    import { map, tileLayer, marker } from 'leaflet';
     import { ArrowUpRight } from "phosphor-svelte";
+    import L from 'leaflet';
 
-    import MenuList from "%/components/MenuList.svelte";
     import { getPopularToday } from "%/lib/test-api.js";
-    import BannerImage from '/BannerExampleImage.jpg';
+    import LoadingBar from "%/components/LoadingBar.svelte";
+    import AnnouncementBanner from "%/components/AnnouncementBanner.svelte";
+    import MenuList from "%/components/MenuList.svelte";
 
     let items = getPopularToday();
 
     onMount(() => {
-        let Map = map('map').setView([50.82304922105467, -0.432780150496344], 13);
-        tileLayer(
+        let map = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
+        L.tileLayer(
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
-        ).addTo(Map);
-        marker([50.82304922105467, -0.432780150496344]).addTo(Map);
+            {maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
+        ).addTo(map);
+        L.marker([50.82304922105467, -0.432780150496344]).addTo(map);
 
     });
 </script>
@@ -25,9 +26,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </svelte:head>
 
-<div class="announcement-banner">
-    <img src={BannerImage} alt="">
-</div>
+<AnnouncementBanner />
 <a href="/annoucements" use:link>Learn More <ArrowUpRight /></a>
 <div class="spacer" />
 
@@ -49,18 +48,21 @@
                 <tr><td>Sunday</td><td>11am</td><td>2am</td></tr>
             </table>
         </div>
+        <a href="/menu" use:link>Ready to book a table?</a>
     </div>
 </div>
 <div class="spacer" />
 
 <h2>Popular Today</h2>
-{#await items}
-    <p>Loading...</p>
-{:then items}
-    <MenuList {items} />
-{:catch error}
-    <p>{error}</p>
-{/await}
+<div id="popular">
+    {#await items}
+        <LoadingBar />
+    {:then items}
+        <MenuList {items} />
+    {:catch error}
+        <p>{error}</p>
+    {/await}
+</div>
 <a href="/menu" use:link>See All <ArrowUpRight /></a>
 <div class="spacer" />
 
@@ -114,6 +116,30 @@
             h2, p {
                 padding-bottom: $spacing-xsmall;
             }
+
+            a {
+                margin-top: 8px;
+                padding: 0 $spacing-small;
+
+                width: 100%;
+                height: 30px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                font-size: $font-size-p;
+                text-decoration: none;
+
+                border-radius: 9999px;
+                background-color: $color-primary;
+                color: $color-on-primary;
+
+                &:hover {
+                    background-color: $color-dark;
+                    color: $color-on-dark;
+                }
+            }
         }
     }
 
@@ -152,6 +178,10 @@
                 }
             }
         }
+    }
+
+    #popular {
+        position: relative;
     }
 
     @media only screen and (max-width: 900px) {

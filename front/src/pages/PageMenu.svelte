@@ -7,13 +7,17 @@
     import { getMenuItems } from "%/lib/test-api.js";
 
     let items = getMenuItems();
+
+    function reloadMenu() {
+        items = getMenuItems();
+    }
 </script>
 
 <div class="menu">
     <div class="container" id="filter">
         <div class="header">
             <h2>Filters</h2>
-            <button><ArrowClockwise /></button>
+            <button on:click={reloadMenu}><ArrowClockwise /></button>
         </div>
         <hr>
         <DropDown name="Meal Prefrences" open={true}>
