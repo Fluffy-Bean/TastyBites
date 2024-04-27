@@ -1,5 +1,5 @@
 <script>
-    import { CaretDown } from "phosphor-svelte";
+    import CaretDown from "phosphor-svelte/lib/CaretDown";
 
     export let open = false;
     export let name;

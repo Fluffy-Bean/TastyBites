@@ -1,5 +1,5 @@
 <script>
-    import MenuList from "%/pages/elements/MenuList.svelte";
+    import MenuList from "%/components/MenuList.svelte";
     import LoadingImage from "/MenuItemLoading.svg";
     import Items from '%/lib/testData.js';
 

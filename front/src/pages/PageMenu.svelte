@@ -1,6 +1,6 @@
 <script>
-    import { ArrowClockwise } from "phosphor-svelte";
-    import MenuList from "%/pages/elements/MenuList.svelte";
+    import ArrowClockwise from "phosphor-svelte/lib/ArrowClockwise";
+    import MenuList from "%/components/MenuList.svelte";
     import DropDown from "%/components/DropDown.svelte";
     import { getMenuItems } from "%/lib/api.js";
 

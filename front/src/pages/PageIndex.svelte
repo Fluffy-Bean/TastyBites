@@ -1,15 +1,13 @@
 <script>
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
-    import { ArrowUpRight } from "phosphor-svelte";
     import { map, tileLayer, marker } from 'leaflet';
+    import ArrowUpRight from "phosphor-svelte/lib/ArrowUpRight";
+    import MenuList from "%/components/MenuList.svelte";
     import { getPopularToday } from "%/lib/api.js";
-    import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
-    import MenuList from "%/pages/elements/MenuList.svelte";
-
+    import BannerImage from '/BannerExampleImage.jpg';
 
     let items = getPopularToday();
-
 
     onMount(() => {
         let Map = map('map').setView([50.82304922105467, -0.432780150496344], 13);
@@ -23,12 +21,12 @@
 </script>
 
 <svelte:head>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </svelte:head>
 
-<AnnouncementBanner />
+<div class="announcement-banner">
+    <img src={BannerImage} alt="">
+</div>
 <a href="/annoucements" use:link>Learn More <ArrowUpRight /></a>
 <div class="spacer" />
 
@@ -40,46 +38,14 @@
         <p>Example text</p>
         <div id="timetable">
             <table>
-                <tr>
-                    <th>Day</th>
-                    <th>Opening</th>
-                    <th>Closing</th>
-                </tr>
-                <tr>
-                    <td>Monday</td>
-                    <td>9am</td>
-                    <td>12pm</td>
-                </tr>
-                <tr>
-                    <td>Tuesday</td>
-                    <td>9am</td>
-                    <td>12pm</td>
-                </tr>
-                <tr>
-                    <td>Wednesday</td>
-                    <td>9am</td>
-                    <td>12pm</td>
-                </tr>
-                <tr>
-                    <td>Thursday</td>
-                    <td>9am</td>
-                    <td>12pm</td>
-                </tr>
-                <tr>
-                    <td>Friday</td>
-                    <td>9am</td>
-                    <td>12pm</td>
-                </tr>
-                <tr>
-                    <td>Saturday</td>
-                    <td>11am</td>
-                    <td>2am</td>
-                </tr>
-                <tr>
-                    <td>Sunday</td>
-                    <td>11am</td>
-                    <td>2am</td>
-                </tr>
+                <tr><th>Day</th><th>Opening</th><th>Closing</th></tr>
+                <tr><td>Monday</td><td>9am</td><td>12pm</td></tr>
+                <tr><td>Tuesday</td><td>9am</td><td>12pm</td></tr>
+                <tr><td>Wednesday</td><td>9am</td><td>12pm</td></tr>
+                <tr><td>Thursday</td><td>9am</td><td>12pm</td></tr>
+                <tr><td>Friday</td><td>9am</td><td>12pm</td></tr>
+                <tr><td>Saturday</td><td>11am</td><td>2am</td></tr>
+                <tr><td>Sunday</td><td>11am</td><td>2am</td></tr>
             </table>
         </div>
     </div>
@@ -92,7 +58,7 @@
 {:then items}
     <MenuList {items} />
 {:catch error}
-    <p>Failed to get todays specials!</p>
+    <p>{error}</p>
 {/await}
 <a href="/menu" use:link>See All <ArrowUpRight /></a>
 <div class="spacer" />
