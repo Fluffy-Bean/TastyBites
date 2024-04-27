@@ -1,9 +1,10 @@
 <script>
     import { ArrowClockwise } from "phosphor-svelte";
 
+    import LoadingBar from "%/components/LoadingBar.svelte";
     import MenuList from "%/components/MenuList.svelte";
     import DropDown from "%/components/DropDown.svelte";
-    import { getMenuItems } from "%/lib/api.js";
+    import { getMenuItems } from "%/lib/test-api.js";
 
     let items = getMenuItems();
 </script>
@@ -139,15 +140,21 @@
     </div>
 
     <div id="menu-list">
-        {#each items as section}
-            <h2>{section.name}</h2>
-            {#if section.items.length > 0}
-                <MenuList items={section.items} />
-            {:else}
-                <p>No results</p>
-            {/if}
-            <div class="spacer" />
-        {/each}
+        {#await items}
+            <LoadingBar />
+        {:then items}
+            {#each items as section}
+                <h2>{section.name}</h2>
+                {#if section.items.length > 0}
+                    <MenuList items={section.items} />
+                {:else}
+                    <p>No results</p>
+                {/if}
+                <div class="spacer" />
+            {/each}
+        {:catch error}
+            <p>{error}</p>
+        {/await}
     </div>
 </div>
 
@@ -162,7 +169,9 @@
     }
 
     #menu-list {
-        padding-left: $spacing-normal;
+        margin-left: $spacing-normal;
+        width: 100%;
+        position: relative;
     }
 
     #filter {
@@ -206,8 +215,8 @@
         }
 
         #menu-list {
-            padding-left: 0;
-            padding-top: $spacing-normal;
+            margin-left: 0;
+            margin-top: $spacing-normal;
         }
     }
 </style>

@@ -1,4 +1,4 @@
-import Items from '%/lib/testData.js';
+import Items from '%/lib/test-data.js';
 
 export async function getPopularToday() {
     const res = await fetch("/api/items")

@@ -5,7 +5,7 @@
     import { ArrowUpRight } from "phosphor-svelte";
 
     import MenuList from "%/components/MenuList.svelte";
-    import { getPopularToday } from "%/lib/api.js";
+    import { getPopularToday } from "%/lib/test-api.js";
     import BannerImage from '/BannerExampleImage.jpg';
 
     let items = getPopularToday();
@@ -35,8 +35,8 @@
 <div id="contact">
     <div id="map"></div>
     <div class="container">
-        <h2>Some Title</h2>
-        <p>Example text</p>
+        <h2>Opening Times</h2>
+        <p>Please make sure to checkout our full calendar, as we have different times during public holiday</p>
         <div id="timetable">
             <table>
                 <tr><th>Day</th><th>Opening</th><th>Closing</th></tr>

@@ -1,7 +1,7 @@
 <script>
     import MenuList from "%/components/MenuList.svelte";
     import LoadingImage from "/MenuItemLoading.svg";
-    import Items from '%/lib/testData.js';
+    import Items from '%/lib/test-data.js';
 
     let items = Items;
 
