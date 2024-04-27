@@ -1,5 +1,5 @@
 <script>
-    import SmileySad from "phosphor-svelte/lib/SmileySad";
+    import { SmileySad } from "phosphor-svelte";
 </script>
 
 <div>

@@ -1,5 +1,6 @@
 <script>
-    import PaperPlaneRight from "phosphor-svelte/lib/PaperPlaneRight";
+    import { PaperPlaneRight } from "phosphor-svelte";
+
     import DropDown from "%/components/DropDown.svelte";
     import { expandOnTyping } from "%/lib/utils.js";
 

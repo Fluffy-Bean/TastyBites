@@ -32,12 +32,6 @@
     <MenuList items={items} />
 </div>
 
-<div class="spacer"></div>
-<div class="other">
-    <h2>Popular</h2>
-    <MenuList items={items} />
-</div>
-
 <style lang="scss">
     @import "%/styles/vars";
 

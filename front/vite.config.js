@@ -3,10 +3,13 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    base: './',
     plugins: [
         svelte(),
     ],
-    base: './',
+    optimizeDeps: {
+        exclude: ["phosphor-svelte"],
+    },
     resolve: {
         alias: {
             '%': __dirname + '/src',

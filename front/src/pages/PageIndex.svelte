@@ -2,7 +2,8 @@
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
     import { map, tileLayer, marker } from 'leaflet';
-    import ArrowUpRight from "phosphor-svelte/lib/ArrowUpRight";
+    import { ArrowUpRight } from "phosphor-svelte";
+
     import MenuList from "%/components/MenuList.svelte";
     import { getPopularToday } from "%/lib/api.js";
     import BannerImage from '/BannerExampleImage.jpg';

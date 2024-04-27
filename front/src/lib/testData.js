@@ -29,7 +29,7 @@ export default Items = [
     },
     {
         name: "half eaten mouldy bread",
-        price: -9999,
+        price: -99,
         labels: ["nut"],
     },
     {

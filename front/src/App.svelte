@@ -2,11 +2,9 @@
     import Router from 'svelte-spa-router';
     import { replace, link } from 'svelte-spa-router';
     import active from 'svelte-spa-router/active'
+    import { TwitterLogo, FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-svelte';
+
     import routes from '%/routes.js';
-    import TwitterLogo from 'phosphor-svelte/lib/TwitterLogo';
-    import FacebookLogo from 'phosphor-svelte/lib/FacebookLogo';
-    import InstagramLogo from 'phosphor-svelte/lib/InstagramLogo';
-    import TiktokLogo from 'phosphor-svelte/lib/TiktokLogo';
     import Logo from '/LogoAlt.svg';
 
     const links = {

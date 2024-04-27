@@ -1,11 +1,7 @@
 <script>
     import { link } from 'svelte-spa-router';
-    import Acorn from 'phosphor-svelte/lib/Acorn';
-    import Fish from 'phosphor-svelte/lib/Fish';
-    import Leaf from 'phosphor-svelte/lib/Leaf';
-    import Pepper from 'phosphor-svelte/lib/Pepper';
-    import ArrowUpRight from 'phosphor-svelte/lib/ArrowUpRight';
-    import GrainsSlash from 'phosphor-svelte/lib/GrainsSlash';
+    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from 'phosphor-svelte';
+    
     import LoadingImage from '/MenuItemLoadingAlt.svg';
 
     export let id;
