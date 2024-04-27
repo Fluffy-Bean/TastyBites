@@ -1,7 +1,14 @@
 import Items from '%/lib/testData.js';
 
-export function getPopularToday() {
-    return Items;
+export async function getPopularToday() {
+    const res = await fetch("/api/items")
+    const data = res.json()
+
+    if (res.ok) {
+        return data
+    } else {
+        throw new Error("Failed to fetch popular today")
+    }
 }
 
 export function getMenuItems() {

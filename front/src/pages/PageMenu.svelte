@@ -2,7 +2,7 @@
     import { ArrowClockwise } from "phosphor-svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
     import DropDown from "%/components/DropDown.svelte";
-    import { getMenuItems } from "%/lib/APIDEV.js";
+    import { getMenuItems } from "%/lib/api.js";
 
     let items = getMenuItems();
 </script>

@@ -1,6 +1,8 @@
 package api
 
 import (
+	"net/http"
+
 	"github.com/Fluffy-Bean/TastyBites/front"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -16,10 +18,16 @@ func Serve(c Config) {
 
 	if c.Logging {
 		r.Use(middleware.Logger())
+		r.Use(middleware.CORS())
 	}
 	r.Use(middleware.Recover())
 
 	r.StaticFS("/", front.DistDir)
+
+	api := r.Group("/api")
+	api.GET("/items", func(e echo.Context) error {
+		return e.JSON(http.StatusOK, sampleData)
+	})
 
 	r.HideBanner = true
 	r.Logger.Fatal(r.Start(c.Host))

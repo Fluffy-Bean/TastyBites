@@ -3,7 +3,7 @@
     import { link } from 'svelte-spa-router';
     import { ArrowUpRight } from "phosphor-svelte";
     import { map, tileLayer, marker } from 'leaflet';
-    import { getPopularToday } from "%/lib/APIDEV.js";
+    import { getPopularToday } from "%/lib/api.js";
     import AnnouncementBanner from "%/pages/elements/AnnouncementBanner.svelte";
     import MenuList from "%/pages/elements/MenuList.svelte";
 
@@ -18,7 +18,8 @@
             {maxZoom: 19, attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'}
         ).addTo(Map);
         marker([50.82304922105467, -0.432780150496344]).addTo(Map);
-    })
+
+    });
 </script>
 
 <svelte:head>
@@ -86,7 +87,13 @@
 <div class="spacer" />
 
 <h2>Popular Today</h2>
-<MenuList {items} />
+{#await items}
+    <p>Loading...</p>
+{:then items}
+    <MenuList {items} />
+{:catch error}
+    <p>Failed to get todays specials!</p>
+{/await}
 <a href="/menu" use:link>See All <ArrowUpRight /></a>
 <div class="spacer" />
 
