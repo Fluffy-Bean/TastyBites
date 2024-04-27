@@ -1,7 +1,5 @@
 <script>
     import SmileySad from "phosphor-svelte/lib/SmileySad";
-
-    export let params = {};
 </script>
 
 <div>
