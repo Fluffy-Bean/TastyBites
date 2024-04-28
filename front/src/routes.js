@@ -1,6 +1,8 @@
 import { wrap } from "svelte-spa-router/wrap";
+
 import PageLoading from "%/pages/PageLoading.svelte";
 import Page404 from "%/pages/Page404.svelte";
+import Page500 from "%/pages/Page500.svelte";
 
 const routes = {
     "/": wrap({
@@ -15,7 +17,7 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true, fullWidth: true, },
     }),
-    "/item/:name": wrap({
+    "/item/:uuid": wrap({
         asyncComponent: () => import("%/pages/PageItem.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
@@ -39,11 +41,21 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true, fullWidth: false, },
     }),
-    '*': wrap({
+    "/ForOhFor": wrap({
         component: Page404,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false, },
-    })
+    }),
+    "/ServerError": wrap({
+        component: Page500,
+        conditions: [],
+        userData: { showNavBar: true, fullWidth: false, },
+    }),
+    "*": wrap({
+        component: Page404,
+        conditions: [],
+        userData: { showNavBar: true, fullWidth: false, },
+    }),
 }
 
 export default routes;

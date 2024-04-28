@@ -7,13 +7,7 @@
 <ul>
     {#each items as item}
         <li>
-            <MenuItem
-                id={item.name}
-                name={item.name}
-                price={item.price}
-                image={item.image}
-                labels={item.labels}
-            />
+            <MenuItem item={item} />
         </li>
     {/each}
 </ul>

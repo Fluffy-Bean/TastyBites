@@ -4,23 +4,19 @@
     
     import LoadingImage from '/MenuItemLoadingAlt.svg';
 
-    export let id;
-    export let name;
-    export let price;
-    export let image;
-    export let labels = []
+    export let item = {};
 </script>
 
 <div class="menu-item">
-    {#if !image}
+    {#if !item.image}
         <img src={LoadingImage} alt="" class="menu-item-image">
     {:else}
-        <img src={image} alt="" class="menu-item-image">
+        <img src={item.image} alt="" class="menu-item-image">
     {/if}
 
     <div class="menu-item-header">
         <ul>
-            {#each labels as label}
+            {#each item.labels as label}
                 {#if label === "vegan"}
                     <li class="vegan"><Leaf weight="fill" /></li>
                 {/if}
@@ -38,12 +34,14 @@
                 {/if}
             {/each}
         </ul>
-        <a href="/item/{id}" use:link>View&nbsp;<ArrowUpRight /></a>
+        <a href="/item/{item.uuid}" use:link>
+            View&nbsp;<ArrowUpRight />
+        </a>
     </div>
 
     <ul class="menu-item-detail">
-        <li>{name}</li>
-        <li>£{price}</li>
+        <li>{item.name}</li>
+        <li>£{item.price}</li>
     </ul>
 </div>
 

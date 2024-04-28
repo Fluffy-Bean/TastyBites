@@ -6,9 +6,7 @@
 
 
 {#await announcement}
-    <div class="announcement-banner-loading">
-        <div />
-    </div>
+    <div class="announcement-banner-loading" />
 {:then announcement}
     <div class="announcement-banner">
         <img src={announcement.image} alt="">
@@ -35,12 +33,15 @@
 
         overflow: hidden;
 
-        > div {
+        &::after {
+            content: '';
+
             position: absolute;
             top: $padding;
             right: $padding;
             bottom: $padding;
             left: $padding;
+
             border-radius: calc($border-radius-large - $padding);
             background-color: rgba($color-background, 0.9);
         }

@@ -36,7 +36,7 @@
             align-items: center;
 
             p {
-                font-size: $font-size-h5;
+                font-size: $font-size-h6;
                 font-weight: $font-weight-bold;
             }
 

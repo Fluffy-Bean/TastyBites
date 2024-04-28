@@ -14,20 +14,19 @@
         cart: {path: '/cart', className: 'active'},
     }
 
-    let windowScrollY = 0;
-    let windowWidth = 0;
+    let scrollY = 0;
+    let width = 0;
 
     let oldLocation = undefined;
     let fullWidth = false;
     let showNavBar = false;
 
-    $: scrolled = windowScrollY > 0
-    $: mobile = windowWidth < 700
-
     function routeLoading(event) {
         if (event.detail.location === oldLocation) {
+            console.log("Fake!");
             return; // not an actual change
         }
+
         showNavBar = event.detail.userData.showNavBar;
         fullWidth = event.detail.userData.fullWidth;
         oldLocation = event.detail.location;
@@ -38,15 +37,18 @@
     }
 </script>
 
-<svelte:window bind:scrollY={windowScrollY} bind:innerWidth={windowWidth} />
+<svelte:window
+    bind:scrollY={scrollY}
+    bind:innerWidth={width}
+/>
 <svelte:head>
     <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&display=swap">
 </svelte:head>
 
 
 {#if showNavBar }
-    <nav class:scrolled={scrolled} class:mobile={mobile}>
-        {#if !mobile}
+    <nav class:scrolled={scrollY > 0} class:mobile={width < 700}>
+        {#if !(width < 700)}
             <ul style="justify-content: flex-end">
                 <li use:active={links.home}><a href="/" use:link>Home</a></li>
                 <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>

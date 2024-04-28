@@ -119,6 +119,7 @@
         min-width: 250px;
         max-width: calc(100vw - calc(2 * $spacing-normal));
         resize: none;
+        overflow: hidden;
     }
 
     button {

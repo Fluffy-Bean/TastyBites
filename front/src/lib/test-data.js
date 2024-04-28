@@ -7,6 +7,7 @@ const Items = [
         name: "Bar of Soap",
         price: 69.99,
         labels: ["vegan", "spicy"],
+        detail: "Example",
     },
     // sock: {
     {
@@ -14,6 +15,7 @@ const Items = [
         name: "Sock",
         price: 21,
         labels: ["vegan", "fish", "nut", "spicy"],
+        detail: "Example",
     },
     // brick: {
     {
@@ -21,6 +23,7 @@ const Items = [
         name: "Brick",
         price: 0,
         labels: ["spicy"],
+        detail: "Example",
     },
     // toast: {
     {
@@ -28,6 +31,7 @@ const Items = [
         name: "Toast",
         price: 4382749832743,
         labels: ["gluten"],
+        detail: "Example",
     },
     // water: {
     {
@@ -35,6 +39,7 @@ const Items = [
         name: "water",
         price: 1,
         labels: ["fish"],
+        detail: "Example",
     },
     // mouldy_bread: {
     {
@@ -42,6 +47,7 @@ const Items = [
         name: "half eaten mouldy bread",
         price: -99,
         labels: ["nut"],
+        detail: "Example",
     },
     // gwagwa: {
     {
@@ -58,6 +64,7 @@ const Items = [
         price: "1111",
         labels: ["fish"],
         image: "/wathog.jpg",
+        detail: "Example",
     },
     // bluhog: {
     {
@@ -66,6 +73,7 @@ const Items = [
         price: "ARUGH",
         labels: ["nut", "gluten", "spicy"],
         image: "/sonichog.jpg",
+        detail: "Example",
     },
 ];
 
