@@ -23,7 +23,7 @@
         justify-content: center;
         align-items: center;
 
-        font-size: 50px;
+        font-size: $font-size-very-fucking-big;
         text-align: center;
     }
     p {

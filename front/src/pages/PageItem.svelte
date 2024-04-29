@@ -1,5 +1,6 @@
 <script>
     import { replace } from "svelte-spa-router";
+    import { SmileySad } from "phosphor-svelte";
 
     import MenuList from "%/components/MenuList.svelte";
     import LoadingBar from "%/components/LoadingBar.svelte";
@@ -65,8 +66,10 @@
             </div>
         </div>
     {:catch error}
-        <p>Server fucking died...</p>
-        <p>{error}</p>
+        <div id="error">
+            <h1>Server fucking died...&nbsp;<SmileySad weight="fill" /></h1>
+            <p>Error: {error.message}</p>
+        </div>
     {/await}
 </div>
 
@@ -160,12 +163,36 @@
     }
 
     .other {
-        margin: 0 auto;
+        margin-left: auto;
+        margin-right: auto;
         max-width: $sizing-default-width;
     }
 
     #popular {
         position: relative;
+    }
+
+    #error {
+        margin-left: auto;
+        margin-right: auto;
+        padding: $spacing-large;
+
+        max-width: $sizing-default-width;
+
+        display: flex;
+        flex-direction: column;
+
+        > h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: $font-size-very-fucking-big;
+            text-align: center;
+        }
+        > p {
+            text-align: center;
+        }
     }
 
     .loading {
@@ -205,14 +232,6 @@
         &.description {
             height: 400px;
             width: 100%;
-        }
-    }
-
-    @media only screen and (max-width: 670px) {
-        .announcement-banner-loading {
-            margin: -$spacing-small;
-            margin-bottom: 0;
-            height: 250px;
         }
     }
 
