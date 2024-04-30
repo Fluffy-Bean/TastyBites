@@ -50,13 +50,13 @@ const Items = [
         detail: "Example",
     },
     // gwagwa: {
-    {
-        uuid: "gwagwa",
-        name: "GwaGwa",
-        price: "Priceless",
-        labels: ["nut"],
-        image: "/dab.jpg",
-    },
+    // {
+    //     uuid: "gwagwa",
+    //     name: "GwaGwa",
+    //     price: "Priceless",
+    //     labels: ["nut"],
+    //     image: "/dab.jpg",
+    // },
     // hogmelon: {
     {
         uuid: "hogmelon",

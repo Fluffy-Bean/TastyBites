@@ -1,10 +1,13 @@
 <script>
-    import { PaperPlaneRight } from "phosphor-svelte";
+    import { PaperPlaneRight, SealWarning, SealCheck } from "phosphor-svelte";
 
     import DropDown from "%/components/DropDown.svelte";
+    import { postContactEmail } from "%/lib/test-api.js";
     import { expandOnTyping } from "%/lib/utils.js";
 
     const minMessageLength = 150;
+
+    let formMessage;
 
     let name = "";
     let email = "";
@@ -25,17 +28,14 @@
     }
 
     function onSubmit(event) {
-        console.log(name, email, message);
+        formMessage = postContactEmail(name, email, message);
     }
 </script>
 
 <h1>Contact us</h1>
 
+<h2>Commonly Asked Questions</h2>
 <div class="container">
-<!--    <div class="header">-->
-<!--        <h2>Commonly Asked Questions</h2>-->
-<!--    </div>-->
-    <hr>
     <DropDown name="Can I refund my order?">
         <p>If you ordered online, if we haven't started making your food yet, a refund is possible.</p>
         <p>If you reserved a table, you can refund upto 1 hour before your time.</p>
@@ -54,6 +54,14 @@
 
 <h2>Contact From</h2>
 <form on:submit|preventDefault={onSubmit}>
+    {#await formMessage then formMessage}
+        {#if formMessage}
+            <p class="form-message success"><SealCheck weight="fill" />&nbsp;{formMessage}</p>
+        {/if}
+    {:catch error}
+        <p class="form-message error"><SealWarning weight="fill" />&nbsp;{error.message}</p>
+    {/await}
+
     <div class="form-element">
         <label class="form-label" for="name">Name</label>
         <input
@@ -86,6 +94,8 @@
         {/if}
     </div>
 
+    <!-- ToDo: Add dropdown for issue type, such as Technical, Order, Account, or other -->
+
     <div class="form-element">
         <label class="form-label" for="message">Message</label>
         <textarea
@@ -103,7 +113,7 @@
         </span>
     </div>
 
-    <button type="submit">Submit&nbsp;&nbsp;<PaperPlaneRight /></button>
+    <button type="submit">Submit&nbsp;&nbsp;<PaperPlaneRight weight="fill" /></button>
 </form>
 
 <style lang="scss">

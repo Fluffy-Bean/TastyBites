@@ -1,11 +1,13 @@
 import Items from '%/lib/test-data.js';
 
+
 let cache = {};
 
 
 async function fakeDelay(timeout = 1000) {
     await new Promise(resolve => setTimeout(resolve, timeout));
 }
+
 
 export async function getAnnouncements() {
     if (cache.announcement_banner !== undefined) {
@@ -20,6 +22,7 @@ export async function getAnnouncements() {
     return data;
 }
 
+
 export async function getPopularToday() {
     if (cache.popular_today !== undefined) {
         return cache.popular_today;
@@ -30,6 +33,7 @@ export async function getPopularToday() {
     await fakeDelay(2000)
     return data;
 }
+
 
 export async function getMenuItems() {
     const data = [
@@ -50,6 +54,7 @@ export async function getMenuItems() {
     return data;
 }
 
+
 export async function getItemByUUID(uuid) {
     let data;
 
@@ -66,4 +71,23 @@ export async function getItemByUUID(uuid) {
     }
 
     return data;
+}
+
+
+export async function postContactEmail(name, email, message) {
+    await fakeDelay(1000)
+
+    if (!name) {
+        throw new Error("Namey missing");
+    }
+    if (!email) {
+        throw new Error("Emaily missing");
+    }
+    if (!message) {
+        throw new Error("Message missing");
+    } else if (message.length < 150) {
+        throw new Error("Message FUCKED");
+    }
+
+    return "Check your email to confirm the message!";
 }

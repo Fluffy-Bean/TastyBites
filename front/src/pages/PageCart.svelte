@@ -1,15 +1,22 @@
 <script>
     import { link } from 'svelte-spa-router';
+
+    import Cart from '%/lib/cart.ts';
+    import MenuList from "%/components/MenuList.svelte";
+
+    console.log($Cart);
 </script>
 
 <h1>Shopping Cart</h1>
 
-<div class="container">
-    <div class="section">
-        <p>Empty....</p>
-    </div>
-</div>
+<MenuList items={$Cart} />
 
-<div class="spacer"></div>
+<ul>
+    {#each $Cart as item}
+        <li>
+            <button on:click={() => {Cart.removeByUUID(item.uuid)}}>Yeet {item.name}</button>
+        </li>
+    {/each}
+</ul>
 
 <p>Looking past orders? Check out the <a href="/contact" use:link>commonly asked questions</a></p>

@@ -2,9 +2,10 @@
     import { replace } from "svelte-spa-router";
     import { SmileySad } from "phosphor-svelte";
 
+    import Cart from "%/lib/cart.ts";
+    import { getPopularToday, getItemByUUID } from "%/lib/test-api.js";
     import MenuList from "%/components/MenuList.svelte";
     import LoadingBar from "%/components/LoadingBar.svelte";
-    import { getPopularToday, getItemByUUID } from "%/lib/test-api.js";
     import LoadingImage from "/MenuItemLoading.svg";
 
     export let params;
@@ -64,6 +65,8 @@
             <div class="container">
                 <p>{item.detail}</p>
             </div>
+
+            <button on:click={() => { Cart.addToCart(item) }}>Add to Cart</button>
         </div>
     {:catch error}
         <div id="error">

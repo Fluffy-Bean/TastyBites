@@ -47,3 +47,23 @@
         color: $color-error;
     }
 }
+
+.form-message {
+    margin-bottom: $spacing-small;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    text-shadow: 0 1px 0.5px rgba(#000, 0.2);
+    border-radius: $border-radius-normal;
+    color: $color-on-background;
+
+    &.success {
+        color: $color-primary;
+    }
+    &.error {
+        color: $color-error;
+    }
+}

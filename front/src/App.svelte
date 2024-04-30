@@ -1,9 +1,11 @@
 <script>
+    import { get } from 'svelte/store';
     import Router from 'svelte-spa-router';
     import { replace, link } from 'svelte-spa-router';
     import active from 'svelte-spa-router/active'
     import { TwitterLogo, FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-svelte';
 
+    import Cart from '%/lib/cart.ts';
     import routes from '%/routes.js';
     import Logo from '/LogoAlt.svg';
 
@@ -13,6 +15,11 @@
         contact: {path: '/contact', className: 'active'},
         cart: {path: '/cart', className: 'active'},
     }
+
+    let cartLen = 0;
+    Cart.subscribe((value) => {
+        cartLen = Cart.getLength();
+    });
 
     let scrollY = 0;
     let width = 0;
@@ -56,14 +63,18 @@
             <span><img src={Logo} alt="TastyBites"></span>
             <ul style="justify-content: flex-start">
                 <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
-                <li use:active={links.cart}><a href="/cart" use:link>Cart</a></li>
+                <li use:active={links.cart}><a href="/cart" use:link>
+                    Cart&nbsp;{#if cartLen}({cartLen}){/if}
+                </a></li>
             </ul>
         {:else}
             <ul>
                 <li use:active={links.home}><a href="/" use:link>Home</a></li>
                 <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
                 <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
-                <li use:active={links.cart}><a href="/cart" use:link>Cart</a></li>
+                <li use:active={links.cart}><a href="/cart" use:link>
+                    Cart&nbsp;{#if cartLen}({cartLen}){/if}
+                </a></li>
             </ul>
         {/if}
     </nav>
