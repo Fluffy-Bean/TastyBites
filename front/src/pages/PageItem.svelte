@@ -1,5 +1,4 @@
 <script>
-    import { replace } from "svelte-spa-router";
     import { SmileySad } from "phosphor-svelte";
 
     import Cart from "%/lib/cart.ts";
@@ -11,15 +10,7 @@
     export let params;
 
     $: item = getItemByUUID(params.uuid)
-        // ToDo: Fix this, keeps fucking breaking
-        // NOT WORKING FUCK
-        // .catch((error) => {
-        //     console.error(error);
-        //     if (error === "404") {
-        //         replace("/ForOhFor");
-        //     }
-        //     replace("/ServerError");
-        // });
+
     let popularToday = getPopularToday();
 </script>
 
@@ -66,7 +57,7 @@
                 <p>{item.detail}</p>
             </div>
 
-            <button on:click={() => { Cart.addToCart(item) }}>Add to Cart</button>
+            <button on:click={() => { Cart.addToCart(item.uuid, 1) }}>Add to Cart</button>
         </div>
     {:catch error}
         <div id="error">

@@ -12,12 +12,35 @@ try {
 function createCartStore() {
     const cart = writable(local);
 
-    function addToCart(item: any) {
-        cart.update((cart) => [...cart, item]);
+    function addToCart(uuid: string, amount: number) {
+        let found = false;
+
+        get(cart).forEach((item) => {
+            if (item.uuid === uuid) {
+                item.amount += amount;
+                found = true;
+            }
+        });
+
+        if (!found) {
+            cart.update((cart) => [...cart, {uuid:uuid,amount:amount}]);
+        }
+
+        // Remove items that have an amount of 0 or lower
+        cart.update((cart) => cart.filter((item) => item.amount > 0))
     }
 
     function getLength() {
         return get(cart).length;
+    }
+
+    function getByUUID(uuid: string) {
+        get(cart).forEach((item) => {
+            if (item.uuid === uuid) {
+                return item;
+            }
+        })
+        return {};
     }
 
     function removeByUUID(uuid: string) {
@@ -28,6 +51,7 @@ function createCartStore() {
         ...cart,
         addToCart,
         getLength,
+        getByUUID,
         removeByUUID,
     }
 }

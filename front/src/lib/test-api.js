@@ -18,7 +18,7 @@ export async function getAnnouncements() {
         image: "/BannerExampleImage.jpg",
     };
     cache.announcement_banner = data;
-    await fakeDelay(5000)
+    await fakeDelay(200)
     return data;
 }
 
@@ -30,7 +30,7 @@ export async function getPopularToday() {
 
     const data = Items;
     cache.popular_today = data;
-    await fakeDelay(2000)
+    await fakeDelay(200)
     return data;
 }
 
@@ -62,9 +62,9 @@ export async function getItemByUUID(uuid) {
         if (item.uuid === uuid) {
             data = item;
         }
-    })
+    });
 
-    await fakeDelay(1000)
+    await fakeDelay(200)
 
     if (!data) {
         throw new Error("Resource could not be found");
@@ -74,8 +74,29 @@ export async function getItemByUUID(uuid) {
 }
 
 
+export async function getItemsByUUID(items) {
+    let data = [];
+
+    Items.forEach((itemInDatabase) => {
+        items.forEach((itemInRequest) => {
+            if (itemInDatabase.uuid === itemInRequest) {
+                data.push(itemInDatabase);
+            }
+        });
+    });
+
+    await fakeDelay(200)
+
+    if (data.length < 0) {
+        throw new Error("Resource could not be found");
+    }
+
+    return data;
+}
+
+
 export async function postContactEmail(name, email, message) {
-    await fakeDelay(1000)
+    await fakeDelay(200)
 
     if (!name) {
         throw new Error("Namey missing");
