@@ -17,7 +17,9 @@ body, #app {
 }
 
 body {
-    background-color: $color-background;
+    background-color: darken($color-background, 10%);
+    //background-color: $color-background;
+    background-image: url("/Noise.png");
     color: $color-on-background;
 }
 
