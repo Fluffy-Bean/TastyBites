@@ -2,7 +2,7 @@
     import { SmileySad } from "phosphor-svelte";
 
     import Cart from "%/lib/cart.ts";
-    import { getPopularToday, getItemByUUID } from "%/lib/test-api.js";
+    import { getPopularToday, getItemByUUID } from "%/lib/test-api.ts";
     import MenuList from "%/components/MenuList.svelte";
     import LoadingBar from "%/components/LoadingBar.svelte";
     import LoadingImage from "/MenuItemLoading.svg";

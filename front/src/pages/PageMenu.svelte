@@ -4,7 +4,7 @@
     import LoadingBar from "%/components/LoadingBar.svelte";
     import MenuList from "%/components/MenuList.svelte";
     import DropDown from "%/components/DropDown.svelte";
-    import { getMenuItems } from "%/lib/test-api.js";
+    import { getMenuItems } from "%/lib/test-api.ts";
 
     let items = getMenuItems();
 

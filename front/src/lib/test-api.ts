@@ -1,16 +1,19 @@
 import Items from '%/lib/test-data.js';
 
 
-let cache = {};
+let cache = {
+    announcement_banner: null,
+    popular_today: null,
+};
 
 
-async function fakeDelay(timeout = 1000) {
+async function fakeDelay(timeout: number = 1000) {
     await new Promise(resolve => setTimeout(resolve, timeout));
 }
 
 
 export async function getAnnouncements() {
-    if (cache.announcement_banner !== undefined) {
+    if (cache.announcement_banner) {
         return cache.announcement_banner;
     }
 
@@ -24,7 +27,7 @@ export async function getAnnouncements() {
 
 
 export async function getPopularToday() {
-    if (cache.popular_today !== undefined) {
+    if (cache.popular_today) {
         return cache.popular_today;
     }
 
@@ -55,26 +58,7 @@ export async function getMenuItems() {
 }
 
 
-export async function getItemByUUID(uuid) {
-    let data;
-
-    Items.forEach((item) => {
-        if (item.uuid === uuid) {
-            data = item;
-        }
-    });
-
-    await fakeDelay(200)
-
-    if (!data) {
-        throw new Error("Resource could not be found");
-    }
-
-    return data;
-}
-
-
-export async function getItemsByUUID(items) {
+export async function getItemsByUUID(items: string[]) {
     let data = [];
 
     Items.forEach((itemInDatabase) => {
@@ -95,7 +79,18 @@ export async function getItemsByUUID(items) {
 }
 
 
-export async function postContactEmail(name, email, message) {
+export async function getItemByUUID(uuid: string) {
+    let data = await getItemsByUUID([uuid]);
+
+    if (data.length != 1) {
+        throw new Error("Resource could not be found");
+    }
+
+    return data[0];
+}
+
+
+export async function postContactEmail(name: string, email: string, message: string) {
     await fakeDelay(200)
 
     if (!name) {

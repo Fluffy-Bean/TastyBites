@@ -2,7 +2,7 @@
     import { PaperPlaneRight, SealWarning, SealCheck } from "phosphor-svelte";
 
     import DropDown from "%/components/DropDown.svelte";
-    import { postContactEmail } from "%/lib/test-api.js";
+    import { postContactEmail } from "%/lib/test-api.ts";
     import { expandOnTyping } from "%/lib/utils.js";
 
     const minMessageLength = 150;

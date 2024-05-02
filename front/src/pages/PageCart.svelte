@@ -1,7 +1,7 @@
 <script>
     import { link } from 'svelte-spa-router';
 
-    import { getItemsByUUID } from "%/lib/test-api.js";
+    import { getItemsByUUID } from "%/lib/test-api.ts";
     import LoadingBar from "%/components/LoadingBar.svelte";
     import Cart from '%/lib/cart.ts';
     import MenuList from "%/components/MenuList.svelte";

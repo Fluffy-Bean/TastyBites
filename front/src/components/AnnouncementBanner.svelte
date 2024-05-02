@@ -1,5 +1,5 @@
 <script>
-    import { getAnnouncements } from '%/lib/test-api.js';
+    import { getAnnouncements } from '%/lib/test-api.ts';
 
     let announcement = getAnnouncements();
 </script>
