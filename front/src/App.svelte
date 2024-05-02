@@ -15,9 +15,9 @@
         cart: {path: '/cart', className: 'active'},
     }
 
-    let cartLen = 0;
+    let cartItemCount = 0;
     Cart.subscribe(() => {
-        cartLen = Cart.getLength();
+        cartItemCount = Cart.getLength();
     });
 
     let scrollY = 0;
@@ -43,12 +43,22 @@
     }
 </script>
 
+
 <svelte:window
     bind:scrollY={scrollY}
     bind:innerWidth={width}
 />
 <svelte:head>
-    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&display=swap">
+    <link
+        rel="stylesheet"
+        href="https://api.fontshare.com/v2/css?f[]=erode@300,301,400,401,500,501,600,601,700,701,1,2&display=swap"
+    />
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    />
 </svelte:head>
 
 
@@ -59,21 +69,17 @@
                 <li use:active={links.home}><a href="/" use:link>Home</a></li>
                 <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
             </ul>
-            <span><img src={Logo} alt="TastyBites"></span>
+            <span class="nav-logo"><img src={Logo} alt="TastyBites"></span>
             <ul style="justify-content: flex-start">
                 <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
-                <li use:active={links.cart}><a href="/cart" use:link>
-                    Cart&nbsp;{#if cartLen}({cartLen}){/if}
-                </a></li>
+                <li use:active={links.cart}><a href="/cart" use:link>Cart&nbsp;<span class="nav-basket">{cartItemCount}</span></a></li>
             </ul>
         {:else}
             <ul>
                 <li use:active={links.home}><a href="/" use:link>Home</a></li>
                 <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
                 <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
-                <li use:active={links.cart}><a href="/cart" use:link>
-                    Cart&nbsp;{#if cartLen}({cartLen}){/if}
-                </a></li>
+                <li use:active={links.cart}><a href="/cart" use:link>Cart&nbsp;<span class="nav-basket">{cartItemCount}</span></a></li>
             </ul>
         {/if}
     </nav>
