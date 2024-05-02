@@ -1,10 +1,10 @@
 <script>
     import { ArrowClockwise } from "phosphor-svelte";
 
-    import LoadingBar from "%/components/LoadingBar.svelte";
-    import MenuList from "%/components/MenuList.svelte";
-    import DropDown from "%/components/DropDown.svelte";
-    import { getMenuItems } from "%/lib/test-api.ts";
+    import { getMenuItems } from "../lib/test-api";
+    import LoadingBar from "../components/LoadingBar.svelte";
+    import MenuList from "../components/MenuList.svelte";
+    import DropDown from "../components/DropDown.svelte";
 
     let items = getMenuItems();
 
@@ -163,7 +163,7 @@
 </div>
 
 <style lang="scss">
-    @import "%/styles/vars";
+    @import "../styles/vars";
 
     .menu {
         display: flex;

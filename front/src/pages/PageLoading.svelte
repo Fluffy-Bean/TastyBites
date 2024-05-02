@@ -1,5 +1,5 @@
 <script>
-    import LoadingBar from "%/components/LoadingBar.svelte";
+    import LoadingBar from "../components/LoadingBar.svelte";
 
     const FunnyMessages = [
         "*patiently waiting*",

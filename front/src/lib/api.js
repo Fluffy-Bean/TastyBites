@@ -1,4 +1,4 @@
-import Items from '%/lib/test-data.js';
+import TestData from '%/lib/test-data.ts';
 
 export async function getPopularToday() {
     const res = await fetch("/api/items")
@@ -15,7 +15,7 @@ export function getMenuItems() {
     return [
         {
             name: "Main Menu",
-            items: Items,
+            items: TestData,
         },
         {
             name: "Breakfast",
@@ -23,7 +23,7 @@ export function getMenuItems() {
         },
         {
             name: "Seasonal",
-            items: Items,
+            items: TestData,
         },
     ];
 }

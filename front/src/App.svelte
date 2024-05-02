@@ -1,12 +1,11 @@
 <script>
-    import { get } from 'svelte/store';
     import Router from 'svelte-spa-router';
     import { replace, link } from 'svelte-spa-router';
     import active from 'svelte-spa-router/active'
     import { TwitterLogo, FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-svelte';
 
-    import Cart from '%/lib/cart.ts';
-    import routes from '%/routes.js';
+    import Cart from './lib/cart';
+    import routes from './routes';
     import Logo from '/LogoAlt.svg';
 
     const links = {
@@ -17,7 +16,7 @@
     }
 
     let cartLen = 0;
-    Cart.subscribe((value) => {
+    Cart.subscribe(() => {
         cartLen = Cart.getLength();
     });
 
@@ -39,7 +38,7 @@
         oldLocation = event.detail.location;
     }
 
-    function conditionFailure(event) {
+    function conditionFailure() {
         replace("/");
     }
 </script>

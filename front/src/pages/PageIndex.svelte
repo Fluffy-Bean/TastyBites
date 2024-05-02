@@ -4,10 +4,10 @@
     import { ArrowUpRight } from "phosphor-svelte";
     import L from 'leaflet';
 
-    import { getPopularToday } from "%/lib/test-api.ts";
-    import LoadingBar from "%/components/LoadingBar.svelte";
-    import AnnouncementBanner from "%/components/AnnouncementBanner.svelte";
-    import MenuList from "%/components/MenuList.svelte";
+    import { getPopularToday } from "../lib/test-api";
+    import LoadingBar from "../components/LoadingBar.svelte";
+    import AnnouncementBanner from "../components/AnnouncementBanner.svelte";
+    import MenuList from "../components/MenuList.svelte";
 
     let items = getPopularToday();
 
@@ -72,7 +72,7 @@
 
 
 <style lang="scss">
-    @import "%/styles/vars";
+    @import "../styles/vars";
 
     a {
         margin-top: 8px;

@@ -1,10 +1,10 @@
 <script>
     import { SmileySad } from "phosphor-svelte";
 
-    import Cart from "%/lib/cart.ts";
-    import { getPopularToday, getItemByUUID } from "%/lib/test-api.ts";
-    import MenuList from "%/components/MenuList.svelte";
-    import LoadingBar from "%/components/LoadingBar.svelte";
+    import { getPopularToday, getItemByUUID } from "../lib/test-api";
+    import Cart from "../lib/cart";
+    import MenuList from "../components/MenuList.svelte";
+    import LoadingBar from "../components/LoadingBar.svelte";
     import LoadingImage from "/MenuItemLoading.svg";
 
     export let params;
@@ -83,7 +83,7 @@
 </div>
 
 <style lang="scss">
-    @import "%/styles/vars";
+    @import "../styles/vars";
 
     $padding: 1px;
 

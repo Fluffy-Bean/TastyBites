@@ -1,4 +1,5 @@
-import Items from '%/lib/test-data.js';
+import type { Item } from './types';
+import TestData from './test-data';
 
 
 let cache = {
@@ -7,8 +8,10 @@ let cache = {
 };
 
 
+// @ts-ignore
 async function fakeDelay(timeout: number = 1000) {
-    await new Promise(resolve => setTimeout(resolve, timeout));
+    // @ts-ignore
+    await new Promise((resolve: TimerHandler) => setTimeout(resolve, timeout));
 }
 
 
@@ -31,7 +34,7 @@ export async function getPopularToday() {
         return cache.popular_today;
     }
 
-    const data = Items;
+    const data = TestData;
     cache.popular_today = data;
     await fakeDelay(200)
     return data;
@@ -42,7 +45,7 @@ export async function getMenuItems() {
     const data = [
         {
             name: "Main Menu",
-            items: Items,
+            items: TestData,
         },
         {
             name: "Breakfast",
@@ -50,7 +53,7 @@ export async function getMenuItems() {
         },
         {
             name: "Seasonal",
-            items: Items,
+            items: TestData,
         },
     ];
     await fakeDelay(20)
@@ -61,7 +64,7 @@ export async function getMenuItems() {
 export async function getItemsByUUID(items: string[]) {
     let data = [];
 
-    Items.forEach((itemInDatabase) => {
+    TestData.forEach((itemInDatabase: Item) => {
         items.forEach((itemInRequest) => {
             if (itemInDatabase.uuid === itemInRequest) {
                 data.push(itemInDatabase);
@@ -94,10 +97,10 @@ export async function postContactEmail(name: string, email: string, message: str
     await fakeDelay(200)
 
     if (!name) {
-        throw new Error("Namey missing");
+        throw new Error("Name missing");
     }
     if (!email) {
-        throw new Error("Emaily missing");
+        throw new Error("Email missing");
     }
     if (!message) {
         throw new Error("Message missing");

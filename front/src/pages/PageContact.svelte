@@ -1,9 +1,9 @@
 <script>
     import { PaperPlaneRight, SealWarning, SealCheck } from "phosphor-svelte";
 
-    import DropDown from "%/components/DropDown.svelte";
-    import { postContactEmail } from "%/lib/test-api.ts";
-    import { expandOnTyping } from "%/lib/utils.js";
+    import { postContactEmail } from "../lib/test-api";
+    import { expandOnTyping } from "../lib/utils";
+    import DropDown from "../components/DropDown.svelte";
 
     const minMessageLength = 150;
 
@@ -27,7 +27,7 @@
         messageValid = message.length > minMessageLength
     }
 
-    function onSubmit(event) {
+    function onSubmit() {
         formMessage = postContactEmail(name, email, message);
     }
 </script>
@@ -117,7 +117,7 @@
 </form>
 
 <style lang="scss">
-    @import "%/styles/vars";
+    @import "../styles/vars";
 
     #name, #email {
         width: 300px;

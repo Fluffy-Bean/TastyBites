@@ -1,5 +1,5 @@
 <script>
-    import { getAnnouncements } from '%/lib/test-api.ts';
+    import { getAnnouncements } from '../lib/test-api';
 
     let announcement = getAnnouncements();
 </script>
@@ -16,7 +16,7 @@
 {/await}
 
 <style lang="scss">
-    @import "%/styles/vars";
+    @import "../styles/vars";
 
     $padding: 1px;
 
