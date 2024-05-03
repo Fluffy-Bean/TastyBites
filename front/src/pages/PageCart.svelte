@@ -12,15 +12,17 @@
 
     let items: [string, CartItem][];
     let totalPrice: number;
+    let totalItems: number;
 
     Cart.subscribe(() => {
         items = Cart.getEntries();
         totalPrice = Cart.getTotalPrice();
+        totalItems = Cart.getUniqueLength();
     });
 </script>
 
 
-{#if items.entries}
+{#if totalItems}
     <h1>Cart</h1>
 
     <button id="checkout-button">Checkout</button>

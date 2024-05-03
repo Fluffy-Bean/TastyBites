@@ -42,6 +42,13 @@ function createCartStore() {
                     )
                 });
         }
+
+        cart.update((cart: Record<string, CartItem>) => {
+            if (cart[uuid].amount <= 0) {
+                delete cart[uuid];
+            }
+            return cart;
+        })
     }
 
     function getEntries(): [string, CartItem][] {
