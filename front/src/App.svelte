@@ -17,7 +17,7 @@
 
     let cartItemCount = 0;
     Cart.subscribe(() => {
-        cartItemCount = Cart.getLength();
+        cartItemCount = Cart.getTotalLength();
     });
 
     let scrollY = 0;
@@ -72,14 +72,14 @@
             <span class="nav-logo"><img src={Logo} alt="TastyBites"></span>
             <ul style="justify-content: flex-start">
                 <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
-                <li use:active={links.cart}><a href="/cart" use:link>Cart&nbsp;<span class="nav-basket">{cartItemCount}</span></a></li>
+                <li use:active={links.cart}><a href="/cart" use:link>Cart&nbsp;&nbsp;<span class="nav-basket">{cartItemCount}</span></a></li>
             </ul>
         {:else}
             <ul>
                 <li use:active={links.home}><a href="/" use:link>Home</a></li>
                 <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
                 <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
-                <li use:active={links.cart}><a href="/cart" use:link>Cart&nbsp;<span class="nav-basket">{cartItemCount}</span></a></li>
+                <li use:active={links.cart}><a href="/cart" use:link>Cart&nbsp;&nbsp;<span class="nav-basket">{cartItemCount}</span></a></li>
             </ul>
         {/if}
     </nav>

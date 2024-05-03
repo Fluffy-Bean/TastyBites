@@ -1,32 +1,75 @@
-<script>
+<script lang="ts">
     import { link } from 'svelte-spa-router';
 
-    import { getItemsByUUID } from "../lib/test-api";
+    import { getPopularToday } from "../lib/test-api";
     import Cart from "../lib/cart";
-    import LoadingBar from "../components/LoadingBar.svelte";
     import MenuList from "../components/MenuList.svelte";
+    import BasketItem from "../components/BasketItem.svelte";
 
-    $: items = getItemsByUUID($Cart.map((item) => item.uuid));
+    let popularToday = getPopularToday();
+
+    $: items = $Cart;
+    $: totalPrice = $Cart.map((item) => item.amount * item.data.price).reduce((a, b) => a + b, 0);
 </script>
 
-<h1>Shopping Cart</h1>
+<h1>Cart</h1>
 
-{#await items}
-    <LoadingBar />
-{:then items}
-    {#if items.length}
-        <MenuList items={items} />
-    {:else}
-        <p>Empty.....</p>
-    {/if}
+<button id="checkout-button">Checkout</button>
+<h2>Order total: £{totalPrice}</h2>
 
-    <ul>
-        {#each items as item}
-            <li>
-                <button on:click={() => {Cart.removeByUUID(item.uuid)}}>Yeet {item.name}</button>
-            </li>
-        {/each}
-    </ul>
+{#if items.length > 0}
+    {#each items as item}
+        <div class="basket-item">
+            <BasketItem item={item}/>
+        </div>
+    {/each}
+{:else}
+    <p>Empty.....</p>
+{/if}
+
+<div class="spacer" />
+
+<h2>Looking for something more?</h2>
+{#await popularToday}
+    <p>Loading</p>
+{:then popularToday}
+    <MenuList items={popularToday} />
 {/await}
 
+<div class="spacer" />
+
 <p>Looking past orders? Check out the <a href="/contact" use:link>commonly asked questions</a></p>
+
+<style lang="scss">
+    @import "../styles/vars";
+
+    .basket-item {
+        margin-bottom: $spacing-normal;
+    }
+
+    #checkout-button {
+        padding: 0 $spacing-normal;
+
+        height: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        text-shadow: 0 1px 0.5px rgba($color-dark, 0.3);;
+
+        border: 0 solid transparent;
+        border-radius: 9999px;
+        background-color: $color-primary;
+        color: $color-on-primary;
+
+        float: right;
+
+        &:hover, &:focus {
+            border: 0 solid transparent;
+            background-color: $color-dark;
+            color: $color-on-dark;
+            outline: 0 solid transparent
+        }
+    }
+</style>

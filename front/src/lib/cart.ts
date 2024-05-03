@@ -1,5 +1,9 @@
 import { get, writable } from "svelte/store";
 
+import type { CartItem } from './types';
+import { getItemByUUID } from "./test-api";
+
+
 // Load content from localstorage
 let local = [];
 try {
@@ -12,10 +16,10 @@ try {
 function createCartStore() {
     const cart = writable(local);
 
-    function addToCart(uuid: string, amount: number) {
+    async function addToCart(uuid: string, amount: number) {
         let found = false;
 
-        get(cart).forEach((item) => {
+        get(cart).forEach((item: CartItem) => {
             if (item.uuid === uuid) {
                 item.amount += amount;
                 found = true;
@@ -23,24 +27,33 @@ function createCartStore() {
         });
 
         if (!found) {
-            cart.update((cart) => [...cart, {uuid:uuid,amount:amount}]);
+            const newItem: CartItem = {
+                uuid: uuid,
+                amount: amount,
+                data: await getItemByUUID(uuid),
+            };
+            cart.update((cart: CartItem[]) => [...cart, newItem]);
         }
 
         // Remove items that have an amount of 0 or lower
         cart.update((cart) => cart.filter((item) => item.amount > 0))
     }
 
-    function getLength() {
+    function getUniqueLength() {
         return get(cart).length;
     }
 
-    function getByUUID(uuid: string) {
+    function getTotalLength() {
+        let amounts = get(cart).map((item) => item.amount);
+        return amounts.reduce((a, b) => a + b, 0);
+    }
+
+    function getTotalPrice() {
+        let price = 0;
         get(cart).forEach((item) => {
-            if (item.uuid === uuid) {
-                return item;
-            }
+            price += item.amount * item.data.price;
         })
-        return {};
+        return price;
     }
 
     function removeByUUID(uuid: string) {
@@ -50,8 +63,9 @@ function createCartStore() {
     return {
         ...cart,
         addToCart,
-        getLength,
-        getByUUID,
+        getUniqueLength,
+        getTotalLength,
+        getTotalPrice,
         removeByUUID,
     }
 }
