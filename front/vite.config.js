@@ -10,9 +10,9 @@ export default defineConfig({
     optimizeDeps: {
         exclude: ["phosphor-svelte"],
     },
-    resolve: {
-        alias: {
-            '%': __dirname + '/src',
-        }
-    },
+    // resolve: {
+    //     alias: {
+    //         '%': __dirname + '/src',
+    //     }
+    // },
 })

@@ -23,7 +23,7 @@
 </script>
 
 <AnnouncementBanner />
-<a href="/annoucements" use:link>Learn More <ArrowUpRight /></a>
+
 <div class="spacer" />
 
 <h2>Where to find us</h2>
@@ -44,9 +44,10 @@
                 <tr><td>Sunday</td><td>11am</td><td>2am</td></tr>
             </table>
         </div>
-        <a href="/menu" use:link>Ready to book a table?</a>
+        <a href="/book" use:link>Ready to book a table?</a>
     </div>
 </div>
+
 <div class="spacer" />
 
 <h2>Popular Today</h2>
@@ -60,6 +61,7 @@
     {/await}
 </div>
 <a href="/menu" use:link>See All <ArrowUpRight /></a>
+
 <div class="spacer" />
 
 <h2>About Us</h2>contact

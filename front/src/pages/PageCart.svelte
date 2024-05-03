@@ -1,6 +1,8 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
+    import { Basket } from "phosphor-svelte";
 
+    import type { CartItem } from "../lib/types";
     import { getPopularToday } from "../lib/test-api";
     import Cart from "../lib/cart";
     import MenuList from "../components/MenuList.svelte";
@@ -8,8 +10,13 @@
 
     let popularToday = getPopularToday();
 
-    $: items = $Cart;
-    $: totalPrice = $Cart.map((item) => item.amount * item.data.price).reduce((a, b) => a + b, 0);
+    let items: CartItem[];
+    let totalPrice: number;
+
+    Cart.subscribe(() => {
+        items = $Cart;
+        totalPrice = Cart.getTotalPrice();
+    });
 </script>
 
 
@@ -26,8 +33,8 @@
     {/each}
 {:else}
     <div id="emptyCart">
-        <h1>Empty Cart!</h1>
-        <p>Go add some items from the menu...</p>
+        <h1>Empty Cart&nbsp;<Basket weight="fill" /></h1>
+        <p>Why not go and checkout <a href="/menu" use:link>our menu</a>?</p>
     </div>
 {/if}
 
