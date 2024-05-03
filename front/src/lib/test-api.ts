@@ -1,4 +1,4 @@
-import type {CartItem, Item} from './types';
+import { type CartItem, type Item } from './types';
 import TestData from './test-data';
 
 
@@ -19,12 +19,12 @@ export async function getAnnouncements(): Promise<{image: string}> {
     if (cache.announcement_banner) {
         return cache.announcement_banner;
     }
+    await fakeDelay(200)
+
     const data = {
         image: "/BannerExampleImage.jpg",
     };
     cache.announcement_banner = data;
-
-    await fakeDelay(200)
 
     return data;
 }
@@ -34,17 +34,18 @@ export async function getPopularToday(): Promise<Item[]> {
     if (cache.popular_today) {
         return cache.popular_today;
     }
+    await fakeDelay(200)
+
     const data: Item[] = TestData;
     cache.popular_today = data;
-
-    await fakeDelay(200)
 
     return data;
 }
 
 
-export async function getMenuItems() {
-    const data = [
+export async function getMenuItems(): Promise<{name: string, items: Item[]}[]> {
+    await fakeDelay(20);
+    return [
         {
             name: "Main Menu",
             items: TestData,
@@ -58,12 +59,12 @@ export async function getMenuItems() {
             items: TestData,
         },
     ];
-    await fakeDelay(20)
-    return data;
 }
 
 
-export async function getItemsByUUID(items: string[]): Promise<Item[] | Error> {
+export async function getItemsByUUID(items: string[]): Promise<Item[]> {
+    await fakeDelay(200)
+
     let data: Item[] = [];
 
     TestData.forEach((itemInDatabase: Item) => {
@@ -74,8 +75,6 @@ export async function getItemsByUUID(items: string[]): Promise<Item[] | Error> {
         });
     });
 
-    await fakeDelay(200)
-
     if (data.length < 0) {
         throw new Error("Resource could not be found");
     }
@@ -84,21 +83,26 @@ export async function getItemsByUUID(items: string[]): Promise<Item[] | Error> {
 }
 
 
-export async function getItemByUUID(uuid: string): Promise<Item | Error> {
-    let data: Item[] | Error = await getItemsByUUID([uuid]);
+export async function getItemByUUID(uuid: string): Promise<Item> {
+    let data: Item[];
 
-    if (data instanceof Error) {
-        throw new Error("Resource could not be found");
-    }
-    if (data.length != 1) {
-        throw new Error("Resource could not be found");
-    }
+    await getItemsByUUID([uuid])
+        .then((result) => {
+            if (result.length != 1) {
+                throw new Error("Resource could not be found");
+            } else {
+                data = result;
+            }
+        })
+        .catch((error) => {
+            throw error;
+        });
 
     return data[0];
 }
 
 
-export async function postContactEmail(name: string, email: string, message: string): Promise<string | Error> {
+export async function postContactEmail(name: string, email: string, message: string): Promise<string> {
     await fakeDelay(200)
 
     if (!name) {
@@ -116,34 +120,28 @@ export async function postContactEmail(name: string, email: string, message: str
     return "Check your email to confirm the message!";
 }
 
-export async function postVerifyCart(currentCartData: CartItem[]): Promise<CartItem[] | Error> {
-    if (currentCartData.length <= 0) {
-        return [];
-    }
+export async function postVerifyCart(currentCartData: Record<string, CartItem>): Promise<Record<string, CartItem>> {
+    let verifiedItems: Item[] = []
 
-    let itemUUIDs: string[] = currentCartData.map((item) => item.uuid);
-    let verifiedItems: Item[] | Error = await getItemsByUUID(itemUUIDs);
-
-    if (verifiedItems instanceof Error) {
-        return new Error("Could not collect new cart information");
-    }
-
-    let newCartData: CartItem[] = [];
-    currentCartData.forEach((currentItem) => {
-        let data: Item;
-        verifiedItems.forEach((verifiedItem) => {
-            if (verifiedItem.uuid === currentItem.uuid) {
-                data = verifiedItem;
-            }
+    await getItemsByUUID(Object.keys(currentCartData))
+        .then((data) => {
+            verifiedItems = data
         })
+        .catch(() => {
+            return new Error("Could not collect new cart information")
+        });
 
-        if (data) {
-            newCartData.push({
-                uuid: currentItem.uuid,
-                amount: currentItem.amount,
-                data: data,
-            });
-        }
+    let newCartData: Record<string, CartItem> = {};
+    Object.entries(currentCartData).forEach(([key, value]) => {
+        verifiedItems.forEach((verifiedItem) => {
+            if (verifiedItem.uuid === key) {
+                newCartData[key] = {
+                    uuid: value.uuid,
+                    amount: value.amount,
+                    data: verifiedItem,
+                };
+            }
+        });
     });
 
     return newCartData;

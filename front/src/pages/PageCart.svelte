@@ -2,7 +2,7 @@
     import { link } from 'svelte-spa-router';
     import { Basket } from "phosphor-svelte";
 
-    import type { CartItem } from "../lib/types";
+    import { type CartItem } from "../lib/types";
     import { getPopularToday } from "../lib/test-api";
     import Cart from "../lib/cart";
     import MenuList from "../components/MenuList.svelte";
@@ -10,23 +10,23 @@
 
     let popularToday = getPopularToday();
 
-    let items: CartItem[];
+    let items: [string, CartItem][];
     let totalPrice: number;
 
     Cart.subscribe(() => {
-        items = $Cart;
+        items = Cart.getEntries();
         totalPrice = Cart.getTotalPrice();
     });
 </script>
 
 
-{#if items.length > 0}
+{#if items.entries}
     <h1>Cart</h1>
 
     <button id="checkout-button">Checkout</button>
     <h2>Order total: £{totalPrice}</h2>
 
-    {#each items as item}
+    {#each items as [key, item]}
         <div class="basket-item">
             <BasketItem item={item}/>
         </div>

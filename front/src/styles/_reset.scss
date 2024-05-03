@@ -78,6 +78,10 @@ hr {
     background-color: rgba($color-dark, 0.1);
 }
 
+button {
+    font-family: $font-family;
+}
+
 .spacer {
     height: $spacing-large;
 }

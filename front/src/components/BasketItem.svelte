@@ -1,8 +1,8 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import { Plus, Minus, Trash } from 'phosphor-svelte';
+    import { Plus, Minus, Trash, Acorn, Fish, GrainsSlash, Leaf, Pepper } from "phosphor-svelte";
 
-    import type { CartItem } from "../lib/types";
+    import { type CartItem, Labels } from "../lib/types";
     import Cart from "../lib/cart";
 
     export let item: CartItem;
@@ -15,7 +15,7 @@
         <img src="/MenuItemLoadingAlt.svg" alt="Item" class="basket-item-image">
     {/if}
 
-    <ul>
+    <ul class="basket-item-data">
         <li class="basket-item-name"><a href="/item/{item.uuid}" use:link>{item.data.name}</a></li>
         <li class="basket-item-controls">
             <button class="button " on:click={() => { Cart.addToCart(item.uuid, -1) }}><Minus /></button>
@@ -25,6 +25,22 @@
             <button class="button evil" on:click={() => { Cart.removeByUUID(item.uuid) }}><Trash /></button>
         </li>
         <li class="basket-item-price">£{item.data.price * item.amount} (£{item.data.price})</li>
+    </ul>
+
+    <ul class="basket-item-labels">
+        {#each item.data.labels as label}
+            {#if label === Labels.vegan}
+                <li class="vegan"><Leaf weight="fill" /></li>
+            {:else if label === Labels.fish}
+                <li class="fish"><Fish weight="fill" /></li>
+            {:else if label === Labels.nut}
+                <li class="nut"><Acorn weight="fill" /></li>
+            {:else if label === Labels.gluten}
+                <li class="gluten"><GrainsSlash weight="fill" /></li>
+            {:else if label === Labels.spicy}
+                <li class="spicy"><Pepper weight="fill" /></li>
+            {/if}
+        {/each}
     </ul>
 </div>
 
@@ -39,21 +55,7 @@
         background-position: 135px -43px;
 
         overflow: hidden;
-
-        ul {
-            margin: $spacing-small;
-            padding: 0;
-
-            display: flex;
-            flex-direction: column;
-
-            li {
-                padding-bottom: $spacing-small;
-                list-style: none;
-            }
-        }
     }
-
     .basket-item-image {
         margin: $spacing-small;
 
@@ -63,6 +65,58 @@
         border-radius: $border-radius-normal;
 
         object-fit: cover;
+    }
+    .basket-item-labels {
+        padding: $spacing-normal;
+
+        display: flex;
+        flex-direction: row;
+
+        > li {
+            margin: 0 0 0 -15px;
+
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: $border-radius-circle;
+            background-color: $color-dark;
+            color: $color-on-dark;
+
+            list-style: none;
+
+            &.vegan {
+                background-color: $color-vegan;
+            }
+            &.fish {
+                background-color: $color-fish;
+            }
+            &.nut {
+                background-color: $color-nut;
+            }
+            &.gluten {
+                background-color: $color-gluten;
+            }
+            &.spicy {
+                background-color: $color-spicy;
+            }
+        }
+    }
+    .basket-item-data {
+        margin: $spacing-small;
+        padding: 0;
+
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        > li {
+            padding-bottom: $spacing-small;
+            list-style: none;
+        }
     }
     .basket-item-name a {
         font-size: $font-size-h2;

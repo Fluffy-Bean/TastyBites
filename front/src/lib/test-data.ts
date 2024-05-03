@@ -44,13 +44,13 @@ const TestData: Item[] = [
         labels: [Labels.nut],
         detail: "Example",
     },
-    // {
-    //     uuid: "gwagwa",
-    //     name: "GwaGwa",
-    //     price: 69,
-    //     labels: [Labels.nut],
-    //     image: "/dab.jpg",
-    // },
+    {
+        uuid: "gwagwa",
+        name: "GwaGwa",
+        price: 69,
+        labels: [Labels.nut],
+        image: "/dab.jpg",
+    },
     {
         uuid: "hogmelon",
         name: "Hogermellon",
@@ -59,14 +59,14 @@ const TestData: Item[] = [
         image: "/wathog.jpg",
         detail: "Example",
     },
-    // {
-    //     uuid: "bluhog",
-    //     name: "Blue HOGGGGG",
-    //     price: 0,
-    //     labels: [Labels.nut, Labels.gluten, Labels.spicy],
-    //     image: "/sonichog.jpg",
-    //     detail: "Example",
-    // },
+    {
+        uuid: "bluhog",
+        name: "Blue HOGGGGG",
+        price: 0,
+        labels: [Labels.nut, Labels.gluten, Labels.spicy],
+        image: "/sonichog.jpg",
+        detail: "Example",
+    },
 ];
 
 export default TestData;

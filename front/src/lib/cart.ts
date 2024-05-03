@@ -1,86 +1,84 @@
+import type { Writable } from "svelte/store";
 import { get, writable } from "svelte/store";
 
-import type { Item, CartItem } from './types';
+import { type CartItem } from './types';
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
 
 // Load content from localstorage
-let local: CartItem[] = [];
+let local: Record<string, CartItem> = {};
 try {
-    let verified = await postVerifyCart(
-        JSON.parse(localStorage.getItem("basket")) || []
-    );
-
-    if (verified instanceof Error) {
-        throw new Error("Bruh");
-    }
-
-    local = <CartItem[]>verified;
+    await postVerifyCart(JSON.parse(localStorage.getItem("basket")))
+        .then((data: Record<string, CartItem>) => {
+            local = data;
+            console.log(data);
+        })
+        .catch((error) => {
+            throw error; // Hot potato style
+        });
 } catch {
     console.error("Failed to load cart")
 }
 
 // Store function
 function createCartStore() {
-    const cart = writable(local);
+    const cart: Writable<Record<string, CartItem>> = writable(local);
 
     async function addToCart(uuid: string, amount: number) {
-        let found = false;
-
-        get(cart).forEach((item: CartItem) => {
-            if (item.uuid === uuid) {
-                item.amount += amount;
-                found = true;
-            }
-        });
-
-        if (!found) {
-            let cartData: Item;
-
-            try {
-                let data: Item | Error = await getItemByUUID(uuid);
-                if (data instanceof Error) {
-                    return;
-                }
-                cartData = <Item>data;
-            } finally {
-                const newItem: CartItem = {
-                    uuid: uuid,
-                    amount: amount,
-                    data: cartData,
-                };
-                cart.update((cart: CartItem[]) => [...cart, newItem]);
-            }
+        if (get(cart)[uuid] !== undefined) {
+            cart.update((cart: Record<string, CartItem>) => {
+                cart[uuid].amount += amount;
+                return cart;
+            });
+        } else {
+            await getItemByUUID(uuid)
+                .then((data) => {
+                    cart.update((cart: Record<string, CartItem>) =>
+                        Object.assign({}, cart, {[uuid]: {
+                            uuid: uuid,
+                            amount: amount,
+                            data: data,
+                        }})
+                    )
+                });
         }
-
-        // Remove items that have an amount of 0 or lower
-        cart.update((cart) => cart.filter((item) => item.amount > 0))
     }
 
-    function getUniqueLength() {
-        return get(cart).length;
+    function getEntries(): [string, CartItem][] {
+        return Object.entries(get(cart));
     }
 
-    function getTotalLength() {
-        let amounts = get(cart).map((item) => item.amount);
-        return amounts.reduce((a, b) => a + b, 0);
+    function getUniqueLength(): number {
+        return Object.keys(get(cart)).length;
     }
 
-    function getTotalPrice() {
-        let price = 0;
-        get(cart).forEach((item) => {
-            price += item.amount * item.data.price;
-        })
-        return price;
+    function getTotalLength(): number {
+        let totalCartSize: number = 0;
+        Object.values(get(cart)).forEach((item: CartItem) => {
+            totalCartSize += item.amount;
+        });
+        return totalCartSize;
+    }
+
+    function getTotalPrice(): number {
+        let totalCartPrice: number = 0;
+        Object.values(get(cart)).forEach((item: CartItem) => {
+            totalCartPrice += (item.amount * item.data.price);
+        });
+        return totalCartPrice;
     }
 
     function removeByUUID(uuid: string) {
-        cart.update((cart) => cart.filter((item) => item.uuid !== uuid))
+        cart.update((cart) => {
+            delete cart[uuid];
+            return cart;
+        })
     }
 
     return {
         ...cart,
         addToCart,
+        getEntries,
         getUniqueLength,
         getTotalLength,
         getTotalPrice,
@@ -94,6 +92,11 @@ const Cart = createCartStore();
 // Make sure to update localstorage on any changes
 Cart.subscribe((value) => {
     localStorage.setItem("basket", JSON.stringify(value));
+});
+
+// Debug
+Cart.subscribe((value) => {
+    console.log(value);
 });
 
 export default Cart;

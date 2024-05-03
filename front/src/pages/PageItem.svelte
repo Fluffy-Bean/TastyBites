@@ -10,8 +10,7 @@
     export let params;
 
     $: item = getItemByUUID(params.uuid)
-
-    let popularToday = getPopularToday();
+    $: popularToday = getPopularToday();
 </script>
 
 <div class="main">
