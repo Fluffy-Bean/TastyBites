@@ -2,10 +2,7 @@ import { type CartItem, type Item } from './types';
 import TestData from './test-data';
 
 
-let cache = {
-    announcement_banner: undefined,
-    popular_today: undefined,
-};
+let cache: Record<string, any> = {};
 
 
 // @ts-ignore
@@ -16,28 +13,28 @@ async function fakeDelay(timeout: number = 1000) {
 
 
 export async function getAnnouncements(): Promise<{image: string}> {
-    if (cache.announcement_banner) {
-        return cache.announcement_banner;
+    if (cache["announcement_banner"] !== undefined) {
+        return cache["announcement_banner"];
     }
-    await fakeDelay(200)
+    await fakeDelay(200);
 
     const data = {
         image: "/BannerExampleImage.jpg",
     };
-    cache.announcement_banner = data;
+    cache["announcement_banner"] = data;
 
     return data;
 }
 
 
 export async function getPopularToday(): Promise<Item[]> {
-    if (cache.popular_today) {
-        return cache.popular_today;
+    if (cache["popular_today"] !== undefined) {
+        return cache["popular_today"];
     }
-    await fakeDelay(200)
+    await fakeDelay(200);
 
     const data: Item[] = TestData;
-    cache.popular_today = data;
+    cache["popular_today"] = data;
 
     return data;
 }
@@ -63,7 +60,7 @@ export async function getMenuItems(): Promise<{name: string, items: Item[]}[]> {
 
 
 export async function getItemsByUUID(items: string[]): Promise<Item[]> {
-    await fakeDelay(200)
+    await fakeDelay(200);
 
     let data: Item[] = [];
 
@@ -103,7 +100,7 @@ export async function getItemByUUID(uuid: string): Promise<Item> {
 
 
 export async function postContactEmail(name: string, email: string, message: string): Promise<string> {
-    await fakeDelay(200)
+    await fakeDelay(200);
 
     if (!name) {
         throw new Error("Name missing");
@@ -121,19 +118,20 @@ export async function postContactEmail(name: string, email: string, message: str
 }
 
 export async function postVerifyCart(currentCartData: Record<string, CartItem>): Promise<Record<string, CartItem>> {
-    let verifiedItems: Item[] = []
+    let verifiedItems: Item[] = [];
 
     await getItemsByUUID(Object.keys(currentCartData))
         .then((data) => {
-            verifiedItems = data
+            verifiedItems = data;
         })
         .catch(() => {
-            return new Error("Could not collect new cart information")
+            return new Error("Could not collect new cart information");
         });
 
     let newCartData: Record<string, CartItem> = {};
+
     Object.entries(currentCartData).forEach(([key, value]) => {
-        verifiedItems.forEach((verifiedItem) => {
+        verifiedItems.forEach((verifiedItem: Item) => {
             if (verifiedItem.uuid === key) {
                 newCartData[key] = {
                     uuid: value.uuid,

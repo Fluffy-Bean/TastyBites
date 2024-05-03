@@ -1,7 +1,6 @@
-import type { Writable } from "svelte/store";
-import { get, writable } from "svelte/store";
+import { type Writable, get, writable } from "svelte/store";
 
-import { type CartItem } from './types';
+import {type CartItem, type Item } from './types';
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
 
@@ -32,14 +31,14 @@ function createCartStore() {
             });
         } else {
             await getItemByUUID(uuid)
-                .then((data) => {
+                .then((data: Item) => {
                     cart.update((cart: Record<string, CartItem>) =>
                         Object.assign({}, cart, {[uuid]: {
                             uuid: uuid,
                             amount: amount,
                             data: data,
                         }})
-                    )
+                    );
                 });
         }
 

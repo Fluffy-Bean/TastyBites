@@ -9,7 +9,7 @@
 
     export let params;
 
-    $: item = getItemByUUID(params.uuid)
+    $: item = getItemByUUID(params.uuid);
     $: popularToday = getPopularToday();
 </script>
 
