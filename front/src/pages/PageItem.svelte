@@ -57,7 +57,7 @@
                 <p>{item.detail}</p>
             </div>
 
-            <button on:click={() => { Cart.addToCart(item.uuid, 1) }}>Add to Cart</button>
+            <button on:click={() => { Cart.addToCart(item.uuid, 1) }} id="add-to-cart">Add to Cart</button>
         </div>
     {:catch error}
         <div id="error">
@@ -153,6 +153,30 @@
         .container {
             padding: $spacing-normal;
             width: 100%;
+        }
+    }
+
+    #add-to-cart {
+        padding: 0 $spacing-normal;
+
+        height: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        text-shadow: 0 1px 0.5px rgba($color-dark, 0.3);;
+
+        border: 0 solid transparent;
+        border-radius: 9999px;
+        background-color: $color-primary;
+        color: $color-on-primary;
+
+        &:hover, &:focus {
+            border: 0 solid transparent;
+            background-color: $color-dark;
+            color: $color-on-dark;
+            outline: 0 solid transparent
         }
     }
 

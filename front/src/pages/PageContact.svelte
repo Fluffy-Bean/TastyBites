@@ -28,7 +28,17 @@
     }
 
     function onSubmit() {
+        nameValid = true;
+        emailValid = true;
+        messageValid = false;
+
         formMessage = postContactEmail(name, email, message);
+
+        formMessage.catch(() => {
+            validateName();
+            validateEmail();
+            validateMessage();
+        });
     }
 </script>
 

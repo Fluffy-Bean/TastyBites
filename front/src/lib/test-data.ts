@@ -44,13 +44,13 @@ const TestData: Item[] = [
         labels: [Labels.nut],
         detail: "Example",
     },
-    {
-        uuid: "gwagwa",
-        name: "GwaGwa",
-        price: 69,
-        labels: [Labels.nut],
-        image: "/dab.jpg",
-    },
+    // {
+    //     uuid: "gwagwa",
+    //     name: "GwaGwa",
+    //     price: 69,
+    //     labels: [Labels.nut],
+    //     image: "/dab.jpg",
+    // },
     {
         uuid: "hogmelon",
         name: "Hogermellon",
