@@ -30,6 +30,9 @@
         display: flex;
         flex-direction: row;
 
+        // Move background out of way of the image
+        background-position: 135px -43px;
+
         overflow: hidden;
 
         ul {
@@ -49,8 +52,8 @@
     .basket-item-image {
         margin: $spacing-small;
 
-        width: 140px;
-        height: 140px;
+        width: 120px;
+        height: 120px;
 
         border-radius: $border-radius-normal;
 

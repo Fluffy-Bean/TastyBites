@@ -12,19 +12,23 @@
     $: totalPrice = $Cart.map((item) => item.amount * item.data.price).reduce((a, b) => a + b, 0);
 </script>
 
-<h1>Cart</h1>
-
-<button id="checkout-button">Checkout</button>
-<h2>Order total: £{totalPrice}</h2>
 
 {#if items.length > 0}
+    <h1>Cart</h1>
+
+    <button id="checkout-button">Checkout</button>
+    <h2>Order total: £{totalPrice}</h2>
+
     {#each items as item}
         <div class="basket-item">
             <BasketItem item={item}/>
         </div>
     {/each}
 {:else}
-    <p>Empty.....</p>
+    <div id="emptyCart">
+        <h1>Empty Cart!</h1>
+        <p>Go add some items from the menu...</p>
+    </div>
 {/if}
 
 <div class="spacer" />
@@ -70,6 +74,29 @@
             background-color: $color-dark;
             color: $color-on-dark;
             outline: 0 solid transparent
+        }
+    }
+
+    #emptyCart {
+        margin-left: auto;
+        margin-right: auto;
+        padding: $spacing-large;
+
+        max-width: $sizing-default-width;
+
+        display: flex;
+        flex-direction: column;
+
+        > h1 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: $font-size-very-fucking-big;
+            text-align: center;
+        }
+        > p {
+            text-align: center;
         }
     }
 </style>

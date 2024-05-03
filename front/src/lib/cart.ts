@@ -1,13 +1,21 @@
 import { get, writable } from "svelte/store";
 
-import type { CartItem } from './types';
-import { getItemByUUID } from "./test-api";
+import type { Item, CartItem } from './types';
+import { getItemByUUID, postVerifyCart } from "./test-api";
 
 
 // Load content from localstorage
-let local = [];
+let local: CartItem[] = [];
 try {
-    local = JSON.parse(localStorage.getItem("basket")) || []
+    let verified = await postVerifyCart(
+        JSON.parse(localStorage.getItem("basket")) || []
+    );
+
+    if (verified instanceof Error) {
+        throw new Error("Bruh");
+    }
+
+    local = <CartItem[]>verified;
 } catch {
     console.error("Failed to load cart")
 }
@@ -27,12 +35,22 @@ function createCartStore() {
         });
 
         if (!found) {
-            const newItem: CartItem = {
-                uuid: uuid,
-                amount: amount,
-                data: await getItemByUUID(uuid),
-            };
-            cart.update((cart: CartItem[]) => [...cart, newItem]);
+            let cartData: Item;
+
+            try {
+                let data: Item | Error = await getItemByUUID(uuid);
+                if (data instanceof Error) {
+                    return;
+                }
+                cartData = <Item>data;
+            } finally {
+                const newItem: CartItem = {
+                    uuid: uuid,
+                    amount: amount,
+                    data: cartData,
+                };
+                cart.update((cart: CartItem[]) => [...cart, newItem]);
+            }
         }
 
         // Remove items that have an amount of 0 or lower
