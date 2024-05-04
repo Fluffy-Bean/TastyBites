@@ -25,7 +25,7 @@ function createCartStore() {
     async function addToCart(uuid: string, amount: number) {
         if (get(cart)[uuid] !== undefined) {
             cart.update((cart: Record<string, CartItem>) => {
-                cart[uuid].amount += amount; // skipcq: JS-0320
+                cart[uuid].amount += amount;
                 return cart;
             });
         } else {
@@ -63,7 +63,7 @@ function createCartStore() {
     }
 
     function getTotalPrice(): number {
-        let totalCartPrice: number = 0;
+        let totalCartPrice = 0;
         Object.values(get(cart)).forEach((item: CartItem) => {
             totalCartPrice += item.amount * item.data.price;
         });
@@ -72,7 +72,7 @@ function createCartStore() {
 
     function removeByUUID(uuid: string) {
         cart.update((cart) => {
-            delete cart[uuid];
+            delete cart[uuid];  // skipcq: JS-0320
             return cart;
         });
     }
