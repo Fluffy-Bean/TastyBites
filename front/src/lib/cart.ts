@@ -3,7 +3,6 @@ import { type Writable, get, writable } from "svelte/store";
 import { type CartItem, type Item } from "./types";
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
-
 function getLocal(): Record<string, CartItem> {
     let localData: Record<string, CartItem> = {};
 
