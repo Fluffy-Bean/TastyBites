@@ -1,104 +1,104 @@
 nav {
-    padding: $spacing-small $spacing-normal;
+  padding: $spacing-small $spacing-normal;
 
-    width: 100%;
-    height: $sizing-navigation-height;
+  width: 100%;
+  height: $sizing-navigation-height;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  border-bottom: 3px solid $color-primary;
+  background-color: $color-dark;
+  color: $color-light;
+
+  z-index: 9999999;
+
+  ul {
+    padding: 0;
+
+    width: 300px;
 
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
 
-    position: fixed;
-    top: 0;
-    left: 0;
+    list-style: none;
 
-    border-bottom: 3px solid $color-primary;
-    background-color: $color-dark;
-    color: $color-light;
+    li {
+      font-weight: $font-weight-normal;
+      font-size: $font-size-h6;
+      border-radius: $border-radius-circle;
 
-    z-index: 9999999;
-
-    ul {
-        padding: 0;
-
-        width: 300px;
+      a {
+        padding: $spacing-xsmall $spacing-normal;
 
         display: flex;
         flex-direction: row;
+        justify-content: center;
         align-items: center;
 
-        list-style: none;
+        text-decoration: none;
+        text-shadow: 0 1px 0.5px rgba(#000, 0.8);
 
-        li {
-            font-weight: $font-weight-normal;
-            font-size: $font-size-h6;
-            border-radius: $border-radius-circle;
+        color: inherit;
 
-            a {
-                padding: $spacing-xsmall $spacing-normal;
+        .nav-basket {
+          padding: 0 $spacing-xsmall;
 
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
+          min-width: 17px;
+          min-height: 17px;
 
-                text-decoration: none;
-                text-shadow: 0 1px 0.5px rgba(#000, 0.8);
+          display: inline-block;
 
-                color: inherit;
+          font-size: $font-size-small;
 
-                .nav-basket {
-                    padding: 0 $spacing-xsmall;
-
-                    min-width: 17px;
-                    min-height: 17px;
-
-                    display: inline-block;
-
-                    font-size: $font-size-small;
-
-                    border-radius: $border-radius-circle;
-                    background-color: $color-light;
-                    color: $color-on-light;
-                }
-            }
-
-            &:hover {
-                background-color: rgba($color-light, 0.05);
-            }
-
-            &.active {
-                color: $color-primary !important;
-
-                .nav-basket {
-                    background-color: $color-primary;
-                    color: $color-on-primary;
-                }
-            }
+          border-radius: $border-radius-circle;
+          background-color: $color-light;
+          color: $color-on-light;
         }
-    }
+      }
 
-    .nav-logo {
-        padding: 0 $spacing-normal;
-        font-weight: $font-weight-black;
-        font-size: $font-size-h1;
+      &:hover {
+        background-color: rgba($color-light, 0.05);
+      }
 
-        > img {
-            height: calc($sizing-navigation-height - calc(2 * $spacing-small));
+      &.active {
+        color: $color-primary !important;
 
-            display: block;
+        .nav-basket {
+          background-color: $color-primary;
+          color: $color-on-primary;
         }
+      }
     }
+  }
 
-    &.scrolled {
-        box-shadow: 0 0 3px 1px rgba(#000, 0.8);
-    }
+  .nav-logo {
+    padding: 0 $spacing-normal;
+    font-weight: $font-weight-black;
+    font-size: $font-size-h1;
 
-    &.mobile {
-        ul {
-            width: 100%;
-            justify-content: space-around;
-        }
+    > img {
+      height: calc($sizing-navigation-height - calc(2 * $spacing-small));
+
+      display: block;
     }
+  }
+
+  &.scrolled {
+    box-shadow: 0 0 3px 1px rgba(#000, 0.8);
+  }
+
+  &.mobile {
+    ul {
+      width: 100%;
+      justify-content: space-around;
+    }
+  }
 }

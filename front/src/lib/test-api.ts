@@ -1,146 +1,146 @@
-import { type CartItem, type Item } from './types';
-import TestData from './test-data';
-
+import { type CartItem, type Item } from "./types";
+import TestData from "./test-data";
 
 let cache: Record<string, any> = {};
 
-
 // @ts-ignore
 async function fakeDelay(timeout: number = 1000) {
-    // @ts-ignore
-    await new Promise((resolve: TimerHandler) => setTimeout(resolve, timeout));
+  // @ts-ignore
+  await new Promise((resolve: TimerHandler) => setTimeout(resolve, timeout));
 }
 
+export async function getAnnouncements(): Promise<{ image: string }> {
+  if (cache["announcement_banner"] !== undefined) {
+    return cache["announcement_banner"];
+  }
+  await fakeDelay(200);
 
-export async function getAnnouncements(): Promise<{image: string}> {
-    if (cache["announcement_banner"] !== undefined) {
-        return cache["announcement_banner"];
-    }
-    await fakeDelay(200);
+  const data = {
+    image: "/BannerExampleImage.jpg",
+  };
+  cache["announcement_banner"] = data;
 
-    const data = {
-        image: "/BannerExampleImage.jpg",
-    };
-    cache["announcement_banner"] = data;
-
-    return data;
+  return data;
 }
-
 
 export async function getPopularToday(): Promise<Item[]> {
-    if (cache["popular_today"] !== undefined) {
-        return cache["popular_today"];
-    }
-    await fakeDelay(200);
+  if (cache["popular_today"] !== undefined) {
+    return cache["popular_today"];
+  }
+  await fakeDelay(200);
 
-    const data: Item[] = TestData;
-    cache["popular_today"] = data;
+  const data: Item[] = TestData;
+  cache["popular_today"] = data;
 
-    return data;
+  return data;
 }
 
-
-export async function getMenuItems(): Promise<{name: string, items: Item[]}[]> {
-    await fakeDelay(20);
-    return [
-        {
-            name: "Main Menu",
-            items: TestData,
-        },
-        {
-            name: "Breakfast",
-            items: [],
-        },
-        {
-            name: "Seasonal",
-            items: TestData,
-        },
-    ];
+export async function getMenuItems(): Promise<
+  { name: string; items: Item[] }[]
+> {
+  await fakeDelay(20);
+  return [
+    {
+      name: "Main Menu",
+      items: TestData,
+    },
+    {
+      name: "Breakfast",
+      items: [],
+    },
+    {
+      name: "Seasonal",
+      items: TestData,
+    },
+  ];
 }
-
 
 export async function getItemsByUUID(items: string[]): Promise<Item[]> {
-    await fakeDelay(200);
+  await fakeDelay(200);
 
-    let data: Item[] = [];
+  let data: Item[] = [];
 
-    TestData.forEach((itemInDatabase: Item) => {
-        items.forEach((itemInRequest) => {
-            if (itemInDatabase.uuid === itemInRequest) {
-                data.push(itemInDatabase);
-            }
-        });
+  TestData.forEach((itemInDatabase: Item) => {
+    items.forEach((itemInRequest) => {
+      if (itemInDatabase.uuid === itemInRequest) {
+        data.push(itemInDatabase);
+      }
     });
+  });
 
-    if (data.length < 0) {
-        throw new Error("Resource could not be found");
-    }
+  if (data.length < 0) {
+    throw new Error("Resource could not be found");
+  }
 
-    return data;
+  return data;
 }
-
 
 export async function getItemByUUID(uuid: string): Promise<Item> {
-    let data: Item[];
+  let data: Item[];
 
-    await getItemsByUUID([uuid])
-        .then((result) => {
-            if (result.length != 1) {
-                throw new Error("Resource could not be found");
-            } else {
-                data = result;
-            }
-        })
-        .catch((error) => {
-            throw error;
-        });
-
-    return data[0];
-}
-
-
-export async function postContactEmail(name: string, email: string, message: string): Promise<string> {
-    await fakeDelay(200);
-
-    if (!name) {
-        throw new Error("Name missing");
-    }
-    if (!email) {
-        throw new Error("Email missing");
-    }
-    if (!message) {
-        throw new Error("Message missing");
-    } else if (message.length < 150) {
-        throw new Error("Message FUCKED");
-    }
-
-    return "Check your email to confirm the message!";
-}
-
-export async function postVerifyCart(currentCartData: Record<string, CartItem>): Promise<Record<string, CartItem>> {
-    let verifiedItems: Item[] = [];
-
-    await getItemsByUUID(Object.keys(currentCartData))
-        .then((data) => {
-            verifiedItems = data;
-        })
-        .catch(() => {
-            return new Error("Could not collect new cart information");
-        });
-
-    let newCartData: Record<string, CartItem> = {};
-
-    Object.entries(currentCartData).forEach(([key, value]) => {
-        verifiedItems.forEach((verifiedItem: Item) => {
-            if (verifiedItem.uuid === key) {
-                newCartData[key] = {
-                    uuid: value.uuid,
-                    amount: value.amount,
-                    data: verifiedItem,
-                };
-            }
-        });
+  await getItemsByUUID([uuid])
+    .then((result) => {
+      if (result.length != 1) {
+        throw new Error("Resource could not be found");
+      } else {
+        data = result;
+      }
+    })
+    .catch((error) => {
+      throw error;
     });
 
-    return newCartData;
+  return data[0];
+}
+
+export async function postContactEmail(
+  name: string,
+  email: string,
+  message: string,
+): Promise<string> {
+  await fakeDelay(200);
+
+  if (!name) {
+    throw new Error("Name missing");
+  }
+  if (!email) {
+    throw new Error("Email missing");
+  }
+  if (!message) {
+    throw new Error("Message missing");
+  } else if (message.length < 150) {
+    throw new Error("Message FUCKED");
+  }
+
+  return "Check your email to confirm the message!";
+}
+
+export async function postVerifyCart(
+  currentCartData: Record<string, CartItem>,
+): Promise<Record<string, CartItem>> {
+  let verifiedItems: Item[] = [];
+
+  await getItemsByUUID(Object.keys(currentCartData))
+    .then((data) => {
+      verifiedItems = data;
+    })
+    .catch(() => {
+      return new Error("Could not collect new cart information");
+    });
+
+  let newCartData: Record<string, CartItem> = {};
+
+  Object.entries(currentCartData).forEach(([key, value]) => {
+    verifiedItems.forEach((verifiedItem: Item) => {
+      if (verifiedItem.uuid === key) {
+        newCartData[key] = {
+          uuid: value.uuid,
+          amount: value.amount,
+          data: verifiedItem,
+        };
+      }
+    });
+  });
+
+  return newCartData;
 }
