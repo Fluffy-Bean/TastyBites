@@ -32,7 +32,7 @@ function createCartStore() {
             await getItemByUUID(uuid).then((data: Item) => {
                 cart.update((cart: Record<string, CartItem>) =>
                     Object.assign({}, cart, {
-                        [uuid]: {uuid, amount, data},
+                        [uuid]: { uuid, amount, data },
                     })
                 );
             });
