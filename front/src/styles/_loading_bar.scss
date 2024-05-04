@@ -6,16 +6,16 @@
     height: 4px;
     border-radius: 999px;
     overflow: hidden;
-    animation: start .3s ease-in;
+    animation: start 0.3s ease-in;
 
     &.bottom {
         top: unset;
-        bottom: 2px
+        bottom: 2px;
     }
 
     .bar {
         position: absolute;
-        transition: transform .2s linear;
+        transition: transform 0.2s linear;
         left: 0;
         top: 0;
         bottom: 0;
@@ -24,12 +24,16 @@
 
         &.bar-1 {
             background-color: $color-dark;
-            animation: growBar1 2.5s infinite, moveBar1 2.5s infinite;
+            animation:
+                growBar1 2.5s infinite,
+                moveBar1 2.5s infinite;
         }
 
         &.bar-2 {
             background-color: $color-primary;
-            animation: growBar2 2.5s infinite, moveBar2 2.5s infinite;
+            animation:
+                growBar2 2.5s infinite,
+                moveBar2 2.5s infinite;
         }
     }
 }
@@ -62,7 +66,12 @@
     }
     69.15% {
         left: 21.5%;
-        animation-timing-function: cubic-bezier(0.30244, 0.38135, 0.55, 0.95635);
+        animation-timing-function: cubic-bezier(
+            0.30244,
+            0.38135,
+            0.55,
+            0.95635
+        );
     }
     100% {
         left: 95.44444%;
@@ -70,15 +79,30 @@
 }
 @keyframes growBar2 {
     0% {
-        animation-timing-function: cubic-bezier(0.20503, 0.05705, 0.57661, 0.45397);
+        animation-timing-function: cubic-bezier(
+            0.20503,
+            0.05705,
+            0.57661,
+            0.45397
+        );
         transform: scaleX(0.1);
     }
     19.15% {
-        animation-timing-function: cubic-bezier(0.15231, 0.19643, 0.64837, 1.00432);
+        animation-timing-function: cubic-bezier(
+            0.15231,
+            0.19643,
+            0.64837,
+            1.00432
+        );
         transform: scaleX(0.57);
     }
     44.15% {
-        animation-timing-function: cubic-bezier(0.25776, -0.00316, 0.21176, 1.38179);
+        animation-timing-function: cubic-bezier(
+            0.25776,
+            -0.00316,
+            0.21176,
+            1.38179
+        );
         transform: scaleX(0.91);
     }
     100% {

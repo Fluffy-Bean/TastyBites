@@ -1,13 +1,13 @@
-import TestData from '%/lib/test-data.ts';
+import TestData from "%/lib/test-data.ts";
 
 export async function getPopularToday() {
-    const res = await fetch("/api/items")
-    const data = res.json()
+    const res = await fetch("/api/items");
+    const data = res.json();
 
     if (res.ok) {
-        return data
+        return data;
     } else {
-        throw new Error("Failed to fetch popular today")
+        throw new Error("Failed to fetch popular today");
     }
 }
 

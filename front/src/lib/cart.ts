@@ -1,8 +1,7 @@
 import { type Writable, get, writable } from "svelte/store";
 
-import {type CartItem, type Item } from './types';
+import { type CartItem, type Item } from "./types";
 import { getItemByUUID, postVerifyCart } from "./test-api";
-
 
 // Load content from localstorage
 let local: Record<string, CartItem> = {};
@@ -16,7 +15,7 @@ try {
             throw error; // Hot potato style
         });
 } catch {
-    console.error("Failed to load cart")
+    console.error("Failed to load cart");
 }
 
 // Store function
@@ -30,16 +29,17 @@ function createCartStore() {
                 return cart;
             });
         } else {
-            await getItemByUUID(uuid)
-                .then((data: Item) => {
-                    cart.update((cart: Record<string, CartItem>) =>
-                        Object.assign({}, cart, {[uuid]: {
+            await getItemByUUID(uuid).then((data: Item) => {
+                cart.update((cart: Record<string, CartItem>) =>
+                    Object.assign({}, cart, {
+                        [uuid]: {
                             uuid: uuid,
                             amount: amount,
                             data: data,
-                        }})
-                    );
-                });
+                        },
+                    })
+                );
+            });
         }
 
         cart.update((cart: Record<string, CartItem>) => {
@@ -47,7 +47,7 @@ function createCartStore() {
                 delete cart[uuid];
             }
             return cart;
-        })
+        });
     }
 
     function getEntries(): [string, CartItem][] {
@@ -69,7 +69,7 @@ function createCartStore() {
     function getTotalPrice(): number {
         let totalCartPrice: number = 0;
         Object.values(get(cart)).forEach((item: CartItem) => {
-            totalCartPrice += (item.amount * item.data.price);
+            totalCartPrice += item.amount * item.data.price;
         });
         return totalCartPrice;
     }
@@ -78,7 +78,7 @@ function createCartStore() {
         cart.update((cart) => {
             delete cart[uuid];
             return cart;
-        })
+        });
     }
 
     return {
@@ -89,7 +89,7 @@ function createCartStore() {
         getTotalLength,
         getTotalPrice,
         removeByUUID,
-    }
+    };
 }
 
 // Create store
