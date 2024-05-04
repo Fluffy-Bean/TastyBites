@@ -1,9 +1,7 @@
-import { type CartItem, type Item } from './types';
-import TestData from './test-data';
-
+import { type CartItem, type Item } from "./types";
+import TestData from "./test-data";
 
 let cache: Record<string, any> = {};
-
 
 // @ts-ignore
 async function fakeDelay(timeout: number = 1000) {
@@ -11,8 +9,7 @@ async function fakeDelay(timeout: number = 1000) {
     await new Promise((resolve: TimerHandler) => setTimeout(resolve, timeout));
 }
 
-
-export async function getAnnouncements(): Promise<{image: string}> {
+export async function getAnnouncements(): Promise<{ image: string }> {
     if (cache["announcement_banner"] !== undefined) {
         return cache["announcement_banner"];
     }
@@ -26,7 +23,6 @@ export async function getAnnouncements(): Promise<{image: string}> {
     return data;
 }
 
-
 export async function getPopularToday(): Promise<Item[]> {
     if (cache["popular_today"] !== undefined) {
         return cache["popular_today"];
@@ -39,8 +35,9 @@ export async function getPopularToday(): Promise<Item[]> {
     return data;
 }
 
-
-export async function getMenuItems(): Promise<{name: string, items: Item[]}[]> {
+export async function getMenuItems(): Promise<
+    { name: string; items: Item[] }[]
+> {
     await fakeDelay(20);
     return [
         {
@@ -57,7 +54,6 @@ export async function getMenuItems(): Promise<{name: string, items: Item[]}[]> {
         },
     ];
 }
-
 
 export async function getItemsByUUID(items: string[]): Promise<Item[]> {
     await fakeDelay(200);
@@ -79,7 +75,6 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
     return data;
 }
 
-
 export async function getItemByUUID(uuid: string): Promise<Item> {
     let data: Item[];
 
@@ -98,8 +93,11 @@ export async function getItemByUUID(uuid: string): Promise<Item> {
     return data[0];
 }
 
-
-export async function postContactEmail(name: string, email: string, message: string): Promise<string> {
+export async function postContactEmail(
+    name: string,
+    email: string,
+    message: string
+): Promise<string> {
     await fakeDelay(200);
 
     if (!name) {
@@ -117,7 +115,9 @@ export async function postContactEmail(name: string, email: string, message: str
     return "Check your email to confirm the message!";
 }
 
-export async function postVerifyCart(currentCartData: Record<string, CartItem>): Promise<Record<string, CartItem>> {
+export async function postVerifyCart(
+    currentCartData: Record<string, CartItem>
+): Promise<Record<string, CartItem>> {
     let verifiedItems: Item[] = [];
 
     await getItemsByUUID(Object.keys(currentCartData))

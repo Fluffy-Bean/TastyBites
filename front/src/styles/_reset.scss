@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     text-rendering: optimizeLegibility;
     box-sizing: border-box;
@@ -10,7 +12,8 @@ html {
     font-family: $font-family;
 }
 
-body, #app {
+body,
+#app {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -23,8 +26,12 @@ body {
     color: $color-on-background;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     padding-bottom: $spacing-small;
     text-shadow: 0 1px 0.5px rgba($color-dark, 0.3);
 }
