@@ -25,18 +25,14 @@ function createCartStore() {
     async function addToCart(uuid: string, amount: number) {
         if (get(cart)[uuid] !== undefined) {
             cart.update((cart: Record<string, CartItem>) => {
-                cart[uuid].amount += amount;
+                cart[uuid].amount += amount; // skipcq: JS-0320
                 return cart;
             });
         } else {
             await getItemByUUID(uuid).then((data: Item) => {
                 cart.update((cart: Record<string, CartItem>) =>
                     Object.assign({}, cart, {
-                        [uuid]: {
-                            uuid: uuid,
-                            amount: amount,
-                            data: data,
-                        },
+                        [uuid]: {uuid, amount, data},
                     })
                 );
             });
@@ -44,7 +40,7 @@ function createCartStore() {
 
         cart.update((cart: Record<string, CartItem>) => {
             if (cart[uuid].amount <= 0) {
-                delete cart[uuid];
+                delete cart[uuid]; // skipcq: JS-0320
             }
             return cart;
         });
@@ -59,7 +55,7 @@ function createCartStore() {
     }
 
     function getTotalLength(): number {
-        let totalCartSize: number = 0;
+        let totalCartSize = 0;
         Object.values(get(cart)).forEach((item: CartItem) => {
             totalCartSize += item.amount;
         });

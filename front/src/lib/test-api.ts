@@ -1,11 +1,9 @@
 import { type CartItem, type Item } from "./types";
 import TestData from "./test-data";
 
-let cache: Record<string, any> = {};
+const cache = {};
 
-// @ts-ignore
-async function fakeDelay(timeout: number = 1000) {
-    // @ts-ignore
+async function fakeDelay(timeout = 1000) {
     await new Promise((resolve: TimerHandler) => setTimeout(resolve, timeout));
 }
 
@@ -58,7 +56,7 @@ export async function getMenuItems(): Promise<
 export async function getItemsByUUID(items: string[]): Promise<Item[]> {
     await fakeDelay(200);
 
-    let data: Item[] = [];
+    const data: Item[] = [];
 
     TestData.forEach((itemInDatabase: Item) => {
         items.forEach((itemInRequest) => {
@@ -68,7 +66,7 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
         });
     });
 
-    if (data.length < 0) {
+    if (data.length === 0) {
         throw new Error("Resource could not be found");
     }
 
@@ -76,15 +74,14 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
 }
 
 export async function getItemByUUID(uuid: string): Promise<Item> {
-    let data: Item[];
+    const data: Item[] = [];
 
     await getItemsByUUID([uuid])
         .then((result) => {
-            if (result.length != 1) {
+            if (result.length !== 1) {
                 throw new Error("Resource could not be found");
-            } else {
-                data = result;
             }
+            data.push(...result);
         })
         .catch((error) => {
             throw error;
@@ -118,17 +115,17 @@ export async function postContactEmail(
 export async function postVerifyCart(
     currentCartData: Record<string, CartItem>
 ): Promise<Record<string, CartItem>> {
-    let verifiedItems: Item[] = [];
+    const verifiedItems: Item[] = [];
 
     await getItemsByUUID(Object.keys(currentCartData))
         .then((data) => {
-            verifiedItems = data;
+            verifiedItems.push(...data);
         })
         .catch(() => {
             return new Error("Could not collect new cart information");
         });
 
-    let newCartData: Record<string, CartItem> = {};
+    const newCartData: Record<string, CartItem> = {};
 
     Object.entries(currentCartData).forEach(([key, value]) => {
         verifiedItems.forEach((verifiedItem: Item) => {
