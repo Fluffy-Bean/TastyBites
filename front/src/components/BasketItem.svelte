@@ -6,6 +6,20 @@
     import Cart from "../lib/cart";
 
     export let item: CartItem;
+
+    function reduce() {
+        if (item.amount > 1) {
+            Cart.addToCart(item.uuid, -1)
+        }
+    }
+    function add() {
+        if (item.amount < 99) {
+            Cart.addToCart(item.uuid, 1);
+        }
+    }
+    function yeet() {
+        Cart.removeByUUID(item.uuid)
+    }
 </script>
 
 <div class="container">
@@ -18,11 +32,11 @@
     <ul class="basket-item-data">
         <li class="basket-item-name"><a href="/item/{item.uuid}" use:link>{item.data.name}</a></li>
         <li class="basket-item-controls">
-            <button class="button " on:click={() => { Cart.addToCart(item.uuid, -1) }}><Minus /></button>
+            <button class="button" class:disabled={item.amount <= 1} on:click={reduce}><Minus /></button>
             <p>{item.amount}</p>
-            <button class="button " on:click={() => { Cart.addToCart(item.uuid, 1) }}><Plus /></button>
+            <button class="button" class:disabled={item.amount >= 99} on:click={add}><Plus /></button>
             <hr>
-            <button class="button evil" on:click={() => { Cart.removeByUUID(item.uuid) }}><Trash /></button>
+            <button class="button evil" on:click={yeet}><Trash /></button>
         </li>
         <li class="basket-item-price">£{item.data.price * item.amount} (£{item.data.price})</li>
     </ul>
@@ -151,7 +165,7 @@
             &:hover {
                 border: 1px solid rgba($color-dark, 0.4);
             }
-            &:focus {
+            &:focus-visible {
                 border: 1px solid rgba($color-primary, 0.9);
                 outline: 0 solid transparent;
             }
@@ -161,8 +175,20 @@
                 color: $color-error;
 
                 &:hover,
-                &:focus {
+                &:focus-visible {
                     background-color: rgba($color-error, 0.1);
+                }
+            }
+
+            &.disabled {
+                border: 1px solid rgba($color-dark, 0.1);
+                color: rgba($color-on-light, 0.6);
+
+                &:hover,
+                &:focus-visible {
+                    border: 1px solid rgba($color-dark, 0.1);
+                    background-color: $color-light;
+                    color: rgba($color-on-light, 0.6);
                 }
             }
         }
