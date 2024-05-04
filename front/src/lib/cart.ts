@@ -3,24 +3,30 @@ import { type Writable, get, writable } from "svelte/store";
 import { type CartItem, type Item } from "./types";
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
-// Load content from localstorage
-let local: Record<string, CartItem> = {};
-try {
-    await postVerifyCart(JSON.parse(localStorage.getItem("basket")))
+
+function getLocal(): Record<string, CartItem> {
+    let localData: Record<string, CartItem> = {};
+
+    try {
+        localData = JSON.parse(localStorage.getItem("basket"));
+    } catch (error) {
+        console.error("Could parse basket JSON:", error);
+        return localData;
+    }
+
+    postVerifyCart(localData)
         .then((data: Record<string, CartItem>) => {
-            local = data;
-            console.log(data);
+            localData = data;
         })
         .catch((error) => {
-            throw error; // Hot potato style
+            console.error("Could not load basket:", error);
         });
-} catch {
-    console.error("Failed to load cart");
+
+    return localData;
 }
 
-// Store function
 function createCartStore() {
-    const cart: Writable<Record<string, CartItem>> = writable(local);
+    const cart: Writable<Record<string, CartItem>> = writable(getLocal());
 
     async function addToCart(uuid: string, amount: number) {
         if (get(cart)[uuid] !== undefined) {
