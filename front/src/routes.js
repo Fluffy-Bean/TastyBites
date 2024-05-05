@@ -45,7 +45,7 @@ const routes = {
         asyncComponent: () => import("./pages/PageBooking.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
-        userData: { showNavBar: true, fullWidth: true }
+        userData: { showNavBar: true, fullWidth: true },
     }),
     "/ForOhFor": wrap({
         component: Page404,
