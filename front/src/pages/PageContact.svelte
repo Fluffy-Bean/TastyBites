@@ -7,7 +7,7 @@
 
     const minMessageLength = 150;
 
-    let formMessage: Promise<string>;
+    let formMessage: Promise<string | Error>;
 
     let name = "";
     let email = "";
@@ -37,7 +37,7 @@
                 validateName();
                 validateEmail();
                 validateMessage();
-                return error;
+                throw error;
             });
     }
 </script>
