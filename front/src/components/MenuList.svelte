@@ -14,16 +14,24 @@
 </ul>
 
 <style lang="scss">
+    @import "../styles/vars";
+
     ul {
         list-style-type: none;
         padding: 0;
         margin: 0;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 16px
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: $spacing-small;
+
+        > li {
+            margin: 0;
+        }
     }
-    li {
-        margin: 0;
+
+    @media only screen and (max-width: 900px) {
+        ul {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
     }
 </style>

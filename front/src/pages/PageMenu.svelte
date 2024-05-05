@@ -202,7 +202,14 @@
         }
     }
 
-    @media only screen and (max-width: 670px) {
+    @media only screen and (max-width: 900px) {
+        #filter {
+            min-width: calc(250px - $spacing-normal);
+            max-width: calc(250px - $spacing-normal);
+        }
+    }
+
+    @media only screen and (max-width: 700px) {
         .menu {
             flex-direction: column;
         }

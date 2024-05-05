@@ -1,14 +1,7 @@
 .menu-item {
     padding: $spacing-normal;
 
-    width: 200px;
-    height: 200px;
-
     position: relative;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 
     border-radius: $border-radius-large;
     background-color: $color-dark;
@@ -28,84 +21,89 @@
     z-index: 1;
 }
 
-.menu-item-header {
-    position: relative;
+.menu-item-link {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    height: 30px;
+
+    position: absolute;
+    top: $spacing-small;
+    right: $spacing-small;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-decoration: none;
+    font-size: 14px;
+
+    border-radius: $border-radius-circle;
+    background-color: $color-dark;
+    color: $color-on-dark;
+
+    z-index: +2;
+
+    &:hover {
+        background-color: $color-light;
+        color: $color-on-light;
+    }
+}
+
+.menu-item-labels {
+    padding: 0;
+
+    position: absolute;
+    top: $spacing-small;
+    left: calc($spacing-normal + $spacing-small);
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 
-    z-index: 2;
+    z-index: +2;
 
-    > ul {
-        padding: 0 0 0 $spacing-normal;
+    > li {
+        margin: 0 0 0 -15px;
 
-        display: flex;
-        flex-direction: row;
-
-        > li {
-            margin: 0 0 0 -15px;
-
-            width: 30px;
-            height: 30px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            border-radius: $border-radius-circle;
-            background-color: $color-dark;
-            color: $color-on-dark;
-
-            list-style: none;
-
-            &.vegan {
-                background-color: $color-vegan;
-            }
-            &.fish {
-                background-color: $color-fish;
-            }
-            &.nut {
-                background-color: $color-nut;
-            }
-            &.gluten {
-                background-color: $color-gluten;
-            }
-            &.spicy {
-                background-color: $color-spicy;
-            }
-        }
-    }
-
-    > a {
-        padding-left: 10px;
-        padding-right: 10px;
-
+        width: 30px;
         height: 30px;
 
         display: flex;
         justify-content: center;
         align-items: center;
 
-        text-decoration: none;
-        font-size: 14px;
-
         border-radius: $border-radius-circle;
         background-color: $color-dark;
         color: $color-on-dark;
 
-        &:hover {
-            background-color: $color-light;
-            color: $color-on-light;
+        list-style: none;
+
+        &.vegan {
+            background-color: $color-vegan;
+        }
+        &.fish {
+            background-color: $color-fish;
+        }
+        &.nut {
+            background-color: $color-nut;
+        }
+        &.gluten {
+            background-color: $color-gluten;
+        }
+        &.spicy {
+            background-color: $color-spicy;
         }
     }
 }
 
 .menu-item-detail {
-    margin: -$spacing-normal;
     padding: $spacing-normal;
 
-    position: relative;
+    width: 100%;
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
 
     display: flex;
     flex-direction: column;
@@ -119,5 +117,8 @@
 
     > li {
         list-style: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

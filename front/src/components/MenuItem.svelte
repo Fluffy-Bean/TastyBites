@@ -4,37 +4,50 @@
 
     import { type Item, Labels} from "../lib/types";
     import LoadingImage from '/MenuItemLoadingAlt.svg';
+    import {onMount} from "svelte";
 
     export let item: Item;
+
+    let element: HTMLElement;
+
+    onMount(() => {
+        keepSquare();
+    })
+
+    function keepSquare() {
+        element.style.height = "";
+        element.style.height = element.offsetWidth + "px";
+    }
 </script>
 
-<div class="menu-item">
+<svelte:window on:resize={keepSquare}></svelte:window>
+
+<div class="menu-item" bind:this={element}>
     {#if item.images}
         <img src={item.images[0]} alt="" class="menu-item-image">
     {:else}
         <img src={LoadingImage} alt="" class="menu-item-image">
     {/if}
 
-    <div class="menu-item-header">
-        <ul>
-            {#each item.labels as label}
-                {#if label === Labels.vegan}
-                    <li class="vegan"><Leaf weight="fill" /></li>
-                {:else if label === Labels.fish}
-                    <li class="fish"><Fish weight="fill" /></li>
-                {:else if label === Labels.nut}
-                    <li class="nut"><Acorn weight="fill" /></li>
-                {:else if label === Labels.gluten}
-                    <li class="gluten"><GrainsSlash weight="fill" /></li>
-                {:else if label === Labels.spicy}
-                    <li class="spicy"><Pepper weight="fill" /></li>
-                {/if}
-            {/each}
-        </ul>
-        <a href="/item/{item.uuid}" use:link>
-            View&nbsp;<ArrowUpRight />
-        </a>
-    </div>
+    <ul class="menu-item-labels">
+        {#each item.labels as label}
+            {#if label === Labels.vegan}
+                <li class="vegan"><Leaf weight="fill" /></li>
+            {:else if label === Labels.fish}
+                <li class="fish"><Fish weight="fill" /></li>
+            {:else if label === Labels.nut}
+                <li class="nut"><Acorn weight="fill" /></li>
+            {:else if label === Labels.gluten}
+                <li class="gluten"><GrainsSlash weight="fill" /></li>
+            {:else if label === Labels.spicy}
+                <li class="spicy"><Pepper weight="fill" /></li>
+            {/if}
+        {/each}
+    </ul>
+
+    <a class="menu-item-link" href="/item/{item.uuid}" use:link>
+        View&nbsp;<ArrowUpRight />
+    </a>
 
     <ul class="menu-item-detail">
         <li>{item.name}</li>
