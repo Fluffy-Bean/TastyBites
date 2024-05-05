@@ -30,7 +30,7 @@ const routes = {
         userData: { showNavBar: true, fullWidth: false },
     }),
     "/about": wrap({
-        component: PageLoading,
+        asyncComponent: () => import("./pages/PageAbout.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
@@ -40,6 +40,12 @@ const routes = {
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
+    }),
+    "/booking": wrap({
+        asyncComponent: () => import("./pages/PageBooking.svelte"),
+        loadingComponent: PageLoading,
+        conditions: [],
+        userData: { showNavBar: true, fullWidth: true }
     }),
     "/ForOhFor": wrap({
         component: Page404,

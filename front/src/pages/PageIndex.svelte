@@ -5,8 +5,8 @@
     import L from 'leaflet';
 
     import { getPopularToday } from "../lib/test-api";
-    import LoadingBar from "../components/LoadingBar.svelte";
     import AnnouncementBanner from "../components/AnnouncementBanner.svelte";
+    import LoadingBar from "../components/LoadingBar.svelte";
     import MenuList from "../components/MenuList.svelte";
 
     let items = getPopularToday();
@@ -44,9 +44,17 @@
                 <tr><td>Sunday</td><td>11am</td><td>2am</td></tr>
             </table>
         </div>
-        <a href="/book" use:link>Ready to book a table?</a>
+        <a href="/booking" use:link>Ready to book a table?</a>
     </div>
 </div>
+
+<div class="spacer" />
+
+<h2>About Us</h2>
+<div class="container padding">
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At deserunt est quos dicta ipsa! Soluta laudantium dolore temporibus nisi aspernatur expedita vel, unde natus a nulla rerum officiis optio neque.</p>
+</div>
+<a href="/about" use:link>Continue reading <ArrowUpRight /></a>
 
 <div class="spacer" />
 
@@ -61,12 +69,6 @@
     {/await}
 </div>
 <a href="/menu" use:link>See All <ArrowUpRight /></a>
-
-<div class="spacer" />
-
-<h2>About Us</h2>contact
-<p>Want to know the story of the restaurant?</p>
-<a href="/about" use:link>Continue reading <ArrowUpRight /></a>
 
 
 <style lang="scss">
@@ -180,6 +182,10 @@
 
     #popular {
         position: relative;
+    }
+
+    .padding {
+        padding: $spacing-normal;
     }
 
     @media only screen and (max-width: 900px) {
