@@ -47,7 +47,10 @@ function createCartStore() {
         cart.update((cart: Record<string, CartItem>) => {
             if (cart[uuid].amount <= 0) {
                 delete cart[uuid]; // skipcq: JS-0320
+            } else if (cart[uuid].amount > 99) {
+                cart[uuid].amount = 99; // skipcq: JS-0320
             }
+
             return cart;
         });
     }
@@ -103,8 +106,8 @@ Cart.subscribe((value) => {
 });
 
 // Debug
-Cart.subscribe((value) => {
-    console.log(value);
-});
+// Cart.subscribe((value) => {
+//     console.log(value);
+// });
 
 export default Cart;

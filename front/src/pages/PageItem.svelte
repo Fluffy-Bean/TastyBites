@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { SmileySad } from "phosphor-svelte";
+    import { Minus, Plus, SmileySad } from "phosphor-svelte";
 
     import { getPopularToday, getItemByUUID } from "../lib/test-api";
     import Cart from "../lib/cart";
@@ -11,8 +11,24 @@
         uuid?: string;
     };
 
+    let basketAmount = 1;
+
     $: item = getItemByUUID(params.uuid);
     $: popularToday = getPopularToday();
+
+    function reduce() {
+        if (basketAmount > 1) {
+            basketAmount -= 1;
+        }
+    }
+    function increase() {
+        if (basketAmount < 99) {
+            basketAmount += 1;
+        }
+    }
+    function add() {
+        Cart.addToCart(params.uuid, basketAmount);
+    }
 </script>
 
 <div class="main">
@@ -62,7 +78,15 @@
                 <p>{item.description}</p>
             </div>
 
-            <button on:click={() => { Cart.addToCart(item.uuid, 1) }} id="add-to-cart">Add to Cart</button>
+            <div id="basket-controls">
+                <button class="button" class:disabled={basketAmount <= 1} on:click={reduce}><Minus /></button>
+                <p>{basketAmount}</p>
+                <button class="button" class:disabled={basketAmount >= 99} on:click={increase}><Plus /></button>
+                <hr>
+                <button class="button add" on:click={add} id="add-to-cart">Add to Cart</button>
+            </div>
+
+
         </div>
     {:catch error}
         <div id="error">
@@ -103,6 +127,7 @@
 
         > div {
             margin-bottom: $spacing-small;
+            padding: $spacing-small;
 
             width: 650px;
             height: 500px;
@@ -111,11 +136,14 @@
             justify-content: center;
             align-items: center;
 
+            border-radius: $border-radius-normal;
+            background-color: $color-background;
+
             overflow: hidden;
 
             > img {
-                max-width: 650px;
-                max-height: 500px;
+                max-width: 100%;
+                max-height: 100%;
 
                 border-radius: $border-radius-normal;
             }
@@ -161,27 +189,83 @@
         }
     }
 
-    #add-to-cart {
-        padding: 0 $spacing-normal;
-
-        height: 30px;
-
+    #basket-controls {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        flex-direction: row;
 
-        text-shadow: 0 1px 0.5px rgba($color-dark, 0.3);;
+        > .button {
+            min-width: 35px;
+            height: 35px;
 
-        border: 0 solid transparent;
-        border-radius: 9999px;
-        background-color: $color-primary;
-        color: $color-on-primary;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        &:hover, &:focus {
+            font-family: $font-family;
+            font-size: $font-size-p;
+
+            border: 1px solid rgba($color-dark, 0.2);
+            border-radius: $border-radius-normal;
+            background-color: $color-light;
+            color: $color-on-light;
+
+            &:hover {
+                border: 1px solid rgba($color-dark, 0.4);
+            }
+            &:focus-visible {
+                border: 1px solid rgba($color-primary, 0.9);
+                outline: 0 solid transparent;
+            }
+
+            &.add {
+                padding: 0 $spacing-normal;
+                border: 0 solid transparent;
+                background-color: $color-dark;
+                color: $color-on-dark;
+
+                &:hover,
+                &:focus-visible {
+                    background-color: $color-primary;
+                    color: $color-on-primary;
+                }
+            }
+
+            &.disabled {
+                border: 1px solid rgba($color-dark, 0.1);
+                color: rgba($color-on-light, 0.6);
+
+                &:hover,
+                &:focus-visible {
+                    border: 1px solid rgba($color-dark, 0.1);
+                    background-color: $color-light;
+                    color: rgba($color-on-light, 0.6);
+                }
+            }
+        }
+
+        > p {
+            width: 40px;
+            height: 35px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: $font-family;
+            font-size: $font-size-p;
+
+            border: 1px solid transparent;
+            color: $color-on-light;
+        }
+
+        > hr {
+            margin: 0 $spacing-small;
+
+            width: 1px;
+            height: 100%;
+
             border: 0 solid transparent;
-            background-color: $color-dark;
-            color: $color-on-dark;
-            outline: 0 solid transparent
+            background-color: rgba($color-dark, 0.1);
         }
     }
 
