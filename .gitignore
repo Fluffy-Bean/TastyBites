@@ -28,3 +28,10 @@ go.work
 build-*.log
 build/
 main
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3

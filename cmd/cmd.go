@@ -14,6 +14,8 @@ func Parse() {
 	switch os.Args[1] {
 	case "run":
 		run(os.Args[2:])
+	case "migrate":
+		migrate(os.Args[2:])
 	case "-h":
 	case "--help":
 		fmt.Println("Available commands are:")
