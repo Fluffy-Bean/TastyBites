@@ -15,7 +15,6 @@ export interface Item {
     images?: string[];
 }
 
-
 export interface CartItem {
     amount: number;
     data: Item;
