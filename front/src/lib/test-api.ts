@@ -127,13 +127,12 @@ export async function postVerifyCart(
 
     const newCartData: Record<string, CartItem> = {};
 
-    Object.entries(currentCartData).forEach(([key, value]) => {
+    Object.entries(currentCartData).forEach(([uuid, currentData]) => {
         verifiedItems.forEach((verifiedItem: Item) => {
-            if (verifiedItem.uuid === key) {
-                console.log(verifiedItem, key);
-                newCartData[key] = {
-                    uuid: value.uuid,
-                    amount: value.amount,
+            if (verifiedItem.uuid === uuid) {
+                console.log(verifiedItem, uuid);
+                newCartData[uuid] = {
+                    amount: currentData.amount,
                     data: verifiedItem,
                 };
             }

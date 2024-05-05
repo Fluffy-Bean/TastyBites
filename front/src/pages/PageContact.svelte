@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { PaperPlaneRight, SealWarning, SealCheck } from "phosphor-svelte";
 
     import { postContactEmail } from "../lib/test-api";
@@ -7,7 +7,7 @@
 
     const minMessageLength = 150;
 
-    let formMessage;
+    let formMessage: Promise<string>;
 
     let name = "";
     let email = "";
@@ -32,13 +32,13 @@
         emailValid = true;
         messageValid = false;
 
-        formMessage = postContactEmail(name, email, message);
-
-        formMessage.catch(() => {
-            validateName();
-            validateEmail();
-            validateMessage();
-        });
+        formMessage = postContactEmail(name, email, message)
+            .catch((error) => {
+                validateName();
+                validateEmail();
+                validateMessage();
+                return error;
+            });
     }
 </script>
 

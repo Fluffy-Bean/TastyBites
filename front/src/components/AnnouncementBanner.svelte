@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { getAnnouncements } from '../lib/test-api';
 
     let announcement = getAnnouncements();

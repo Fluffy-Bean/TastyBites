@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
     import { ArrowUpRight } from "phosphor-svelte";

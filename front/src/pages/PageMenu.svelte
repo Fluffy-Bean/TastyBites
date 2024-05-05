@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { ArrowClockwise } from "phosphor-svelte";
 
     import { getMenuItems } from "../lib/test-api";

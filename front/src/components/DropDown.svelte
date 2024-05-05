@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
     import { CaretDown } from "phosphor-svelte";
 
     export let open = false;
-    export let name;
+    export let name: string;
 </script>
 
 <div class="dropdown" class:open={open}>

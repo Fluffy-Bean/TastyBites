@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
+    import { type Item } from "../lib/types";
     import MenuItem from "./MenuItem.svelte";
 
-    export let items = [];
+    export let items: Item[];
 </script>
 
 <ul>

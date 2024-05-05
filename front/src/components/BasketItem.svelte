@@ -9,28 +9,28 @@
 
     function reduce() {
         if (item.amount > 1) {
-            Cart.addToCart(item.uuid, -1)
+            Cart.addToCart(item.data.uuid, -1)
         }
     }
     function add() {
         if (item.amount < 99) {
-            Cart.addToCart(item.uuid, 1);
+            Cart.addToCart(item.data.uuid, 1);
         }
     }
     function yeet() {
-        Cart.removeByUUID(item.uuid)
+        Cart.removeByUUID(item.data.uuid)
     }
 </script>
 
 <div class="container">
-    {#if item.data.image}
-        <img src="{item.data.image}" alt="Item" class="basket-item-image">
+    {#if item.data.images}
+        <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
     {:else}
-        <img src="/MenuItemLoadingAlt.svg" alt="Item" class="basket-item-image">
+        <img src="/MenuItemLoading.svg" alt="Item" class="basket-item-image">
     {/if}
 
     <ul class="basket-item-data">
-        <li class="basket-item-name"><a href="/item/{item.uuid}" use:link>{item.data.name}</a></li>
+        <li class="basket-item-name"><a href="/item/{item.data.uuid}" use:link>{item.data.name}</a></li>
         <li class="basket-item-controls">
             <button class="button" class:disabled={item.amount <= 1} on:click={reduce}><Minus /></button>
             <p>{item.amount}</p>

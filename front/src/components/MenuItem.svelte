@@ -1,18 +1,18 @@
-<script>
+<script lang="ts">
     import { link } from 'svelte-spa-router';
     import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from 'phosphor-svelte';
 
-    import { Labels } from "../lib/types";
+    import { type Item, Labels} from "../lib/types";
     import LoadingImage from '/MenuItemLoadingAlt.svg';
 
-    export let item = {};
+    export let item: Item;
 </script>
 
 <div class="menu-item">
-    {#if !item.image}
-        <img src={LoadingImage} alt="" class="menu-item-image">
+    {#if item.images}
+        <img src={item.images[0]} alt="" class="menu-item-image">
     {:else}
-        <img src={item.image} alt="" class="menu-item-image">
+        <img src={LoadingImage} alt="" class="menu-item-image">
     {/if}
 
     <div class="menu-item-header">

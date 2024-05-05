@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { SmileySad } from "phosphor-svelte";
 
     import { getPopularToday, getItemByUUID } from "../lib/test-api";
@@ -7,7 +7,9 @@
     import LoadingBar from "../components/LoadingBar.svelte";
     import LoadingImage from "/MenuItemLoading.svg";
 
-    export let params;
+    export let params: {
+        uuid?: string;
+    };
 
     $: item = getItemByUUID(params.uuid);
     $: popularToday = getPopularToday();
@@ -37,7 +39,11 @@
     {:then item}
         <div id="images">
             <div>
-                <img src={item.image} alt="">
+                {#if item.images}
+                    <img src="{item.images[0]}" alt="Item">
+                {:else}
+                    <img src="/MenuItemLoading.svg" alt="Item">
+                {/if}
             </div>
             <ul>
                 <li><img src={LoadingImage} alt=""></li>
@@ -53,7 +59,7 @@
             <p>£{item.price}</p>
 
             <div class="container">
-                <p>{item.detail}</p>
+                <p>{item.description}</p>
             </div>
 
             <button on:click={() => { Cart.addToCart(item.uuid, 1) }} id="add-to-cart">Add to Cart</button>

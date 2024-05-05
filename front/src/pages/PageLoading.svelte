@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import LoadingBar from "../components/LoadingBar.svelte";
 
     const FunnyMessages = [

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { SmileySad } from "phosphor-svelte";
 </script>
 
