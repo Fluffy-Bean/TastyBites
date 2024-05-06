@@ -130,7 +130,7 @@ export async function postVerifyCart(
     Object.entries(currentCartData).forEach(([uuid, currentData]) => {
         verifiedItems.forEach((verifiedItem: Item) => {
             if (verifiedItem.uuid === uuid) {
-                console.log(verifiedItem, uuid);
+                
                 newCartData[uuid] = {
                     amount: currentData.amount,
                     data: verifiedItem,
