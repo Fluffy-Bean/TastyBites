@@ -2,7 +2,8 @@ package database
 
 import (
 	"database/sql"
-	"log"
+	"fmt"
+	"os"
 
 	"github.com/mattn/go-sqlite3"
 )
@@ -16,19 +17,22 @@ func Open() {
 
 	Conn, err = sql.Open("sqlite3", "tastybites.db?_journal_mode=WAL")
 	if err != nil {
-		log.Fatal("Error opening connection: ", err)
+		fmt.Println("Error opening connection:", err)
+		os.Exit(1)
 	}
 
 	//Set the connection to use WAL mode
 	_, err = Conn.Exec("PRAGMA journal_mode=WAL;")
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 }
 
 func Close() {
 	err := Conn.Close()
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 }

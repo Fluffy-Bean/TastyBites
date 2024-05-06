@@ -16,6 +16,8 @@ func Parse() {
 		run(os.Args[2:])
 	case "migrate":
 		migrate(os.Args[2:])
+	case "status":
+		status(os.Args[2:])
 	case "-h":
 	case "--help":
 		fmt.Println("Available commands are:")
