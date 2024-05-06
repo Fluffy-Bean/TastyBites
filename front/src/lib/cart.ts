@@ -4,14 +4,7 @@ import { type CartItem, type Item } from "./types";
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
 function getLocal(): Record<string, CartItem> {
-    let localData: Record<string, CartItem> = {};
-
-    try {
-        localData = JSON.parse(localStorage.getItem("basket"));
-    } catch (error) {
-        console.error("Could parse basket JSON:", error);
-        return localData;
-    }
+    let localData: Record<string, CartItem> = JSON.parse(localStorage.getItem("basket")) || {};
 
     postVerifyCart(localData)
         .then((data: Record<string, CartItem>) => {
@@ -19,6 +12,7 @@ function getLocal(): Record<string, CartItem> {
         })
         .catch((error) => {
             console.error("Could not load basket:", error);
+            return <Record<string, CartItem>>{};
         });
 
     return localData;
