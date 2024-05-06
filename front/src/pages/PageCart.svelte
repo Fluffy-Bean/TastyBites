@@ -43,25 +43,25 @@
 
 <div class="spacer" />
 
-<h2>Help</h2>
-<div class="container">
-    <DropDown name="Booking" open={true}>
-        <p>Want to reserve a table instead? <a href="/booking" use:link>You can do this here</a>!</p>
-    </DropDown>
-    <hr>
-    <DropDown name="Past Orders" open={true}>
-        <p>Looking past orders? Check out the <a href="/contact" use:link>commonly asked questions</a>.</p>
-    </DropDown>
-</div>
-
-<div class="spacer" />
-
 <h2>Looking for something more?</h2>
 {#await popularToday}
     <p>Loading</p>
 {:then popularToday}
     <MenuList items={popularToday} />
 {/await}
+
+<div class="spacer" />
+
+<h2>Help</h2>
+<div class="container">
+    <DropDown name="Booking">
+        <p>Want to reserve a table instead? <a href="/booking" use:link>You can do this here</a>!</p>
+    </DropDown>
+    <hr>
+    <DropDown name="Past Orders">
+        <p>Looking past orders? Check out the <a href="/contact" use:link>commonly asked questions</a>.</p>
+    </DropDown>
+</div>
 
 <style lang="scss">
     @import "../styles/vars";
