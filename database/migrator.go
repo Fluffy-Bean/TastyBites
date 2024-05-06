@@ -44,12 +44,12 @@ func Status() error {
 		return err
 	}
 
-	fmt.Println("Migration list:")
+	fmt.Println("Available migrations:")
 	for _, migration := range applied {
-		fmt.Printf("DONE: %s\n", migration.Id)
+		fmt.Printf("  Complete: %s\n", migration.Id)
 	}
 	for _, migration := range planned {
-		fmt.Printf("TODO: %s\n", migration.Id)
+		fmt.Printf("  Pending:  %s\n", migration.Id)
 	}
 
 	return nil

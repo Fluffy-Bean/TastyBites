@@ -7,7 +7,7 @@ import (
 
 func Parse() {
 	if len(os.Args) < 2 {
-		fmt.Println("Use -h or --help for usage")
+		fmt.Println("Use -h or -help for usage")
 		os.Exit(1)
 	}
 
@@ -19,12 +19,15 @@ func Parse() {
 	case "status":
 		status(os.Args[2:])
 	case "-h":
-	case "--help":
+		fallthrough
+	case "-help":
 		fmt.Println("Available commands are:")
-		fmt.Println("  run: starts the server")
+		fmt.Println("  run:     starts the server")
+		fmt.Println("  migrate: migrates database")
+		fmt.Println("  status:  checks if there are pending migrations")
 		fmt.Println("\nTo specific usages, run commandName -h")
 	default:
-		fmt.Println("Use -h or --help for usage")
+		fmt.Println("Use -h or -help for usage")
 		os.Exit(1)
 	}
 }
