@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  args_bin = ["run", "-host=127.0.0.1:8080"]
+  args_bin = ["run", "-host=127.0.0.1:3000"]
   bin = "./tmp/main"
   cmd = "go build -o ./tmp/main ."
   delay = 1000
@@ -44,3 +44,8 @@ tmp_dir = "tmp"
 [screen]
   clear_on_rebuild = false
   keep_scroll = true
+
+[proxy]
+  enabled = true
+  proxy_port = 8080
+  app_port = 3000
