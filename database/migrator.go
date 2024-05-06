@@ -1,8 +1,11 @@
 package database
 
 import (
+	"bufio"
 	"embed"
 	"fmt"
+	"os"
+	"strings"
 
 	migrate "github.com/rubenv/sql-migrate"
 )
@@ -14,12 +17,50 @@ var migrations = migrate.EmbedFileSystemMigrationSource{
 	Root:       "migrations",
 }
 
-func Migrate(Up bool) error {
-	var direction migrate.MigrationDirection
-	if Up {
+func Migrate(downgrade, confirm bool) error {
+	var direction = migrate.Down
+	if !downgrade {
 		direction = migrate.Up
+	}
+
+	var pending int
+	if !downgrade {
+		n, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
+		if err != nil {
+			return err
+		}
+		pending = len(n)
 	} else {
-		direction = migrate.Down
+		n, err := migrate.GetMigrationRecords(Conn, "sqlite3")
+		if err != nil {
+			return err
+		}
+		pending = len(n)
+	}
+
+	if pending == 0 {
+		fmt.Println("Nothing to change")
+		os.Exit(0)
+	}
+
+	if !confirm {
+		if downgrade {
+			fmt.Printf("Downgrade %d migrations? [Y/n] ", pending)
+		} else {
+			fmt.Printf("Apply %d pending migrations? [Y/n] ", pending)
+		}
+
+		reader := bufio.NewReader(os.Stdin)
+		input, _ := reader.ReadString('\n')
+
+		// Format input
+		input = strings.TrimSpace(input)
+		input = strings.ToLower(input)
+
+		if !strings.HasPrefix(input, "y") && input != "" {
+			fmt.Println("Canceling migration")
+			os.Exit(0)
+		}
 	}
 
 	n, err := migrate.Exec(Conn, "sqlite3", migrations, direction)
@@ -27,7 +68,11 @@ func Migrate(Up bool) error {
 		return err
 	}
 
-	fmt.Printf("Applied %d migrations!\n", n)
+	if downgrade {
+		fmt.Printf("Downgraded %d migrations!\n", n)
+	} else {
+		fmt.Printf("Applied %d migrations!\n", n)
+	}
 	return nil
 }
 
@@ -39,17 +84,21 @@ func Status() error {
 	}
 
 	// Get the list of migrations that are yet to be applied
-	planned, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
+	pending, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("Available migrations:")
 	for _, migration := range applied {
-		fmt.Printf("  Complete: %s\n", migration.Id)
+		fmt.Printf("  [x]  %s\n", migration.Id)
 	}
-	for _, migration := range planned {
-		fmt.Printf("  Pending:  %s\n", migration.Id)
+	for _, migration := range pending {
+		fmt.Printf("  [ ]  %s\n", migration.Id)
+	}
+
+	if len(pending) > 0 {
+		fmt.Printf("\nTo apply %d pending migrations, run `TastyBites migrate`\n", len(pending))
 	}
 
 	return nil
