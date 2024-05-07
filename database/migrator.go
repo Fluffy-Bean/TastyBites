@@ -17,73 +17,83 @@ var migrations = migrate.EmbedFileSystemMigrationSource{
 	Root:       "migrations",
 }
 
-func Migrate(downgrade, confirm bool) error {
-	var direction = migrate.Down
-	if !downgrade {
-		direction = migrate.Up
-	}
+func Migrate(confirm bool) error {
+	var direction = migrate.Up
 
-	var pending int
-	if !downgrade {
-		n, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
-		if err != nil {
-			return err
-		}
-		pending = len(n)
-	} else {
-		n, err := migrate.GetMigrationRecords(Conn, "sqlite3")
-		if err != nil {
-			return err
-		}
-		pending = len(n)
+	pending, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
+	if err != nil {
+		return err
 	}
-
-	if pending == 0 {
+	if len(pending) == 0 {
 		fmt.Println("Nothing to change")
 		os.Exit(0)
 	}
 
 	if !confirm {
-		if downgrade {
-			fmt.Printf("Downgrade %d migrations? [Y/n] ", pending)
-		} else {
-			fmt.Printf("Apply %d pending migrations? [Y/n] ", pending)
-		}
+		fmt.Printf("Apply %d pending migration(s)? [Y/n] ", len(pending))
 
 		reader := bufio.NewReader(os.Stdin)
-		input, _ := reader.ReadString('\n')
 
-		// Format input
+		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(input)
 		input = strings.ToLower(input)
 
 		if !strings.HasPrefix(input, "y") && input != "" {
-			fmt.Println("Canceling migration")
+			fmt.Printf("Canceling %d migration(s)\n", len(pending))
 			os.Exit(0)
 		}
 	}
 
-	n, err := migrate.Exec(Conn, "sqlite3", migrations, direction)
+	changes, err := migrate.Exec(Conn, "sqlite3", migrations, direction)
 	if err != nil {
 		return err
 	}
 
-	if downgrade {
-		fmt.Printf("Downgraded %d migrations!\n", n)
-	} else {
-		fmt.Printf("Applied %d migrations!\n", n)
+	fmt.Printf("Applied %d migration(s)!\n", changes)
+	return nil
+}
+
+func Downgrade(confirm bool) error {
+	var direction = migrate.Down
+
+	pending, err := migrate.GetMigrationRecords(Conn, "sqlite3")
+	if err != nil {
+		return err
 	}
+	if len(pending) == 0 {
+		fmt.Println("Nothing to change")
+		os.Exit(0)
+	}
+
+	if !confirm {
+		fmt.Printf("Undo %d migration(s)? [Y/n] ", len(pending))
+
+		reader := bufio.NewReader(os.Stdin)
+
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
+		input = strings.ToLower(input)
+
+		if !strings.HasPrefix(input, "y") && input != "" {
+			fmt.Printf("Canceling %d downgrade(s)\n", len(pending))
+			os.Exit(0)
+		}
+	}
+
+	changes, err := migrate.Exec(Conn, "sqlite3", migrations, direction)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Undone %d migration(s)!\n", changes)
 	return nil
 }
 
 func Status() error {
-	// Get the list of applied migrations
 	applied, err := migrate.GetMigrationRecords(Conn, "sqlite3")
 	if err != nil {
 		return err
 	}
-
-	// Get the list of migrations that are yet to be applied
 	pending, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
 	if err != nil {
 		return err
@@ -104,7 +114,7 @@ func Status() error {
 	return nil
 }
 
-func Pending() (bool, error) {
+func GetPending() (bool, error) {
 	planned, _, err := migrate.PlanMigration(Conn, "sqlite3", migrations, migrate.Up, 0)
 	if err != nil {
 		return false, err

@@ -23,7 +23,7 @@ func run(flags []string) {
 	}
 
 	if !*skip {
-		pending, err := db.Pending()
+		pending, err := db.GetPending()
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)

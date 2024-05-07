@@ -11,7 +11,6 @@ import (
 func migrate(flags []string) {
 	cmd := flag.NewFlagSet("migrate", flag.ExitOnError)
 
-	downgrade := cmd.Bool("downgrade", false, "Downgrade Database")
 	confirm := cmd.Bool("y", false, "Skip questioning")
 
 	err := cmd.Parse(flags)
@@ -20,7 +19,25 @@ func migrate(flags []string) {
 		os.Exit(1)
 	}
 
-	err = db.Migrate(*downgrade, *confirm)
+	err = db.Migrate(*confirm)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
+func downgrade(flags []string) {
+	cmd := flag.NewFlagSet("migrate", flag.ExitOnError)
+
+	confirm := cmd.Bool("y", false, "Skip questioning")
+
+	err := cmd.Parse(flags)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	err = db.Downgrade(*confirm)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
