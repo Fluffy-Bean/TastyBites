@@ -17,7 +17,8 @@ function createCartStore() {
         }
 
         try {
-            const newData: Record<string, CartItem> = await postVerifyCart(localData);
+            const newData: Record<string, CartItem> =
+                await postVerifyCart(localData);
             cart.set(newData);
         } catch (error) {
             console.error("Could not load basket:", error);
@@ -28,7 +29,7 @@ function createCartStore() {
 
     async function addToCart(uuid: string, amount: number) {
         if (!loaded) {
-            return
+            return;
         }
 
         if (get(cart)[uuid] !== undefined) {
@@ -83,7 +84,7 @@ function createCartStore() {
 
     function removeByUUID(uuid: string) {
         if (!loaded) {
-            return
+            return;
         }
 
         cart.update((cart) => {
@@ -106,7 +107,7 @@ function createCartStore() {
 
 // Create store
 const Cart = createCartStore();
-export let cartLoaded = Cart.init()
+export let cartLoaded = Cart.init();
 
 // Make sure to update localstorage on any changes
 Cart.subscribe((value) => {

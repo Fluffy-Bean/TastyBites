@@ -139,5 +139,5 @@ export async function postVerifyCart(
     });
 
     await fakeDelay(1);
-    return newCartData
+    return newCartData;
 }
