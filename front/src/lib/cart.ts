@@ -106,7 +106,7 @@ function createCartStore() {
 
 // Create store
 const Cart = createCartStore();
-export let cartLoaded = Cart.init()
+export const cartLoaded = Cart.init()
 
 // Make sure to update localstorage on any changes
 Cart.subscribe((value) => {
