@@ -4,6 +4,7 @@
 
     import { type CartItem, Labels } from "../lib/types";
     import Cart from "../lib/cart";
+    import ImageLoading from '/assets/MenuItemLoading.svg';
 
     export let item: CartItem;
 
@@ -23,10 +24,10 @@
 </script>
 
 <div class="container">
-    {#if item.data.images}
+    {#if item.data.images && item.data.images[0]}
         <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
     {:else}
-        <img src="/assets/MenuItemLoading.svg" alt="Item" class="basket-item-image">
+        <img src={ImageLoading} alt="Item" class="basket-item-image">
     {/if}
 
     <ul class="basket-item-data">

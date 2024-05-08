@@ -138,5 +138,6 @@ export async function postVerifyCart(
         });
     });
 
-    return newCartData;
+    await fakeDelay(1);
+    return newCartData
 }

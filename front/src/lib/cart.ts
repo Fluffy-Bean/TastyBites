@@ -3,26 +3,34 @@ import { type Writable, get, writable } from "svelte/store";
 import { type CartItem, type Item } from "./types";
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
-function getLocal(): Record<string, CartItem> {
-    let localData: Record<string, CartItem> =
-        JSON.parse(localStorage.getItem("basket")) || {};
-
-    postVerifyCart(localData)
-        .then((data: Record<string, CartItem>) => {
-            localData = data;
-        })
-        .catch((error) => {
-            console.error("Could not load basket:", error);
-            return <Record<string, CartItem>>{};
-        });
-
-    return localData;
-}
-
 function createCartStore() {
-    const cart: Writable<Record<string, CartItem>> = writable(getLocal());
+    let loaded = false;
+
+    const cart: Writable<Record<string, CartItem>> = writable({});
+
+    async function init() {
+        let localData: Record<string, CartItem> = {};
+        try {
+            localData = JSON.parse(localStorage.getItem("basket")) || {};
+        } catch {
+            console.error("Local Cart data fucked");
+        }
+
+        try {
+            const newData: Record<string, CartItem> = await postVerifyCart(localData);
+            cart.set(newData);
+        } catch (error) {
+            console.error("Could not load basket:", error);
+        }
+
+        loaded = true;
+    }
 
     async function addToCart(uuid: string, amount: number) {
+        if (!loaded) {
+            return
+        }
+
         if (get(cart)[uuid] !== undefined) {
             cart.update((cart: Record<string, CartItem>) => {
                 cart[uuid].amount += amount;
@@ -74,6 +82,10 @@ function createCartStore() {
     }
 
     function removeByUUID(uuid: string) {
+        if (!loaded) {
+            return
+        }
+
         cart.update((cart) => {
             delete cart[uuid]; // skipcq: JS-0320
             return cart;
@@ -82,6 +94,7 @@ function createCartStore() {
 
     return {
         ...cart,
+        init,
         addToCart,
         getEntries,
         getUniqueLength,
@@ -93,15 +106,11 @@ function createCartStore() {
 
 // Create store
 const Cart = createCartStore();
+export let cartLoaded = Cart.init()
 
 // Make sure to update localstorage on any changes
 Cart.subscribe((value) => {
     localStorage.setItem("basket", JSON.stringify(value));
 });
-
-// Debug
-// Cart.subscribe((value) => {
-//     console.log(value);
-// });
 
 export default Cart;

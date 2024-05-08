@@ -4,7 +4,7 @@
 
     import { type CartItem } from "../lib/types";
     import { getPopularToday } from "../lib/test-api";
-    import Cart from "../lib/cart";
+    import Cart, { cartLoaded } from "../lib/cart";
     import MenuList from "../components/MenuList.svelte";
     import BasketItem from "../components/BasketItem.svelte";
     import DropDown from "../components/DropDown.svelte";
@@ -22,24 +22,32 @@
     });
 </script>
 
+<!--<button on:click={() => { localStorage['basket'] = "balls" }}>Fuck up the cart</button>-->
 
-{#if totalItems}
-    <h1>Cart</h1>
-
-    <button id="checkout-button">Checkout</button>
-    <h2>Order total: £{totalPrice}</h2>
-
-    {#each items as [key, item]}
-        <div class="basket-item">
-            <BasketItem item={item}/>
-        </div>
-    {/each}
-{:else}
+{#await cartLoaded}
     <div id="emptyCart">
-        <h1>Empty Cart&nbsp;<Basket weight="fill" /></h1>
-        <p>Why not go and checkout <a href="/menu" use:link>our menu</a>?</p>
+        <h1>Cart Loading&nbsp;<Basket weight="fill" /></h1>
+        <p>This shouldn't take long</p>
     </div>
-{/if}
+{:then _}
+    {#if totalItems}
+        <h1>Cart</h1>
+
+        <button id="checkout-button">Checkout</button>
+        <h2>Order total: £{totalPrice}</h2>
+
+        {#each items as [key, item]}
+            <div class="basket-item">
+                <BasketItem item={item}/>
+            </div>
+        {/each}
+    {:else}
+        <div id="emptyCart">
+            <h1>Empty Cart&nbsp;<Basket weight="fill" /></h1>
+            <p>Why not go and checkout <a href="/menu" use:link>our menu</a>?</p>
+        </div>
+    {/if}
+{/await}
 
 <div class="spacer" />
 

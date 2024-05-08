@@ -1,19 +1,24 @@
 <script lang="ts">
-    import { Minus, Plus, SmileySad } from "phosphor-svelte";
+    import { link } from 'svelte-spa-router';
+    import { Acorn, Fish, GrainsSlash, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart } from "phosphor-svelte";
+    import SvelteMarkdown from 'svelte-markdown'
 
+    import { Labels } from "../lib/types";
     import { getPopularToday, getItemByUUID } from "../lib/test-api";
-    import Cart from "../lib/cart";
+    import Cart, { cartLoaded } from "../lib/cart";
     import MenuList from "../components/MenuList.svelte";
     import LoadingBar from "../components/LoadingBar.svelte";
-    import LoadingImage from "/MenuItemLoading.svg";
+    import LoadingImage from "/assets/MenuItemLoading.svg";
 
     export let params: {
         uuid?: string;
     };
 
     let basketAmount = 1;
+    let selectedImage = 0;
 
     $: item = getItemByUUID(params.uuid);
+    $: item.finally(() => { selectedImage = 0 });
     $: popularToday = getPopularToday();
 
     function reduce() {
@@ -21,11 +26,13 @@
             basketAmount -= 1;
         }
     }
+
     function increase() {
         if (basketAmount < 99) {
             basketAmount += 1;
         }
     }
+
     function add() {
         Cart.addToCart(params.uuid, basketAmount);
     }
@@ -34,39 +41,42 @@
 <div class="main">
     {#await item}
         <div id="images">
-            <div>
-                <img src={LoadingImage} alt="">
+            <div class="img-main">
+                <div class="loading image" />
             </div>
-            <ul>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
+            <ul class="img-alts">
+                <li><div class="loading image-small" /></li>
+                <li><div class="loading image-small" /></li>
+                <li><div class="loading image-small" /></li>
+                <li><div class="loading image-small" /></li>
+                <li><div class="loading image-small" /></li>
             </ul>
         </div>
 
         <div id="info">
             <div class="loading title" />
             <div class="loading price" />
-
             <div class="loading description" />
         </div>
     {:then item}
         <div id="images">
-            <div>
-                {#if item.images}
-                    <img src="{item.images[0]}" alt="Item">
+            <div class="img-main">
+                {#if item.images && item.images[selectedImage]}
+                    <img src="{item.images[selectedImage]}" alt="Item">
                 {:else}
-                    <img src="/assets/MenuItemLoading.svg" alt="Item">
+                    <img src={LoadingImage} alt="Item">
                 {/if}
             </div>
-            <ul>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
-                <li><img src={LoadingImage} alt=""></li>
+            <ul class="img-alts">
+                {#if item.images && item.images.length > 1}
+                    {#each item.images as image, i}
+                        <li class:selected={selectedImage === i}>
+                            <button on:click={() => { selectedImage = i }}>
+                                <img src={image} alt="">
+                            </button>
+                        </li>
+                    {/each}
+                {/if}
             </ul>
         </div>
 
@@ -75,18 +85,46 @@
             <p>£{item.price}</p>
 
             <div class="container">
-                <p>{item.description}</p>
+                <div id="description">
+                    {#if item.description}
+                        <SvelteMarkdown source={item.description} />
+                    {:else}
+                        <p>Item is missing information</p>
+                    {/if}
+                </div>
+                <hr>
+                <div id="small-text">
+                    <p>If you require any specific informtaion on a meal, <a href="/contact" use:link>please contact us</a>.</p>
+                </div>
             </div>
+
+            <ul id="allergy-labels">
+                {#each item.labels as label}
+                    {#if label === Labels.vegan}
+                        <li class="vegan"><Leaf weight="fill" />&nbsp;&nbsp;Vegan</li>
+                    {:else if label === Labels.fish}
+                        <li class="fish"><Fish weight="fill" />&nbsp;&nbsp;Sea</li>
+                    {:else if label === Labels.nut}
+                        <li class="nut"><Acorn weight="fill" />&nbsp;&nbsp;Nut</li>
+                    {:else if label === Labels.gluten}
+                        <li class="gluten"><GrainsSlash weight="fill" />&nbsp;&nbsp;Gluten Free</li>
+                    {:else if label === Labels.spicy}
+                        <li class="spicy"><Pepper weight="fill" />&nbsp;&nbsp;Spicy</li>
+                    {/if}
+                {/each}
+            </ul>
 
             <div id="basket-controls">
                 <button class="button" class:disabled={basketAmount <= 1} on:click={reduce}><Minus /></button>
                 <p>{basketAmount}</p>
                 <button class="button" class:disabled={basketAmount >= 99} on:click={increase}><Plus /></button>
                 <hr>
-                <button class="button add" on:click={add} id="add-to-cart">Add to Cart</button>
+                {#await cartLoaded}
+                    <button class="button add disabled" id="add-to-cart">Add&nbsp;to&nbsp;Cart&nbsp;&nbsp;<ShoppingCart weight="fill" /></button>
+                {:then _}
+                    <button class="button add" on:click={add} id="add-to-cart">Add&nbsp;to&nbsp;Cart&nbsp;&nbsp;<ShoppingCart weight="fill" /></button>
+                {/await}
             </div>
-
-
         </div>
     {:catch error}
         <div id="error">
@@ -122,24 +160,26 @@
     }
 
     #images {
+        margin-right: $spacing-normal;
         display: flex;
         flex-direction: column;
 
-        > div {
+        .img-main {
             margin-bottom: $spacing-small;
-            padding: $spacing-small;
 
-            width: 650px;
-            height: 500px;
+            width: 600px;
+            height: 450px;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            border-radius: $border-radius-normal;
-            background-color: $color-background;
-
             overflow: hidden;
+
+            > .loading.image {
+                width: 100%;
+                height: 100%;
+            }
 
             > img {
                 max-width: 100%;
@@ -149,7 +189,7 @@
             }
         }
 
-        > ul {
+        .img-alts {
             margin: 0;
             padding: 0;
 
@@ -159,10 +199,39 @@
             > li {
                 list-style: none;
 
-                > img {
+                > .loading.image-small {
                     margin-right: $spacing-small;
                     width: 100px;
+                    height: 100px;
+                }
+
+                > button {
+                    margin-right: $spacing-small;
+                    padding: 0;
+
+                    width: 100px;
+                    height: 100px;
+
                     border-radius: $border-radius-normal;
+                    border: 1px solid transparent;
+                    background: transparent;
+
+                    overflow: hidden;
+
+                    > img {
+                        width: 100%;
+                        height: 100%;
+                        display: block;
+                        object-fit: cover;
+                    }
+
+                    &:hover, &:focus-visible {
+                        border: 1px solid $color-dark;
+                    }
+                }
+
+                &.selected > button {
+                    border: 1px solid $color-primary !important;
                 }
             }
         }
@@ -176,16 +245,31 @@
         align-items: flex-end;
 
         > h2 {
+            margin-bottom: $spacing-small;
+            padding: 0;
             font-size: $font-size-h1;
-            padding-bottom: $spacing-small;
         }
         > p {
+            margin-bottom: $spacing-normal;
+            padding: 0;
             font-size: $font-size-h2;
-            padding-bottom: $spacing-normal;
         }
+
         .container {
-            padding: $spacing-normal;
+            margin-bottom: $spacing-small;
             width: 100%;
+
+            #description {
+                padding: $spacing-normal;
+            }
+
+            #small-text {
+                padding: $spacing-small $spacing-normal;
+
+                p {
+                    font-size: $font-size-xsmall;
+                }
+            }
         }
     }
 
@@ -232,13 +316,18 @@
 
             &.disabled {
                 border: 1px solid rgba($color-dark, 0.1);
-                color: rgba($color-on-light, 0.6);
+                color: rgba($color-on-light, 0.6) !important;
 
                 &:hover,
                 &:focus-visible {
                     border: 1px solid rgba($color-dark, 0.1);
                     background-color: $color-light;
                     color: rgba($color-on-light, 0.6);
+                }
+
+                &.add {
+                    background-color: $color-dark !important;
+                    color: rgba($color-on-dark, 0.6) !important;
                 }
             }
         }
@@ -302,12 +391,60 @@
         }
     }
 
+    #allergy-labels {
+        padding: 0;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+
+        > li {
+            margin: 0 0 $spacing-small $spacing-xsmall;
+            padding: 0 $spacing-small;
+
+            min-width: 30px;
+            height: 30px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: $border-radius-circle;
+            background-color: $color-dark;
+            color: $color-on-dark;
+
+            list-style: none;
+
+            &.vegan {
+                background-color: $color-vegan;
+            }
+            &.fish {
+                background-color: $color-fish;
+            }
+            &.nut {
+                background-color: $color-nut;
+            }
+            &.gluten {
+                background-color: $color-gluten;
+            }
+            &.spicy {
+                background-color: $color-spicy;
+            }
+        }
+    }
+
     .loading {
         position: relative;
 
         border-radius: $border-radius-large;
 
-        background: linear-gradient(to right, $color-background 8%, rgba($color-dark, 0.3) 38%, $color-background 54%);
+        background: linear-gradient(
+                        to right,
+                        rgba($color-dark, 0) 8%,
+                        rgba($color-dark, 0.3) 38%,
+                        rgba($color-dark, 0) 54%
+                    ) no-repeat;
         background-size: 1000px 100%;
         animation: loading 1s infinite linear;
 
@@ -323,7 +460,10 @@
             left: $padding;
 
             border-radius: calc($border-radius-large - $padding);
-            background-color: rgba($color-background, 0.9);
+            background-color: darken($color-background, 10%);
+            background-image: url("/assets/Noise.png");
+
+            opacity: 0.9;
         }
 
         &.title {
@@ -337,17 +477,17 @@
             width: 60px;
         }
         &.description {
-            height: 400px;
+            height: 300px;
             width: 100%;
         }
     }
 
     @keyframes loading{
         0%{
-            background-position: -500px 0
+            background-position: -600px 0
         }
         100%{
-            background-position: 500px 0
+            background-position: 600px 0
         }
     }
 </style>
