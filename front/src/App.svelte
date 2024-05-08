@@ -6,7 +6,7 @@
 
     import Cart from './lib/cart';
     import routes from './routes';
-    import Logo from '/LogoAlt.svg';
+    import Logo from '/assets/LogoAlt.svg';
 
     const links = {
         home: {path: '/', className: 'active'},

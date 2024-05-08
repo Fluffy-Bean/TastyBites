@@ -14,7 +14,7 @@ export async function getAnnouncements(): Promise<{ image: string }> {
     await fakeDelay(200);
 
     const data = {
-        image: "/BannerExampleImage.jpg",
+        image: "/banner_images/BannerExampleImage.jpg",
     };
     cache["announcement_banner"] = data;
 

@@ -26,7 +26,7 @@
     {#if item.data.images}
         <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
     {:else}
-        <img src="/MenuItemLoading.svg" alt="Item" class="basket-item-image">
+        <img src="/assets/MenuItemLoading.svg" alt="Item" class="basket-item-image">
     {/if}
 
     <ul class="basket-item-data">

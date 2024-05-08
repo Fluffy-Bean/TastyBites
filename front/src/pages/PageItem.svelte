@@ -58,7 +58,7 @@
                 {#if item.images}
                     <img src="{item.images[0]}" alt="Item">
                 {:else}
-                    <img src="/MenuItemLoading.svg" alt="Item">
+                    <img src="/assets/MenuItemLoading.svg" alt="Item">
                 {/if}
             </div>
             <ul>

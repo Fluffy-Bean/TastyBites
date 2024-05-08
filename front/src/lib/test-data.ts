@@ -49,14 +49,14 @@ const TestData: Item[] = [
         name: "GwaGwa",
         price: 69,
         labels: [Labels.nut],
-        images: ["/dab.jpg"],
+        images: ["/item_images/dab.jpg"],
     },
     {
         uuid: "hogmelon",
         name: "Hogermellon",
         price: 1111,
         labels: [Labels.fish],
-        images: ["/wathog.jpg"],
+        images: ["/item_images/wathog.jpg"],
         description: "Example",
     },
     {
@@ -64,7 +64,7 @@ const TestData: Item[] = [
         name: "Blue HOGGGGG",
         price: 0,
         labels: [Labels.nut, Labels.gluten, Labels.spicy],
-        images: ["/sonichog.jpg"],
+        images: ["/item_images/sonichog.jpg"],
         description: "Example",
     },
 ];
