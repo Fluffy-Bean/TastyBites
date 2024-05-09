@@ -82,7 +82,7 @@ Contains the following:
 - melon
         `,
         labels: [Labels.nut, Labels.gluten, Labels.spicy, Labels.fish],
-        images: ["/item_images/wathog.jpg","/item_images/sonichog.jpg"],
+        images: ["/item_images/wathog.jpg", "/item_images/sonichog.jpg"],
     },
     {
         uuid: "bluhog",
