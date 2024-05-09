@@ -22,8 +22,6 @@
     });
 </script>
 
-<!--<button on:click={() => { localStorage['basket'] = "balls" }}>Fuck up the cart</button>-->
-
 {#await cartLoaded}
     <div id="emptyCart">
         <h1>Cart Loading&nbsp;<Basket weight="fill" /></h1>

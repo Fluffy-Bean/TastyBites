@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, GrainsSlash, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart } from "phosphor-svelte";
+    import { Acorn, Fish, GrainsSlash, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart, SealWarning } from "phosphor-svelte";
     import SvelteMarkdown from 'svelte-markdown'
 
     import { Labels } from "../lib/types";
@@ -38,6 +38,14 @@
     }
 </script>
 
+{#await item then item}
+    {#if !item.availability}
+        <div class="notice error">
+            <SealWarning weight="fill" />&nbsp;&nbsp;<span>Item is no-longer for sale</span>
+        </div>
+    {/if}
+{/await}
+
 <div class="main">
     {#await item}
         <div id="images">
@@ -60,7 +68,7 @@
         </div>
     {:then item}
         <div id="images">
-            <div class="img-main">
+            <div class="img-main loaded">
                 {#if item.images && item.images[selectedImage]}
                     <img src="{item.images[selectedImage]}" alt="Item">
                 {:else}
@@ -79,10 +87,11 @@
                 {/if}
             </ul>
         </div>
-
         <div id="info">
             <h2>{item.name}</h2>
             <p>£{item.price}</p>
+
+            <div class="spacer" />
 
             <div class="container">
                 <div id="description">
@@ -97,6 +106,8 @@
                     <p>If you require any specific informtaion on a meal, <a href="/contact" use:link>please contact us</a>.</p>
                 </div>
             </div>
+
+            <div class="spacer half" />
 
             <ul id="allergy-labels">
                 {#each item.labels as label}
@@ -113,6 +124,8 @@
                     {/if}
                 {/each}
             </ul>
+
+            <div class="spacer" />
 
             <div id="basket-controls">
                 <button class="button" class:disabled={basketAmount <= 1} on:click={reduce}><Minus /></button>
@@ -154,6 +167,30 @@
 
     $padding: 1px;
 
+    .notice {
+        margin-right: auto;
+        margin-bottom: $spacing-large;
+        margin-left: auto;
+
+        max-width: $sizing-default-width;
+        height: 45px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: $font-size-h6;
+
+        border-radius: $border-radius-normal;
+        background: $color-dark;
+        color: $color-on-dark;
+
+        &.error {
+            background: $color-error;
+            color: $color-on-error;
+        }
+    }
+
     .main {
         display: flex;
         flex-direction: row;
@@ -176,6 +213,12 @@
 
             overflow: hidden;
 
+            &.loaded {
+                border-radius: $border-radius-large;
+                border: 1px solid rgba($color-dark, 0.15);
+                background-color: rgba($color-dark, 0.1);
+            }
+
             > .loading.image {
                 width: 100%;
                 height: 100%;
@@ -184,8 +227,6 @@
             > img {
                 max-width: 100%;
                 max-height: 100%;
-
-                border-radius: $border-radius-normal;
             }
         }
 
@@ -245,18 +286,15 @@
         align-items: flex-end;
 
         > h2 {
-            margin-bottom: $spacing-small;
-            padding: 0;
+            padding-bottom: $spacing-xsmall;
             font-size: $font-size-h1;
         }
         > p {
-            margin-bottom: $spacing-normal;
             padding: 0;
             font-size: $font-size-h2;
         }
 
         .container {
-            margin-bottom: $spacing-small;
             width: 100%;
 
             #description {
@@ -400,7 +438,7 @@
         flex-wrap: wrap;
 
         > li {
-            margin: 0 0 $spacing-small $spacing-xsmall;
+            margin: 0 0 0 $spacing-xsmall;
             padding: 0 $spacing-small;
 
             min-width: 30px;

@@ -8,6 +8,7 @@ export enum Labels {
 
 export interface Item {
     uuid: string;
+    availability: boolean;
     name: string;
     price: number;
     labels: Labels[];

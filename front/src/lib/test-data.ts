@@ -3,6 +3,7 @@ import { type Item, Labels } from "./types";
 const TestData: Item[] = [
     {
         uuid: "soap",
+        availability: true,
         name: "Bar of Soap",
         price: 69.99,
         description: `
@@ -12,6 +13,7 @@ Example
     },
     {
         uuid: "sock",
+        availability: true,
         name: "Sock",
         price: 21,
         description: `
@@ -21,6 +23,7 @@ Example
     },
     {
         uuid: "brick",
+        availability: true,
         name: "Brick",
         price: 0,
         description: `
@@ -30,6 +33,7 @@ Example
     },
     {
         uuid: "toast",
+        availability: true,
         name: "Toast",
         price: 4382749832743,
         description: `
@@ -39,6 +43,7 @@ Example
     },
     {
         uuid: "water",
+        availability: true,
         name: "water",
         price: 1,
         description: `
@@ -48,6 +53,7 @@ Example
     },
     {
         uuid: "mouldy_bread",
+        availability: true,
         name: "half eaten mouldy bread",
         price: -99,
         description: `
@@ -57,6 +63,7 @@ Example
     },
     {
         uuid: "gwagwa",
+        availability: false,
         name: "GwaGwa",
         price: 69,
         labels: [Labels.nut],
@@ -64,6 +71,7 @@ Example
     },
     {
         uuid: "hogmelon",
+        availability: true,
         name: "Hogermellon",
         price: 1111,
         description: `
@@ -78,6 +86,7 @@ Contains the following:
     },
     {
         uuid: "bluhog",
+        availability: true,
         name: "Blue HOGGGGG",
         price: 0,
         description: `
