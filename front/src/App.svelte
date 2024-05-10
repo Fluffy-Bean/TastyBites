@@ -1,17 +1,18 @@
 <script>
     import Router, { replace, link } from 'svelte-spa-router';
     import active from 'svelte-spa-router/active'
-    import { TwitterLogo, FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-svelte';
+    import { House, BookOpenText, Envelope, CalendarDots, Basket, TwitterLogo, FacebookLogo, InstagramLogo, TiktokLogo } from 'phosphor-svelte';
 
     import Cart, { cartLoaded } from './lib/cart';
     import routes from './routes';
     import Logo from '/assets/LogoAlt.svg';
-    import Spinner from '/spinner.svg';
 
     const links = {
         home: {path: '/', className: 'active'},
         menu: {path: '/menu', className: 'active'},
+        about: {path: '/about', className: 'active'},
         contact: {path: '/contact', className: 'active'},
+        booking: {path: '/booking', className: 'active'},
         cart: {path: '/cart', className: 'active'},
     }
 
@@ -61,43 +62,41 @@
 
 
 {#if showNavBar }
-    <nav class:scrolled={scrollY > 0} class:mobile={width < 700}>
-        {#if !(width < 700)}
+    <nav class:scrolled={scrollY > 0} class:mobile={width < 850}>
+        {#if !(width < 850)}
             <ul style="justify-content: flex-end">
                 <li use:active={links.home}><a href="/" use:link>Home</a></li>
-                <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
+                <li use:active={links.about}><a href="/about" use:link>About</a></li>
+                <li use:active={links.contact}><a href="/contact" use:link>Contact</a></li>
             </ul>
             <span class="nav-logo"><img src={Logo} alt="TastyBites"></span>
             <ul style="justify-content: flex-start">
-                <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
+                <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
+                <li use:active={links.booking}><a href="/booking" use:link>Booking</a></li>
                 <li use:active={links.cart}>
                     <a href="/cart" use:link>
                         Cart&nbsp;&nbsp;
                         <span class="nav-basket">
-                            {#await cartLoaded}
-                                <img src={Spinner} alt="Cart Loading">
-                            {:then _}
-                                {cartItemCount}
-                            {/await}
+                            {#await cartLoaded then _}{cartItemCount}{/await}
                         </span>
                     </a>
                 </li>
             </ul>
         {:else}
             <ul>
-                <li use:active={links.home}><a href="/" use:link>Home</a></li>
-                <li use:active={links.menu}><a href="/menu" use:link>Menu</a></li>
-                <li use:active={links.contact}><a href="/contact" use:link>Contact&nbsp;Us</a></li>
+                <li use:active={links.home}><a href="/" use:link><House weight="fill" /></a></li>
+                <li use:active={links.contact}><a href="/contact" use:link><Envelope weight="fill" /></a></li>
+                <li use:active={links.menu}><a href="/menu" use:link><BookOpenText weight="fill" /></a></li>
+                <li use:active={links.booking}><a href="/booking" use:link><CalendarDots weight="fill" /></a></li>
                 <li use:active={links.cart}>
                     <a href="/cart" use:link>
-                        Cart&nbsp;&nbsp;
-                        <span class="nav-basket">
-                            {#await cartLoaded}
-                                <img src={Spinner} alt="Cart Loading">
-                            {:then _}
-                                {cartItemCount}
-                            {/await}
-                        </span>
+                        {#await cartLoaded then _}
+                            {#if cartItemCount === 0}
+                                <Basket weight="fill" />
+                            {:else}
+                                <span class="nav-basket">{cartItemCount}</span>
+                            {/if}
+                        {/await}
                     </a>
                 </li>
             </ul>

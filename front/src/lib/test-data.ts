@@ -61,21 +61,21 @@ Example
         `,
         labels: [Labels.nut],
     },
-    {
-        uuid: "gwagwa",
-        availability: false,
-        name: "GwaGwa",
-        price: 69,
-        labels: [Labels.nut],
-        images: ["/item_images/dab.jpg"],
-    },
+    // {
+    //     uuid: "gwagwa",
+    //     availability: false,
+    //     name: "GwaGwa",
+    //     price: 69,
+    //     labels: [Labels.nut],
+    //     images: ["/item_images/dab.jpg"],
+    // },
     {
         uuid: "hogmelon",
         availability: true,
         name: "Hogermellon",
         price: 1111,
         description: `
-This is a sample description. Gay Balls.
+This is a sample description.
 
 Contains the following:
 - hog
@@ -92,7 +92,7 @@ Contains the following:
         description: `
 This is a sample description.
 
-Gay Balls
+Blue Hog
         `,
         labels: [Labels.nut, Labels.gluten, Labels.spicy],
         images: ["/item_images/sonichog.jpg"],

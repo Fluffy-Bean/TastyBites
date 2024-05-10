@@ -1,10 +1,10 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
     import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from 'phosphor-svelte';
 
     import { type Item, Labels} from "../lib/types";
     import LoadingImage from '/assets/MenuItemLoadingAlt.svg';
-    import {onMount} from "svelte";
 
     export let item: Item;
 

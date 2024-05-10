@@ -34,6 +34,8 @@ func run(flags []string) {
 			fmt.Println("Run `TastyBites status` or use the flag -skipMigrations")
 			os.Exit(1)
 		}
+	} else {
+		fmt.Println("WARNING: Skipping migrations! This can lead to errors, or even data loss!")
 	}
 
 	api.Serve(api.Config{

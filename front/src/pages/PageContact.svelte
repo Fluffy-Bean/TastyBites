@@ -20,9 +20,11 @@
     function validateName() {
         nameValid = name.length > 1
     }
+
     function validateEmail() {
         emailValid = email.length > 1
     }
+
     function validateMessage() {
         messageValid = message.length > minMessageLength
     }
@@ -67,9 +69,11 @@
     {#await formMessage then formMessage}
         {#if formMessage}
             <p class="form-message success"><SealCheck weight="fill" />&nbsp;{formMessage}</p>
+            <div class="spacer half" />
         {/if}
     {:catch error}
         <p class="form-message error"><SealWarning weight="fill" />&nbsp;{error.message}</p>
+        <div class="spacer half" />
     {/await}
 
     <div class="form-element">
@@ -88,6 +92,8 @@
         {/if}
     </div>
 
+    <div class="spacer half" />
+
     <div class="form-element">
         <label class="form-label" for="email">Email</label>
         <input
@@ -104,6 +110,7 @@
         {/if}
     </div>
 
+    <div class="spacer half" />
     <!-- ToDo: Add dropdown for issue type, such as Technical, Order, Account, or other -->
 
     <div class="form-element">
@@ -122,6 +129,8 @@
             ({message.length}/{minMessageLength})
         </span>
     </div>
+
+    <div class="spacer" />
 
     <button type="submit">Submit&nbsp;&nbsp;<PaperPlaneRight weight="fill" /></button>
 </form>
