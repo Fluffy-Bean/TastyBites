@@ -17,7 +17,8 @@ function createCartStore() {
         }
 
         try {
-            const newData: Record<string, CartItem> = await postVerifyCart(localData);
+            const newData: Record<string, CartItem> =
+                await postVerifyCart(localData);
             cart.set(newData);
         } catch (error) {
             console.error("Could not load basket:", error);
