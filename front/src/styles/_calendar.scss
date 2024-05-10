@@ -1,0 +1,107 @@
+.calendar {
+    width: 400px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    border-radius: $border-radius-large;
+    background-color: $color-light;
+    color: $color-on-light;
+
+    overflow: hidden;
+}
+
+.calendar-header {
+    position: relative;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    border-bottom: 1px dotted rgba($color-light, 0.2);
+    background-color: $color-dark;
+    color: $color-on-dark;
+
+    z-index: 4;
+
+    > p {
+        padding-left: $spacing-normal;
+        flex-grow: 1;
+        font-size: $font-size-h4;
+    }
+
+    > button {
+        padding: $spacing-normal;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: $font-size-p;
+
+        border-radius: $border-radius-normal;
+        border: 1px solid transparent;
+        background-color: transparent;
+        color: $color-on-dark;
+
+        &:hover {
+            color: $color-primary;
+        }
+    }
+}
+
+.calendar-weeks {
+    padding: $spacing-small;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+    background-color: $color-dark;
+    color: $color-on-dark;
+    box-shadow: 0 0 3px 1px rgba(#000, 0.3);
+
+    > span {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.calendar-days {
+    padding: $spacing-small;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+    > div {
+        height: 40px;
+        overflow: hidden;
+        list-style: none;
+
+        > button {
+            padding: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: $border-radius-normal;
+            border: 1px solid transparent;
+            background-color: transparent;
+
+            &:hover {
+                border: 1px solid rgba($color-dark, 0.3);
+            }
+        }
+
+        &.today {
+            > button {
+                background-color: $color-primary;
+                color: $color-on-primary;
+            }
+        }
+    }
+}

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { expandOnTyping } from "../lib/utils";
+    import Calendar from "../components/Calendar.svelte";
 
     const specialRequestsMax = 300;
 
@@ -88,11 +89,11 @@
         {/if}
     </div>
 
-    <div class="spacer half" />
-    <hr>
     <div class="spacer" />
-    <hr>
-    <div class="spacer half" />
+
+    <Calendar />
+
+    <div class="spacer" />
 
     <div class="form-element">
         <label class="form-label" for="message">Message</label>
