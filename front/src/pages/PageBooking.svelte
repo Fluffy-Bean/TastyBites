@@ -91,7 +91,11 @@
 
     <div class="spacer" />
 
-    <Calendar />
+    <Calendar
+            on:selected={(event) => {
+                console.log(event.detail.date)
+            }}
+    />
 
     <div class="spacer" />
 

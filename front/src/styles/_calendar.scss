@@ -30,10 +30,17 @@
         padding-left: $spacing-normal;
         flex-grow: 1;
         font-size: $font-size-h4;
+
+        > span {
+            font-weight: $font-weight-bolder;
+        }
     }
 
     > button {
-        padding: $spacing-normal;
+        padding: 0 $spacing-normal;
+
+        height: 50px;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -99,6 +106,17 @@
 
         &.today {
             > button {
+                font-weight: $font-weight-black;
+                text-decoration: underline;
+                //background-color: $color-primary;
+                //color: $color-on-primary;
+            }
+        }
+
+        &.selected {
+            > button {
+                //background-color: $color-dark;
+                //color: $color-on-dark;
                 background-color: $color-primary;
                 color: $color-on-primary;
             }

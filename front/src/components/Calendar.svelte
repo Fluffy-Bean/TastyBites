@@ -1,12 +1,39 @@
-<script>
+<script lang="ts">
+    import { createEventDispatcher } from "svelte";
+
     import { ArrowArcLeft, ArrowArcRight } from "phosphor-svelte";
 
-    const weekLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-    const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const dispatcher = createEventDispatcher();
+    const weekLabels = [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun",
+    ];
+    const monthLabels = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ];
+
+    const today = new Date();
 
     let date = new Date();
     let year = date.getFullYear();
     let month = date.getMonth();
+    let selectedDate: Date;
 
     $: firstDayOffset = new Date(year, month, 0).getDay();
     $: monthLength = new Date(year, month + 1, 0).getDate();
@@ -14,18 +41,20 @@
 
     function last() {
         month -= 1;
-
-        if (month < 0 || month > 11) {
-            date = new Date(year, month, new Date().getDate());
-            year = date.getFullYear();
-            month = date.getMonth();
-        } else {
-            date = new Date();
-        }
+        updateDate();
     }
+
     function next() {
         month += 1;
+        updateDate();
+    }
 
+    function selected(day: number) {
+        selectedDate = new Date(year, month, day);
+        dispatcher("selected", { date: selectedDate });
+    }
+
+    function updateDate() {
         if (month < 0 || month > 11) {
             date = new Date(year, month, new Date().getDate());
             year = date.getFullYear();
@@ -42,28 +71,34 @@
 
 <div class="calendar">
     <div class="calendar-header">
-        <p>{monthLabels[month]}&nbsp;{year}</p>
+        <p>{monthLabels[month]}&nbsp;<span>{year}</span></p>
         <button on:click={last}><ArrowArcLeft weight="fill" /></button>
         <button on:click={next}><ArrowArcRight weight="fill" /></button>
     </div>
     <div class="calendar-weeks">
-        {#each weekLabels as weekname}
-            <span>{weekname}</span>
+        {#each weekLabels as label}
+            <span>{label}</span>
         {/each}
     </div>
     <div class="calendar-days">
         {#each {length:firstDayOffset} as _}
             <div />
         {/each}
-        {#each {length:monthLength} as _, i}
+        {#each {length:monthLength} as _, dayNum}
             <div
                     class:today={
-                        i === date.getDate()
-                        && month === new Date().getMonth()
-                        && year === new Date().getFullYear()
+                        dayNum+1 === today.getDate()
+                        && month === today.getMonth()
+                        && year === today.getFullYear()
+                    }
+                    class:selected={
+                        selectedDate
+                        && dayNum+1 === selectedDate.getDate()
+                        && month === selectedDate.getMonth()
+                        && year === selectedDate.getFullYear()
                     }
             >
-                <button>{i+1}</button>
+                <button on:click={() => { selected(dayNum+1) }}>{dayNum+1}</button>
             </div>
         {/each}
         {#each {length:lastDayOffset} as _}
