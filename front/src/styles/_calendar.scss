@@ -106,7 +106,7 @@
         }
 
         &:nth-child(7n-1),
-        &:nth-child(7n){
+        &:nth-child(7n) {
             > button {
                 color: rgba($color-on-light, 0.5);
             }
