@@ -3,32 +3,25 @@
     import Calendar from "../components/Calendar.svelte";
 
     const specialRequestsMax = 300;
+    const today = new Date();
 
     let name = "";
     let email = "";
     let telephone = "";
+    let date: Date;
     let specialRequests = "";
 
     let nameValid = true;
     let emailValid = true;
     let telephoneValid = true;
+    let dateValid = true;
     let specialRequestsValid = true;
 
-    function validateName() {
-        nameValid = name.length > 1
-    }
-
-    function validateEmail() {
-        emailValid = email.length > 1
-    }
-
-    function validateTelephone() {
-        telephoneValid = telephone.length == 11
-    }
-
-    function validateSpecialRequests() {
-        specialRequestsValid = specialRequests.length < 301
-    }
+    function validateName() { nameValid = name.length > 1}
+    function validateEmail() { emailValid = email.length > 1}
+    function validateTelephone() { telephoneValid = telephone.length == 11}
+    function validateDate() { dateValid = date > today;}
+    function validateSpecialRequests() { specialRequestsValid = specialRequests.length < 301 }
 
     function onSubmit(event) {
 
@@ -91,11 +84,17 @@
 
     <div class="spacer" />
 
-    <Calendar
-            on:selected={(event) => {
-                console.log(event.detail.date)
-            }}
-    />
+    <div class="form-element">
+        <p class="form-label">Booking Date</p>
+        <Calendar
+                bind:selectedDate={date}
+                on:selected={validateDate}
+                notBefore={today}
+        />
+        {#if !dateValid}
+            <span class="form-notice error">Date not valid! Must chose date tomorrow or later</span>
+        {/if}
+    </div>
 
     <div class="spacer" />
 
