@@ -74,7 +74,7 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
 }
 
 export async function getItemByUUID(uuid: string): Promise<Item> {
-    const data = await getItemsByUUID([uuid])
+    const data = await getItemsByUUID([uuid]);
     if (data.length !== 1) {
         throw new Error("Resource could not be found");
     }
@@ -130,5 +130,5 @@ export async function postVerifyCart(
     });
 
     await fakeDelay(1);
-    return newCartData
+    return newCartData;
 }
