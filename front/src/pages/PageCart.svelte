@@ -105,12 +105,14 @@
     #emptyCart {
         margin-left: auto;
         margin-right: auto;
-        padding: $spacing-large;
 
         max-width: $sizing-default-width;
+        height: 400px;
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
         > h1 {
             display: flex;

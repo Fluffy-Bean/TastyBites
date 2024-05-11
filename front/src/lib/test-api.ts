@@ -74,19 +74,10 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
 }
 
 export async function getItemByUUID(uuid: string): Promise<Item> {
-    const data: Item[] = [];
-
-    await getItemsByUUID([uuid])
-        .then((result) => {
-            if (result.length !== 1) {
-                throw new Error("Resource could not be found");
-            }
-            data.push(...result);
-        })
-        .catch((error) => {
-            throw error;
-        });
-
+    const data = await getItemsByUUID([uuid])
+    if (data.length !== 1) {
+        throw new Error("Resource could not be found");
+    }
     return data[0];
 }
 

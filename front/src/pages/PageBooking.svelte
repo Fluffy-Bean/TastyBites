@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { SealWarning, CaretDown } from "phosphor-svelte";
+
     import { expandOnTyping } from "../lib/utils";
     import Calendar from "../components/Calendar.svelte";
 
@@ -9,6 +11,7 @@
     let email = "";
     let telephone = "";
     let date: Date;
+    let timeSlot = "slot1";
     let specialRequests = "";
 
     let nameValid = true;
@@ -41,9 +44,11 @@
                 name="name"
                 class="form-input"
         />
-        {#if !nameValid}
-            <span class="form-notice error">Enter a name</span>
-        {/if}
+        <span class="form-notice error">
+            {#if !nameValid}
+                Enter a name
+            {/if}
+        </span>
     </div>
 
     <div class="spacer half" />
@@ -59,15 +64,17 @@
                 name="email"
                 class="form-input"
         />
-        {#if !emailValid}
-            <span class="form-notice error">Email not valid</span>
-        {/if}
+        <span class="form-notice error">
+            {#if !emailValid}
+                Email not valid
+            {/if}
+        </span>
     </div>
 
     <div class="spacer half" />
 
     <div class="form-element">
-        <label class="form-label" for="email">Telephone</label>
+        <label class="form-label" for="telephone">Telephone</label>
         <input
                 bind:value={telephone}
                 on:blur={validateTelephone}
@@ -77,9 +84,11 @@
                 name="telephone"
                 class="form-input"
         />
-        {#if !telephoneValid}
-            <span class="form-notice error">Telephone number not valid</span>
-        {/if}
+        <span class="form-notice error">
+            {#if !telephoneValid}
+                Telephone number not valid
+            {/if}
+        </span>
     </div>
 
     <div class="spacer" />
@@ -91,10 +100,42 @@
                 on:selected={validateDate}
                 notBefore={today}
         />
-        {#if !dateValid}
-            <span class="form-notice error">Date not valid! Must chose date tomorrow or later</span>
-        {/if}
+        <span class="form-notice error">
+            {#if !dateValid}
+                Must chose date that's tomorrow or later
+            {/if}
+        </span>
     </div>
+
+    <div class="spacer half" />
+
+    <!-- ToDo: Don't give a fake error for the weekend slots, just for testing  || !dateValid -->
+    {#if date && (date.getDay() === 6 || date.getDay() === 0)}
+        <p class="form-message error"><SealWarning weight="fill" />&nbsp;Time slots not available for this date</p>
+    {:else}
+        <div class="form-element">
+            <label class="form-label" for="time-slot">Time Slot</label>
+            <div class="select-container">
+                <select
+                        bind:value={timeSlot}
+                        class="form-input"
+                        id="time-slot"
+                        name="time-slot"
+                >
+                    <option value="slot0">8am to 10am</option>
+                    <option value="slot1">10am to 12am</option>
+                    <option value="slot2" disabled>12am to 2pm</option>
+                    <option value="slot3">2pm to 4pm</option>
+                    <option value="slot4">4pm to 6pm</option>
+                    <option value="slot5">6pm to 8pm</option>
+                    <option value="slot6">8pm to 10pm</option>
+                </select>
+                <div class="select-arrow">
+                    <CaretDown />
+                </div>
+            </div>
+        </div>
+    {/if}
 
     <div class="spacer" />
 
@@ -135,5 +176,35 @@
         max-width: calc(100vw - calc(2 * $spacing-normal));
         resize: none;
         overflow: hidden;
+    }
+
+    .select-container{
+        position: relative;
+
+        > select {
+            width: 200px;
+            appearance: none;
+        }
+
+        > .select-arrow {
+            height: 100%;
+
+            position: absolute;
+            top: 0;
+            right: $spacing-small;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition: transform 0.1s ease-in-out;
+            pointer-events: none;
+        }
+
+        &:hover {
+            > .select-arrow {
+                transform: translateY(2px);
+            }
+        }
     }
 </style>

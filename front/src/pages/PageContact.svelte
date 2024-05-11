@@ -17,22 +17,13 @@
     let emailValid = true;
     let messageValid = false;
 
-    function validateName() {
-        nameValid = name.length > 1
-    }
-
-    function validateEmail() {
-        emailValid = email.length > 1
-    }
-
-    function validateMessage() {
-        messageValid = message.length > minMessageLength
-    }
+    function validateName() { nameValid = name.length > 1 }
+    function validateEmail() { emailValid = email.length > 1 }
+    function validateMessage() { messageValid = message.length > minMessageLength }
 
     function onSubmit() {
         nameValid = true;
         emailValid = true;
-        messageValid = false;
 
         formMessage = postContactEmail(name, email, message)
             .catch((error) => {
@@ -66,6 +57,66 @@
 
 <h2>Contact From</h2>
 <form on:submit|preventDefault={onSubmit}>
+    <div class="form-element">
+        <label class="form-label" for="name">Name</label>
+        <input
+                bind:value={name}
+                on:blur={validateName}
+                on:input={validateName}
+                type="text"
+                id="name"
+                name="name"
+                class="form-input"
+        />
+        <span class="form-notice error">
+            {#if !nameValid}
+                Enter a name
+            {/if}
+        </span>
+    </div>
+
+    <div class="spacer half" />
+
+    <div class="form-element">
+        <label class="form-label" for="email">Email</label>
+        <input
+                bind:value={email}
+                on:blur={validateEmail}
+                on:input={validateEmail}
+                type="text"
+                id="email"
+                name="email"
+                class="form-input"
+        />
+        <span class="form-notice error">
+            {#if !emailValid}
+                Email not valid
+            {/if}
+        </span>
+    </div>
+
+    <div class="spacer half" />
+    <!-- ToDo: Add dropdown for issue type, such as Technical, Order, Account, or other -->
+
+    <div class="form-element">
+        <label class="form-label" for="message">Message</label>
+        <textarea
+                bind:value={message}
+                on:input={validateMessage}
+                use:expandOnTyping
+                rows="1"
+                cols="50"
+                id="message"
+                name="message"
+                class="form-input"
+        />
+        <span class="form-notice" class:error={!messageValid}>
+            ({message.length}/{minMessageLength})
+        </span>
+    </div>
+
+    <div class="spacer half" />
+
     {#await formMessage then formMessage}
         {#if formMessage}
             <p class="form-message success"><SealCheck weight="fill" />&nbsp;{formMessage}</p>
@@ -75,62 +126,6 @@
         <p class="form-message error"><SealWarning weight="fill" />&nbsp;{error.message}</p>
         <div class="spacer half" />
     {/await}
-
-    <div class="form-element">
-        <label class="form-label" for="name">Name</label>
-        <input
-            bind:value={name}
-            on:blur={validateName}
-            on:input={validateName}
-            type="text"
-            id="name"
-            name="name"
-            class="form-input"
-        />
-        {#if !nameValid}
-            <span class="form-notice error">Enter a name</span>
-        {/if}
-    </div>
-
-    <div class="spacer half" />
-
-    <div class="form-element">
-        <label class="form-label" for="email">Email</label>
-        <input
-            bind:value={email}
-            on:blur={validateEmail}
-            on:input={validateEmail}
-            type="text"
-            id="email"
-            name="email"
-            class="form-input"
-        />
-        {#if !emailValid}
-            <span class="form-notice error">Email not valid</span>
-        {/if}
-    </div>
-
-    <div class="spacer half" />
-    <!-- ToDo: Add dropdown for issue type, such as Technical, Order, Account, or other -->
-
-    <div class="form-element">
-        <label class="form-label" for="message">Message</label>
-        <textarea
-            bind:value={message}
-            on:input={validateMessage}
-            use:expandOnTyping
-            rows="1"
-            cols="50"
-            id="message"
-            name="message"
-            class="form-input"
-        />
-        <span class="form-notice" class:error={!messageValid}>
-            ({message.length}/{minMessageLength})
-        </span>
-    </div>
-
-    <div class="spacer" />
 
     <button type="submit">Submit&nbsp;&nbsp;<PaperPlaneRight weight="fill" /></button>
 </form>

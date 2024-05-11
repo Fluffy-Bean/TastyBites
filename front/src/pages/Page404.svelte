@@ -11,12 +11,12 @@
     @import "../styles/vars";
 
     div {
-        padding: $spacing-large;
-
-        height: 100%;
+        height: 400px;
 
         display: flex;
         flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
     h1 {
         display: flex;
