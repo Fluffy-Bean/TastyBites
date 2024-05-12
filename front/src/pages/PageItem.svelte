@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, GrainsSlash, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart, SealWarning } from "phosphor-svelte";
+    import { Acorn, Fish, GrainsSlash, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart, SealWarning, ArrowLeft } from "phosphor-svelte";
     import SvelteMarkdown from 'svelte-markdown'
 
     import { Labels } from "../lib/types";
@@ -46,6 +46,10 @@
     {/if}
 {/await}
 
+<a href="/menu" use:link id="back-button"><ArrowLeft />&nbsp;Back</a>
+
+<div class="spacer half" />
+
 <div class="main">
     {#await item}
         <div id="images">
@@ -60,6 +64,8 @@
                 <li><div class="loading image-small" /></li>
             </ul>
         </div>
+
+        <div class="spacer half" />
 
         <div id="info">
             <div class="loading title" />
@@ -87,6 +93,9 @@
                 {/if}
             </ul>
         </div>
+
+        <div class="spacer half" />
+
         <div id="info">
             <h2>{item.name}</h2>
             <p>£{item.price}</p>
@@ -131,7 +140,7 @@
                 <button class="button" class:disabled={basketAmount <= 1} on:click={reduce}><Minus /></button>
                 <p>{basketAmount}</p>
                 <button class="button" class:disabled={basketAmount >= 99} on:click={increase}><Plus /></button>
-                <hr>
+                <div class="spacer half" />
                 {#await cartLoaded}
                     <button class="button add disabled" id="add-to-cart">Add&nbsp;to&nbsp;Cart&nbsp;&nbsp;<ShoppingCart weight="fill" /></button>
                 {:then _}
@@ -191,13 +200,37 @@
         }
     }
 
+    #back-button {
+        margin-top: 8px;
+        padding: 0 $spacing-small;
+
+        width: max-content;
+        height: 30px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        font-size: $font-size-p;
+        text-decoration: none;
+
+        border-radius: 9999px;
+        background-color: transparent;
+        color: $color-on-background;
+
+        &:hover {
+            background-color: $color-light;
+            color: $color-on-light;
+        }
+    }
+
     .main {
         display: flex;
         flex-direction: row;
     }
 
     #images {
-        margin-right: $spacing-normal;
         display: flex;
         flex-direction: column;
 
@@ -341,7 +374,9 @@
 
             &.add {
                 padding: 0 $spacing-normal;
+
                 border: 0 solid transparent;
+                border-radius: $border-radius-circle;
                 background-color: $color-dark;
                 color: $color-on-dark;
 
@@ -383,16 +418,6 @@
 
             border: 1px solid transparent;
             color: $color-on-light;
-        }
-
-        > hr {
-            margin: 0 $spacing-small;
-
-            width: 1px;
-            height: 100%;
-
-            border: 0 solid transparent;
-            background-color: rgba($color-dark, 0.1);
         }
     }
 

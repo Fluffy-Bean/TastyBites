@@ -90,9 +90,20 @@ button {
 }
 
 .spacer {
+    min-width: $spacing-large;
+    width: $spacing-large;
+    max-width: $spacing-large;
+    min-height: $spacing-large;
     height: $spacing-large;
+    max-height: $spacing-large;
+
     &.half {
+        min-width: calc($spacing-large / 2);
+        width: calc($spacing-large / 2);
+        max-width: calc($spacing-large / 2);
+        min-height: calc($spacing-large / 2);
         height: calc($spacing-large / 2);
+        max-height: calc($spacing-large / 2);
     }
 }
 
