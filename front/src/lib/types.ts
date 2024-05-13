@@ -14,14 +14,14 @@ export type Item = {
     description: string;
     labels?: Labels[];
     images?: string[];
-}
+};
 
 export type CartItem = {
     amount: number;
     data: Item;
-}
+};
 
 export type JSONResponse = {
-    data?: { item: Item[] }
-    error?: string,
-}
+    data?: { item: Item[] };
+    error?: string;
+};
