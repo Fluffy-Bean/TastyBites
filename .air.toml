@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  args_bin = ["run", "-host=127.0.0.1:3000"]
+  args_bin = ["run", "-host=127.0.0.1:3000", "-log"]
   bin = "./tmp/main"
   cmd = "go build -o ./tmp/main ."
   delay = 1000

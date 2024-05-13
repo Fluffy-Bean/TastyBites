@@ -15,6 +15,11 @@ type Config struct {
 	Logging bool
 }
 
+type JSONResponse struct {
+	Data  interface{} `json:"data,omitempty"`
+	Error string      `json:"error,omitempty"`
+}
+
 func Serve(c Config) {
 	r := echo.New()
 
@@ -28,6 +33,11 @@ func Serve(c Config) {
 
 	apiGroup := r.Group("/api")
 	apiGroup.GET("/items", func(e echo.Context) error {
+		var response JSONResponse
+		type ItemResponse struct {
+			Item []db.Item `json:"item"`
+		}
+
 		builder := db.ItemStruct.SelectFrom("Item").Select("*")
 		query, args := builder.BuildWithFlavor(sb.SQLite)
 
@@ -35,7 +45,8 @@ func Serve(c Config) {
 		defer rows.Close()
 		if err != nil {
 			r.Logger.Fatal(err)
-			return e.String(http.StatusInternalServerError, "Could not query for data")
+			response.Error = "Could not query for data"
+			return e.JSON(http.StatusInternalServerError, response)
 		}
 
 		var items []db.Item
@@ -44,12 +55,16 @@ func Serve(c Config) {
 			err := rows.Scan(db.ItemStruct.Addr(&item)...)
 			if err != nil {
 				r.Logger.Fatal(err)
-				return e.String(http.StatusInternalServerError, "Could not scan row")
+				response.Error = "Failed to map response"
+				return e.JSON(http.StatusInternalServerError, response)
 			}
 			items = append(items, item)
 		}
+		response.Data = ItemResponse{
+			Item: items,
+		}
 
-		return e.JSON(http.StatusOK, items)
+		return e.JSON(http.StatusOK, response)
 	})
 
 	r.HideBanner = true

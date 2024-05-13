@@ -23,26 +23,28 @@
 <svelte:window on:resize={keepSquare}></svelte:window>
 
 <div class="menu-item" bind:this={element}>
-    {#if item.images}
+    {#if item.images && item.images[0]}
         <img src={item.images[0]} alt="" class="menu-item-image">
     {:else}
         <img src={LoadingImage} alt="" class="menu-item-image">
     {/if}
 
     <ul class="menu-item-labels">
-        {#each item.labels as label}
-            {#if label === Labels.vegan}
-                <li class="vegan"><Leaf weight="fill" /></li>
-            {:else if label === Labels.fish}
-                <li class="fish"><Fish weight="fill" /></li>
-            {:else if label === Labels.nut}
-                <li class="nut"><Acorn weight="fill" /></li>
-            {:else if label === Labels.gluten}
-                <li class="gluten"><GrainsSlash weight="fill" /></li>
-            {:else if label === Labels.spicy}
-                <li class="spicy"><Pepper weight="fill" /></li>
-            {/if}
-        {/each}
+        {#if item.labels}
+            {#each item.labels as label}
+                {#if label === Labels.vegan}
+                    <li class="vegan"><Leaf weight="fill" /></li>
+                {:else if label === Labels.fish}
+                    <li class="fish"><Fish weight="fill" /></li>
+                {:else if label === Labels.nut}
+                    <li class="nut"><Acorn weight="fill" /></li>
+                {:else if label === Labels.gluten}
+                    <li class="gluten"><GrainsSlash weight="fill" /></li>
+                {:else if label === Labels.spicy}
+                    <li class="spicy"><Pepper weight="fill" /></li>
+                {/if}
+            {/each}
+        {/if}
     </ul>
 
     <a class="menu-item-link" href="/item/{item.uuid}" use:link>

@@ -6,17 +6,22 @@ export enum Labels {
     gluten = "GLUTEN",
 }
 
-export interface Item {
+export type Item = {
     uuid: string;
-    availability: boolean;
+    availability?: boolean;
     name: string;
     price: number;
-    labels: Labels[];
-    description?: string;
+    description: string;
+    labels?: Labels[];
     images?: string[];
 }
 
-export interface CartItem {
+export type CartItem = {
     amount: number;
     data: Item;
+}
+
+export type JSONResponse = {
+    data?: { item: Item[] }
+    error?: string,
 }
