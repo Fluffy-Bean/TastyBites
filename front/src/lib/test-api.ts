@@ -25,7 +25,9 @@ export async function getPopularToday(): Promise<Item[]> {
     return cache["popular_today"];
 }
 
-export async function getMenuItems(): Promise<{ name: string; items: Item[] }[]> {
+export async function getMenuItems(): Promise<
+    { name: string; items: Item[] }[]
+> {
     await fakeDelay(20);
     return [
         {
@@ -66,7 +68,11 @@ export async function getItemByUUID(uuid: string): Promise<Item> {
     return data[0];
 }
 
-export async function postContactEmail(name: string, email: string, message: string): Promise<string> {
+export async function postContactEmail(
+    name: string,
+    email: string,
+    message: string
+): Promise<string> {
     await fakeDelay(200);
 
     if (!name) throw new Error("Name missing");
@@ -77,7 +83,9 @@ export async function postContactEmail(name: string, email: string, message: str
     return "Check your email to confirm the message!";
 }
 
-export async function postVerifyCart(cartData: Record<string, CartItem>): Promise<Record<string, CartItem>> {
+export async function postVerifyCart(
+    cartData: Record<string, CartItem>
+): Promise<Record<string, CartItem>> {
     let verifiedItems: Item[] = [];
 
     try {
