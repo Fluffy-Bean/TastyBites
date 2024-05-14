@@ -22,6 +22,8 @@ export type CartItem = {
 };
 
 export type JSONResponse = {
-    data?: any; // Todo make this _not_ an any
+    data?: {
+        item: Item[], // Todo Make this not just item type
+    };
     error?: string;
 };

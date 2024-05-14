@@ -8,34 +8,24 @@ async function fakeDelay(timeout = 1000) {
 }
 
 export async function getAnnouncements(): Promise<{ image: string }> {
-    if (cache["announcement_banner"] !== undefined) {
-        return cache["announcement_banner"];
+    if (cache["announcement_banner"] === undefined) {
+        cache["announcement_banner"] = {
+            image: "/banner_images/BannerExampleImage.jpg",
+        };
+        await fakeDelay(200);
     }
-    await fakeDelay(200);
-
-    const data = {
-        image: "/banner_images/BannerExampleImage.jpg",
-    };
-    cache["announcement_banner"] = data;
-
-    return data;
+    return cache["announcement_banner"];
 }
 
 export async function getPopularToday(): Promise<Item[]> {
-    if (cache["popular_today"] !== undefined) {
-        return cache["popular_today"];
+    if (cache["popular_today"] === undefined) {
+        cache["popular_today"] = TestData;
+        await fakeDelay(200);
     }
-    await fakeDelay(200);
-
-    const data: Item[] = TestData;
-    cache["popular_today"] = data;
-
-    return data;
+    return cache["popular_today"];
 }
 
-export async function getMenuItems(): Promise<
-    { name: string; items: Item[] }[]
-> {
+export async function getMenuItems(): Promise<{ name: string; items: Item[] }[]> {
     await fakeDelay(20);
     return [
         {
@@ -54,8 +44,6 @@ export async function getMenuItems(): Promise<
 }
 
 export async function getItemsByUUID(items: string[]): Promise<Item[]> {
-    await fakeDelay(200);
-
     const data: Item[] = [];
 
     TestData.forEach((itemInDatabase: Item) => {
@@ -66,59 +54,41 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
         });
     });
 
-    if (data.length === 0) {
-        throw new Error("Resource could not be found");
-    }
+    if (data.length === 0) throw new Error("Resource could not be found");
 
+    await fakeDelay(200);
     return data;
 }
 
 export async function getItemByUUID(uuid: string): Promise<Item> {
     const data = await getItemsByUUID([uuid]);
-    if (data.length !== 1) {
-        throw new Error("Resource could not be found");
-    }
+    if (data.length !== 1) throw new Error("Resource could not be found");
     return data[0];
 }
 
-export async function postContactEmail(
-    name: string,
-    email: string,
-    message: string
-): Promise<string> {
+export async function postContactEmail(name: string, email: string, message: string): Promise<string> {
     await fakeDelay(200);
 
-    if (!name) {
-        throw new Error("Name missing");
-    }
-    if (!email) {
-        throw new Error("Email missing");
-    }
-    if (!message) {
-        throw new Error("Message missing");
-    } else if (message.length < 150) {
-        throw new Error("Message FUCKED");
-    }
+    if (!name) throw new Error("Name missing");
+    if (!email) throw new Error("Email missing");
+    if (!message) throw new Error("Message missing");
+    if (message.length < 150) throw new Error("Message FUCKED");
 
     return "Check your email to confirm the message!";
 }
 
-export async function postVerifyCart(
-    currentCartData: Record<string, CartItem>
-): Promise<Record<string, CartItem>> {
-    const verifiedItems: Item[] = [];
+export async function postVerifyCart(cartData: Record<string, CartItem>): Promise<Record<string, CartItem>> {
+    let verifiedItems: Item[] = [];
 
-    await getItemsByUUID(Object.keys(currentCartData))
-        .then((data) => {
-            verifiedItems.push(...data);
-        })
-        .catch(() => {
-            return new Error("Could not collect new cart information");
-        });
+    try {
+        verifiedItems = await getItemsByUUID(Object.keys(cartData));
+    } catch (error) {
+        throw new Error(error);
+    }
 
     const newCartData: Record<string, CartItem> = {};
 
-    Object.entries(currentCartData).forEach(([uuid, currentData]) => {
+    Object.entries(cartData).forEach(([uuid, currentData]) => {
         verifiedItems.forEach((verifiedItem: Item) => {
             if (verifiedItem.uuid === uuid) {
                 newCartData[uuid] = {
