@@ -1,48 +1,48 @@
 import { wrap } from "svelte-spa-router/wrap";
 
-import PageLoading from "./pages/PageLoading.svelte";
-import Page404 from "./pages/Page404.svelte";
-import Page500 from "./pages/Page500.svelte";
+import PageLoading from "./pages/Loading.svelte";
+import Page404 from "./pages/404.svelte";
+import Page500 from "./pages/500.svelte";
 
 const routes = {
     "/": wrap({
-        asyncComponent: () => import("./pages/PageIndex.svelte"),
+        asyncComponent: () => import("./pages/Index.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
     }),
     "/menu": wrap({
-        asyncComponent: () => import("./pages/PageMenu.svelte"),
+        asyncComponent: () => import("./pages/Menu.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: true },
     }),
     "/item/:uuid": wrap({
-        asyncComponent: () => import("./pages/PageItem.svelte"),
+        asyncComponent: () => import("./pages/Item.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: true },
     }),
     "/contact": wrap({
-        asyncComponent: () => import("./pages/PageContact.svelte"),
+        asyncComponent: () => import("./pages/Contact.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
     }),
     "/about": wrap({
-        asyncComponent: () => import("./pages/PageAbout.svelte"),
+        asyncComponent: () => import("./pages/About.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
     }),
     "/cart": wrap({
-        asyncComponent: () => import("./pages/PageCart.svelte"),
+        asyncComponent: () => import("./pages/Cart.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
     }),
     "/booking": wrap({
-        asyncComponent: () => import("./pages/PageBooking.svelte"),
+        asyncComponent: () => import("./pages/Booking.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: true },
