@@ -2,7 +2,6 @@ import { wrap } from "svelte-spa-router/wrap";
 
 import PageLoading from "./pages/Loading.svelte";
 import Page404 from "./pages/404.svelte";
-import Page500 from "./pages/500.svelte";
 
 const routes = {
     "/": wrap({
@@ -41,21 +40,16 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
     }),
+    "/cart/checkout": wrap({
+        component: Page404,
+        conditions: [],
+        userData: { showNavBar: false, fullWidth: true },
+    }),
     "/booking": wrap({
         asyncComponent: () => import("./pages/Booking.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
         userData: { showNavBar: true, fullWidth: true },
-    }),
-    "/ForOhFor": wrap({
-        component: Page404,
-        conditions: [],
-        userData: { showNavBar: true, fullWidth: false },
-    }),
-    "/ServerError": wrap({
-        component: Page500,
-        conditions: [],
-        userData: { showNavBar: true, fullWidth: false },
     }),
     "*": wrap({
         component: Page404,

@@ -5,7 +5,7 @@
     import { type CartItem } from "../lib/types";
     import { getPopularToday } from "../lib/test-api";
     import Cart, { cartLoaded } from "../lib/cart";
-    import MenuList from "../components/MenuList.svelte";
+    import MenuItemGrid from "../components/MenuItemGrid.svelte";
     import BasketItem from "../components/BasketItem.svelte";
     import DropDown from "../components/DropDown.svelte";
 
@@ -53,7 +53,7 @@
 {#await popularToday}
     <p>Loading</p>
 {:then popularToday}
-    <MenuList items={popularToday} />
+    <MenuItemGrid items={popularToday} />
 {/await}
 
 <div class="spacer" />

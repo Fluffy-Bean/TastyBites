@@ -3,7 +3,7 @@
 
     import { getMenuItems } from "../lib/test-api";
     import LoadingBar from "../components/LoadingBar.svelte";
-    import MenuList from "../components/MenuList.svelte";
+    import MenuList from "../components/MenuItemGrid.svelte";
     import DropDown from "../components/DropDown.svelte";
 
     let items = getMenuItems();

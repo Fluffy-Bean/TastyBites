@@ -6,7 +6,7 @@
     import { Labels } from "../lib/types";
     import { getPopularToday, getItemByUUID } from "../lib/test-api";
     import Cart, { cartLoaded } from "../lib/cart";
-    import MenuList from "../components/MenuList.svelte";
+    import MenuItemGrid from "../components/MenuItemGrid.svelte";
     import LoadingBar from "../components/LoadingBar.svelte";
     import LoadingImage from "/assets/MenuItemLoading.svg";
 
@@ -164,7 +164,7 @@
         {#await popularToday}
             <LoadingBar />
         {:then items}
-            <MenuList {items} />
+            <MenuItemGrid {items} />
         {:catch error}
             <p>{error}</p>
         {/await}

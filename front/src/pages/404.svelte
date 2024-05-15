@@ -4,7 +4,7 @@
 
 <div>
     <h1>You're lost!&nbsp;<SmileySad weight="fill" /></h1>
-    <p>Error 404</p>
+    <p>Error ForOhFor</p>
 </div>
 
 <style lang="scss">
