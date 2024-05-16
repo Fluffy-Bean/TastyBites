@@ -62,7 +62,11 @@ Contains:
 - Cupcake with icing eated
 `,
         labels: [Labels.nut],
-        images: ["/item_images/cupcake.jpg", "/item_images/cupcake.jpg", "/item_images/cupcake.jpg"],
+        images: [
+            "/item_images/cupcake.jpg",
+            "/item_images/cupcake.jpg",
+            "/item_images/cupcake.jpg",
+        ],
     },
     // {
     //     uuid: "gwagwa",
