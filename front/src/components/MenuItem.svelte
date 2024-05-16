@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash, SealWarning } from 'phosphor-svelte';
+    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from 'phosphor-svelte';
 
     import { type Item, Labels} from "../lib/types";
     import LoadingImage from '/assets/MenuItemLoadingAlt.svg';
@@ -10,21 +10,19 @@
 
     let element: HTMLElement;
 
-    onMount(() => {
-        keepSquare();
-    })
-
     function keepSquare() {
         element.style.height = "";
         element.style.height = element.offsetWidth + "px";
     }
+
+    onMount(keepSquare)
 </script>
 
 <svelte:window on:resize={keepSquare}></svelte:window>
 
 <div class="menu-item" bind:this={element}>
     {#if !item.availability}
-<!--        <div class="menu-item-notice"><span>Item is no-longer for sale</span></div>-->
+        <!--<div class="menu-item-notice"><span>Item is no-longer for sale</span></div>-->
     {/if}
 
     {#if item.images && item.images[0]}
@@ -51,13 +49,7 @@
         {/if}
     </ul>
 
-    <a class="menu-item-link" href="/item/{item.uuid}" use:link>
-        View&nbsp;<ArrowUpRight />
-    </a>
-
-    <ul class="menu-item-detail">
-        <li>{item.name}</li>
-        <li>£{item.price}</li>
-    </ul>
+    <a class="menu-item-link" href="/item/{item.uuid}" use:link>View&nbsp;<ArrowUpRight /></a>
+    <ul class="menu-item-detail"><li>£{item.price} | {item.name}</li></ul>
 </div>
 

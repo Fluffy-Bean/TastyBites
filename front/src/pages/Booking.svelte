@@ -8,16 +8,14 @@
     let progress = 1;
     querystring.subscribe((params) => {
         const url = new URLSearchParams(params);
+        const parsed = parseInt(url.get("progress"));
 
         progress = 1;
-        if (
-            url.has("progress") &&
-            !isNaN(parseInt(url.get("progress")))
-        ) {
-            progress = parseInt(url.get("progress"));
-        }
 
-        if ([1, 2, 3].indexOf(progress) == -1) {
+        if (url.has("progress") && !isNaN(parsed)) {
+            progress = parsed;
+        }
+        if ([1, 2, 3].indexOf(progress) === -1) {
             progress = 1;
             push("/booking?progress=1");
         }
@@ -226,7 +224,6 @@
             margin: 0 $spacing-normal;
 
             width: 100%;
-            max-width: 500px;
             height: 5px;
 
             position: relative;

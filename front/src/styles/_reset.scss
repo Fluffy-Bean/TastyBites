@@ -107,6 +107,20 @@ button {
     }
 }
 
+.section {
+    padding: $spacing-normal;
+
+    &.large {
+        padding: $spacing-large;
+    }
+    &.small {
+        padding: $spacing-small;
+    }
+    &.xsmall {
+        padding: $spacing-xsmall;
+    }
+}
+
 main {
     margin-left: auto;
     margin-right: auto;

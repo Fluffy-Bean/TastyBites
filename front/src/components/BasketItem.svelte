@@ -23,61 +23,67 @@
     }
 </script>
 
-<div class="container">
-    {#if !item.data.availability}
-        <div class="basket-item-notice">
-            <SealWarning weight="fill" />&nbsp;&nbsp;<span>Item is no-longer for sale</span>
-        </div>
-    {/if}
 
-    {#if item.data.images && item.data.images[0]}
-        <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
-    {:else}
-        <img src={ImageLoading} alt="Item" class="basket-item-image">
-    {/if}
+<div class="container" >
+    <div class="basket-item" class:basket-item-availability={!item.data.availability}>
+        {#if !item.data.availability}
+            <div class="basket-item-notice">
+                <SealWarning weight="fill" />&nbsp;&nbsp;<span>Item is no-longer for sale</span>
+            </div>
+        {/if}
 
-    <ul class="basket-item-data">
-        <li class="basket-item-name"><a href="/item/{item.data.uuid}" use:link>{item.data.name}</a></li>
-        <li class="basket-item-controls">
-            <button class="button" class:disabled={item.amount <= 1} on:click={reduce}><Minus /></button>
-            <p>{item.amount}</p>
-            <button class="button" class:disabled={item.amount >= 99} on:click={add}><Plus /></button>
-            <hr>
-            <button class="button evil" on:click={yeet}><Trash /></button>
-        </li>
-        <li class="basket-item-price">£{item.data.price * item.amount} (£{item.data.price})</li>
-    </ul>
+        {#if item.data.images && item.data.images[0]}
+            <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
+        {:else}
+            <img src={ImageLoading} alt="Item" class="basket-item-image">
+        {/if}
 
-    <ul class="basket-item-labels">
-        {#each item.data.labels as label}
-            {#if label === Labels.vegan}
-                <li class="vegan"><Leaf weight="fill" /></li>
-            {:else if label === Labels.fish}
-                <li class="fish"><Fish weight="fill" /></li>
-            {:else if label === Labels.nut}
-                <li class="nut"><Acorn weight="fill" /></li>
-            {:else if label === Labels.gluten}
-                <li class="gluten"><GrainsSlash weight="fill" /></li>
-            {:else if label === Labels.spicy}
-                <li class="spicy"><Pepper weight="fill" /></li>
-            {/if}
-        {/each}
-    </ul>
+        <ul class="basket-item-data">
+            <li class="basket-item-name"><a href="/item/{item.data.uuid}" use:link>{item.data.name}</a></li>
+            <li class="basket-item-controls">
+                <button class="button" class:disabled={item.amount <= 1} on:click={reduce}><Minus /></button>
+                <p>{item.amount}</p>
+                <button class="button" class:disabled={item.amount >= 99} on:click={add}><Plus /></button>
+                <hr>
+                <button class="button evil" on:click={yeet}><Trash /></button>
+            </li>
+            <li class="basket-item-price">£{item.data.price * item.amount} (£{item.data.price})</li>
+        </ul>
+
+        <ul class="basket-item-labels">
+            {#each item.data.labels as label}
+                {#if label === Labels.vegan}
+                    <li class="vegan"><Leaf weight="fill" /></li>
+                {:else if label === Labels.fish}
+                    <li class="fish"><Fish weight="fill" /></li>
+                {:else if label === Labels.nut}
+                    <li class="nut"><Acorn weight="fill" /></li>
+                {:else if label === Labels.gluten}
+                    <li class="gluten"><GrainsSlash weight="fill" /></li>
+                {:else if label === Labels.spicy}
+                    <li class="spicy"><Pepper weight="fill" /></li>
+                {/if}
+            {/each}
+        </ul>
+    </div>
 </div>
 
 <style lang="scss">
     @import "../styles/vars";
 
-    .container {
+    .basket-item {
         position: relative;
 
         display: flex;
         flex-direction: row;
 
-        // Move background out of way of the image
-        background-position: 135px -43px;
+        border-radius: $border-radius-normal;
 
         overflow: hidden;
+
+        &.basket-item-availability {
+            padding-top: 30px;
+        }
     }
     .basket-item-notice {
         width: 100%;
@@ -148,8 +154,8 @@
         }
     }
     .basket-item-data {
-        margin: $spacing-small;
-        padding: 0;
+        margin: 0;
+        padding: $spacing-small;
 
         display: flex;
         flex-direction: column;

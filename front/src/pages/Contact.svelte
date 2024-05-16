@@ -7,7 +7,7 @@
 
     const minMessageLength = 150;
 
-    let formMessage: Promise<string | Error>;
+    let formMessage: Promise<string>;
 
     let name = "";
     let email = "";
