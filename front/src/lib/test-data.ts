@@ -5,7 +5,7 @@ const TestData: Item[] = [
         uuid: "soap",
         availability: true,
         name: "Bar of Soap",
-        price: 69.99,
+        price: 2.99,
         description: `Example`,
         labels: [Labels.vegan, Labels.spicy],
     },
@@ -13,7 +13,7 @@ const TestData: Item[] = [
         uuid: "sock",
         availability: true,
         name: "Sock",
-        price: 21,
+        price: 1.99,
         description: `Example`,
         labels: [Labels.vegan, Labels.fish, Labels.nut, Labels.spicy],
     },
@@ -29,7 +29,7 @@ const TestData: Item[] = [
         uuid: "toast",
         availability: true,
         name: "Toast",
-        price: 4382749832743,
+        price: 3.49,
         description: `Example`,
         labels: [Labels.gluten],
     },
@@ -45,7 +45,7 @@ const TestData: Item[] = [
         uuid: "mouldy_bread",
         availability: true,
         name: "half eaten mouldy bread",
-        price: -99,
+        price: 0.39,
         description: `Example`,
         labels: [Labels.nut],
     },
@@ -68,19 +68,20 @@ Contains:
             "/item_images/cupcake.jpg",
         ],
     },
-    // {
-    //     uuid: "gwagwa",
-    //     availability: false,
-    //     name: "GwaGwa",
-    //     price: 69,
-    //     labels: [Labels.nut],
-    //     images: ["/item_images/dab.jpg"],
-    // },
+    {
+        uuid: "gwagwa",
+        availability: false,
+        name: "GwaGwa",
+        price: 69,
+        description: `Example`,
+        labels: [Labels.nut],
+        images: ["/item_images/dab.jpg"],
+    },
     {
         uuid: "hogmelon",
         availability: true,
         name: "Hogermellon",
-        price: 1111,
+        price: 12.99,
         description: `
 This is a sample description.
 
@@ -95,7 +96,7 @@ Contains the following:
         uuid: "bluhog",
         availability: true,
         name: "Blue HOGGGGG",
-        price: 0,
+        price: 13.99,
         description: `
 This is a sample description.
 

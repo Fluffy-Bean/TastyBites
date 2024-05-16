@@ -1,18 +1,25 @@
 <script lang="ts">
-    import { type CartItem } from "../../lib/types";
+    import { link } from "svelte-spa-router";
+    import { SealWarning } from "phosphor-svelte";
+
     import Cart from "../../lib/cart";
 
-    let items: [string, CartItem][];
-    let totalPrice: number;
+    let items = Cart.getEntries();
+    let totalPrice = Cart.getTotalPrice();
 
-    Cart.subscribe(() => {
-        items = Cart.getEntries();
-        totalPrice = Cart.getTotalPrice();
+    let unavailableItems = false;
+    Cart.getEntries().forEach(([_, item]) => {
+        if (!item.data.availability) unavailableItems = true;
     });
 </script>
 
 <h1>Checkout > Order</h1>
 <div class="container">
+    {#if unavailableItems}
+        <div class="unavailable-items-banner">
+            <SealWarning weight="fill" />&nbsp;&nbsp;<span>Order contains an item that is no-longer available</span>
+        </div>
+    {/if}
     <div class="section small">
         <div class="table">
             <table>
@@ -30,10 +37,33 @@
 
         <p>Total: ${totalPrice}</p>
     </div>
+    <hr>
+    <div class="section small">
+        <p>To make any changes to your order, <a href="/cart" use:link>please go back to your cart</a>.</p>
+    </div>
 </div>
 
 <style lang="scss">
     @import "../../styles/vars";
+
+    .container {
+        overflow: hidden;
+    }
+
+    .unavailable-items-banner {
+        height: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: $font-size-p;
+
+        background: $color-error;
+        color: $color-on-error;
+
+        box-shadow: 0 1px 0.5px rgba(#000, 0.3);
+    }
 
     .table {
         border-radius: $border-radius-normal;

@@ -1,27 +1,14 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
-    import { ArrowLeft, ArrowRight, Basket, SealWarning } from "phosphor-svelte";
+    import { ArrowLeft, ArrowRight, Basket } from "phosphor-svelte";
 
-    import Cart from "../lib/cart";
     import PaymentForm from "./Checkout/PaymentForm.svelte";
     import LeFinal from "./Checkout/LeFinal.svelte";
 
     export let params: {
         progress?: string;
     };
-
-    let unavailableItems = false;
-    Cart.getEntries().forEach(([_, item]) => {
-        if (!item.data.availability) unavailableItems = true;
-    });
-
 </script>
-
-{#if unavailableItems}
-    <div class="notice error">
-        <SealWarning weight="fill" />&nbsp;&nbsp;<span>Order contains an item that is no-longer available</span>
-    </div>
-{/if}
 
 <div id="checkoutHeader">
     <a href="/cart" use:link id="cancel-button"><ArrowLeft />&nbsp;Cancel</a>

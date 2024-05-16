@@ -25,13 +25,12 @@
 
 
 <div class="container" >
-    <div class="basket-item" class:basket-item-availability={!item.data.availability}>
-        {#if !item.data.availability}
-            <div class="basket-item-notice">
-                <SealWarning weight="fill" />&nbsp;&nbsp;<span>Item is no-longer for sale</span>
-            </div>
-        {/if}
-
+    {#if !item.data.availability}
+        <div class="basket-item-notice">
+            <SealWarning weight="fill" />&nbsp;&nbsp;<span>Item is no-longer for sale</span>
+        </div>
+    {/if}
+    <div class="basket-item">
         {#if item.data.images && item.data.images[0]}
             <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
         {:else}
@@ -71,6 +70,10 @@
 <style lang="scss">
     @import "../styles/vars";
 
+    .container {
+        overflow: hidden;
+    }
+
     .basket-item {
         position: relative;
 
@@ -80,18 +83,10 @@
         border-radius: $border-radius-normal;
 
         overflow: hidden;
-
-        &.basket-item-availability {
-            padding-top: 30px;
-        }
     }
     .basket-item-notice {
         width: 100%;
         height: 30px;
-
-        position: absolute;
-        top: 0;
-        left: 0;
 
         display: flex;
         justify-content: center;
