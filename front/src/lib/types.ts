@@ -21,7 +21,7 @@ export type CartItem = {
     data: Item;
 };
 
-export type CartRecord = Record<string, CartItem>
+export type CartRecord = Record<string, CartItem>;
 
 export type JSONResponse = {
     data?: {
