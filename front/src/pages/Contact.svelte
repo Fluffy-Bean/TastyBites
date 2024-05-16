@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { PaperPlaneRight, SealWarning, SealCheck } from "phosphor-svelte";
+    import { PaperPlaneRight, SealWarning, SealCheck, CaretDown } from "phosphor-svelte";
 
     import { postContactEmail } from "../lib/test-api";
     import { expandOnTyping } from "../lib/utils";
@@ -11,27 +11,28 @@
 
     let name = "";
     let email = "";
+    let reason = "";
     let message = "";
 
     let nameValid = true;
     let emailValid = true;
+    let reasonValid = true;
     let messageValid = false;
 
     function validateName() { nameValid = name.length > 1 }
     function validateEmail() { emailValid = email.length > 1 }
+    function validateReason() { reasonValid = reason != "" }
     function validateMessage() { messageValid = message.length > minMessageLength }
 
     function onSubmit() {
-        nameValid = true;
-        emailValid = true;
-
-        formMessage = postContactEmail(name, email, message)
-            .catch((error) => {
-                validateName();
-                validateEmail();
-                validateMessage();
-                throw error;
-            });
+        try {
+            formMessage = postContactEmail(name, email, reason, message)
+        } catch (error) {
+            validateName();
+            validateEmail();
+            validateReason();
+            validateMessage();
+        }
     }
 </script>
 
@@ -96,13 +97,41 @@
     </div>
 
     <div class="spacer half" />
-    <!-- ToDo: Add dropdown for issue type, such as Technical, Order, Account, or other -->
+
+    <div class="form-element">
+        <label class="form-label" for="reason">Contact Reason</label>
+        <div class="select-container">
+            <select
+                    bind:value={reason}
+                    on:blur={validateReason}
+                    on:input={validateReason}
+                    class="form-input"
+                    id="reason"
+                    name="reason"
+            >
+                <option value="general">General Enquiry</option>
+                <option value="technical">Technical/Website</option>
+                <option value="order">Order</option>
+                <option value="booking">Booking</option>
+            </select>
+            <div class="select-arrow">
+                <CaretDown />
+            </div>
+        </div>
+        <span class="form-notice error">
+            {#if !reasonValid}
+                You must provide a reason for contact
+            {/if}
+        </span>
+    </div>
+
+    <div class="spacer half" />
 
     <div class="form-element">
         <label class="form-label" for="message">Message</label>
         <textarea
                 bind:value={message}
-                on:input={validateMessage}
+                on:blur={validateMessage}
                 use:expandOnTyping
                 rows="1"
                 cols="50"
@@ -144,6 +173,37 @@
         max-width: calc(100vw - calc(2 * $spacing-normal));
         resize: none;
         overflow: hidden;
+    }
+
+    .select-container{
+        width: max-content;
+        position: relative;
+
+        > select {
+            width: 200px;
+            appearance: none;
+        }
+
+        > .select-arrow {
+            height: 100%;
+
+            position: absolute;
+            top: 0;
+            right: $spacing-small;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition: transform 0.1s ease-in-out;
+            pointer-events: none;
+        }
+
+        &:hover {
+            > .select-arrow {
+                transform: translateY(2px);
+            }
+        }
     }
 
     button {

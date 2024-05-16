@@ -6,12 +6,10 @@
 </script>
 
 <div class="dropdown" class:open={open}>
-    <div class="dropdown-header">
-        <p>{name}</p>
-        <button on:click={() => { open = !open }}>
-            <CaretDown />
-        </button>
-    </div>
+    <button class="dropdown-header" on:click={() => { open = !open }}>
+        <span class="dropdown-text">{name}</span>
+        <span class="dropdown-button"><CaretDown /></span>
+    </button>
     <div class="dropdown-content">
         <slot></slot>
     </div>
@@ -28,6 +26,8 @@
         .dropdown-header {
             padding: $spacing-normal;
 
+            width: 100%;
+
             position: relative;
 
             display: flex;
@@ -35,12 +35,15 @@
             justify-content: space-between;
             align-items: center;
 
-            p {
+            border: 0 solid transparent;
+            background-color: transparent;
+
+            .dropdown-text {
                 font-size: $font-size-h6;
                 font-weight: $font-weight-bold;
             }
 
-            button {
+            .dropdown-button {
                 padding: 0;
 
                 height: 100%;
@@ -62,9 +65,13 @@
                 color: $color-on-light;
 
                 transition: transform 0.1s ease-in-out;
+            }
 
-                &:hover {
+            &:hover, &:focus-visible {
+                .dropdown-button {
                     color: $color-primary;
+                    outline: 0 solid transparent;
+                    transform: rotate(-15deg);
                 }
             }
         }
@@ -76,10 +83,14 @@
 
         &.open {
             .dropdown-header {
-                //padding: $spacing-normal $spacing-normal $spacing-small;
-
-                button {
+                .dropdown-button {
                     transform: rotate(-180deg);
+                }
+
+                &:hover, &:focus-visible {
+                    .dropdown-button {
+                        transform: rotate(calc(-180deg + 15deg));
+                    }
                 }
             }
             .dropdown-content {

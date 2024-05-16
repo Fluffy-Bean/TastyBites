@@ -170,6 +170,10 @@
         margin-left: $spacing-normal;
         width: 100%;
         position: relative;
+
+        > h2, p {
+            text-align: right;
+        }
     }
 
     #filter {
@@ -222,6 +226,10 @@
         #menu-list {
             margin-left: 0;
             margin-top: $spacing-normal;
+
+            > h2, p {
+                text-align: left;
+            }
         }
     }
 </style>

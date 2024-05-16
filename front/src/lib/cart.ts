@@ -1,24 +1,23 @@
 import { type Writable, get, writable } from "svelte/store";
 
-import { type CartItem, type Item } from "./types";
+import { type CartRecord, type CartItem, type Item } from "./types";
 import { getItemByUUID, postVerifyCart } from "./test-api";
 
 function createCartStore() {
     let loaded = false;
 
-    const cart: Writable<Record<string, CartItem>> = writable({});
+    const cart: Writable<CartRecord> = writable({});
 
-    async function init() {
-        let localData: Record<string, CartItem> = {};
+    async function init(): Promise<void> {
+        let localData: CartRecord = {};
         try {
             localData = JSON.parse(localStorage.getItem("basket")) || {};
         } catch {
-            console.error("Local Cart data fucked");
+            console.error("Local Cart data could not be parsed");
         }
 
         try {
-            const newData: Record<string, CartItem> =
-                await postVerifyCart(localData);
+            const newData: CartRecord = await postVerifyCart(localData);
             cart.set(newData);
         } catch (error) {
             console.error("Could not load basket:", error);
@@ -28,18 +27,16 @@ function createCartStore() {
     }
 
     async function addToCart(uuid: string, amount: number) {
-        if (!loaded) {
-            return;
-        }
+        if (!loaded) return;
 
         if (get(cart)[uuid] !== undefined) {
-            cart.update((cart: Record<string, CartItem>) => {
+            cart.update((cart: CartRecord) => {
                 cart[uuid].amount += amount;
                 return cart;
             });
         } else {
             await getItemByUUID(uuid).then((data: Item) => {
-                cart.update((cart: Record<string, CartItem>) =>
+                cart.update((cart: CartRecord) =>
                     Object.assign({}, cart, {
                         [uuid]: { uuid, amount, data },
                     })
@@ -47,13 +44,9 @@ function createCartStore() {
             });
         }
 
-        cart.update((cart: Record<string, CartItem>) => {
-            if (cart[uuid].amount <= 0) {
-                delete cart[uuid]; // skipcq: JS-0320
-            } else if (cart[uuid].amount > 99) {
-                cart[uuid].amount = 99; // skipcq: JS-0320
-            }
-
+        cart.update((cart: CartRecord) => {
+            if (cart.uuid.amount <= 0) delete cart.uuid;
+            if (cart.uuid.amount > 99) cart.uuid.amount = 99;
             return cart;
         });
     }
@@ -82,12 +75,10 @@ function createCartStore() {
         return totalCartPrice;
     }
 
-    function removeByUUID(uuid: string) {
-        if (!loaded) {
-            return;
-        }
+    function removeByUUID(uuid: string): void {
+        if (!loaded) return;
 
-        cart.update((cart) => {
+        cart.update((cart: CartRecord) => {
             delete cart[uuid]; // skipcq: JS-0320
             return cart;
         });
@@ -110,7 +101,7 @@ const Cart = createCartStore();
 export const cartLoaded = Cart.init();
 
 // Make sure to update localstorage on any changes
-Cart.subscribe((value) => {
+Cart.subscribe((value: CartRecord) => {
     localStorage.setItem("basket", JSON.stringify(value));
 });
 

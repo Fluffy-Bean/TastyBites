@@ -71,12 +71,14 @@ export async function getItemByUUID(uuid: string): Promise<Item> {
 export async function postContactEmail(
     name: string,
     email: string,
+    reason: string,
     message: string
 ): Promise<string> {
     await fakeDelay(200);
 
     if (!name) throw new Error("Name missing");
     if (!email) throw new Error("Email missing");
+    if (!reason) throw new Error("Reason missing");
     if (!message) throw new Error("Message missing");
     if (message.length < 150) throw new Error("Message FUCKED");
 
