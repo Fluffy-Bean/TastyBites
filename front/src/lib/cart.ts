@@ -45,8 +45,8 @@ function createCartStore() {
         }
 
         cart.update((cart: CartRecord) => {
-            if (cart.uuid.amount <= 0) delete cart.uuid;
-            if (cart.uuid.amount > 99) cart.uuid.amount = 99;
+            if (cart[uuid].amount <= 0) delete cart[uuid]; // skipcq: JS-0320
+            if (cart[uuid].amount > 99) cart[uuid].amount = 99; // skipcq: JS-0320
             return cart;
         });
     }

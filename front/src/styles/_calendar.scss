@@ -117,15 +117,11 @@
                 font-weight: $font-weight-black;
                 text-decoration: underline;
                 color: $color-on-light;
-                //background-color: $color-primary;
-                //color: $color-on-primary;
             }
         }
 
         &.selected {
             > button {
-                //background-color: $color-dark;
-                //color: $color-on-dark;
                 background-color: $color-primary;
                 color: $color-on-primary;
             }

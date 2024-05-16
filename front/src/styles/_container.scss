@@ -7,6 +7,8 @@
     background-color: $color-light;
     color: $color-on-light;
 
+    box-shadow: 0 1px 0.5px rgba(#000, 0.3);
+
     .header {
         padding: $spacing-normal;
         display: flex;

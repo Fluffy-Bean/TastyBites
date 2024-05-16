@@ -141,14 +141,16 @@
         {#await items}
             <LoadingBar />
         {:then items}
-            {#each items as section}
+            {#each items as section, i}
                 <h2>{section.name}</h2>
                 {#if section.items.length > 0}
                     <MenuList items={section.items} />
                 {:else}
                     <p>No results</p>
                 {/if}
-                <div class="spacer" />
+                {#if i !== items.length -1}
+                    <div class="spacer" />
+                {/if}
             {/each}
         {:catch error}
             <p>{error}</p>

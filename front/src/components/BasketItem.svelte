@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import { Plus, Minus, Trash, Acorn, Fish, GrainsSlash, Leaf, Pepper } from "phosphor-svelte";
+    import { Plus, Minus, Trash, Acorn, Fish, GrainsSlash, Leaf, Pepper, SealWarning } from "phosphor-svelte";
 
     import { type CartItem, Labels } from "../lib/types";
     import Cart from "../lib/cart";
@@ -24,6 +24,12 @@
 </script>
 
 <div class="container">
+    {#if !item.data.availability}
+        <div class="basket-item-notice">
+            <SealWarning weight="fill" />&nbsp;&nbsp;<span>Item is no-longer for sale</span>
+        </div>
+    {/if}
+
     {#if item.data.images && item.data.images[0]}
         <img src="{item.data.images[0]}" alt="Item" class="basket-item-image">
     {:else}
@@ -63,6 +69,8 @@
     @import "../styles/vars";
 
     .container {
+        position: relative;
+
         display: flex;
         flex-direction: row;
 
@@ -70,6 +78,25 @@
         background-position: 135px -43px;
 
         overflow: hidden;
+    }
+    .basket-item-notice {
+        width: 100%;
+        height: 30px;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-size: $font-size-p;
+
+        background: $color-error;
+        color: $color-on-error;
+
+        box-shadow: 0 1px 0.5px rgba(#000, 0.3);
     }
     .basket-item-image {
         margin: $spacing-small;

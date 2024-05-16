@@ -6,9 +6,7 @@ const TestData: Item[] = [
         availability: true,
         name: "Bar of Soap",
         price: 69.99,
-        description: `
-Example
-        `,
+        description: `Example`,
         labels: [Labels.vegan, Labels.spicy],
     },
     {
@@ -16,9 +14,7 @@ Example
         availability: true,
         name: "Sock",
         price: 21,
-        description: `
-Example
-        `,
+        description: `Example`,
         labels: [Labels.vegan, Labels.fish, Labels.nut, Labels.spicy],
     },
     {
@@ -26,9 +22,7 @@ Example
         availability: true,
         name: "Brick",
         price: 0,
-        description: `
-Example
-        `,
+        description: `Example`,
         labels: [Labels.spicy],
     },
     {
@@ -36,9 +30,7 @@ Example
         availability: true,
         name: "Toast",
         price: 4382749832743,
-        description: `
-Example
-        `,
+        description: `Example`,
         labels: [Labels.gluten],
     },
     {
@@ -46,9 +38,7 @@ Example
         availability: true,
         name: "water",
         price: 1,
-        description: `
-Example
-        `,
+        description: `Example`,
         labels: [Labels.fish],
     },
     {
@@ -56,10 +46,23 @@ Example
         availability: true,
         name: "half eaten mouldy bread",
         price: -99,
-        description: `
-Example
-        `,
+        description: `Example`,
         labels: [Labels.nut],
+    },
+    {
+        uuid: "cup_cake_leg",
+        availability: false,
+        name: "Eated Cupcake",
+        price: 1.69,
+        description: `
+aurgh
+
+Contains:
+- Single Pringle GwaGwa
+- Cupcake with icing eated
+`,
+        labels: [Labels.nut],
+        images: ["/item_images/cupcake.jpg", "/item_images/cupcake.jpg", "/item_images/cupcake.jpg"],
     },
     // {
     //     uuid: "gwagwa",

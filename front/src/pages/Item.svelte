@@ -184,6 +184,9 @@
         max-width: $sizing-default-width;
         height: 45px;
 
+        position: sticky;
+        top: calc($spacing-small + $sizing-navigation-height);
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -193,6 +196,8 @@
         border-radius: $border-radius-normal;
         background: $color-dark;
         color: $color-on-dark;
+
+        box-shadow: 0 1px 0.5px rgba(#000, 0.3);
 
         &.error {
             background: $color-error;

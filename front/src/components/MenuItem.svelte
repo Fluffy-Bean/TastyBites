@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from 'phosphor-svelte';
+    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash, SealWarning } from 'phosphor-svelte';
 
     import { type Item, Labels} from "../lib/types";
     import LoadingImage from '/assets/MenuItemLoadingAlt.svg';
@@ -23,6 +23,10 @@
 <svelte:window on:resize={keepSquare}></svelte:window>
 
 <div class="menu-item" bind:this={element}>
+    {#if !item.availability}
+<!--        <div class="menu-item-notice"><span>Item is no-longer for sale</span></div>-->
+    {/if}
+
     {#if item.images && item.images[0]}
         <img src={item.images[0]} alt="" class="menu-item-image">
     {:else}

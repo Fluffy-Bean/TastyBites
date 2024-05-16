@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import { Basket } from "phosphor-svelte";
+    import {ArrowLeft, ArrowRight, Basket} from "phosphor-svelte";
 
     import { type CartItem } from "../lib/types";
     import { getPopularToday } from "../lib/test-api";
@@ -31,10 +31,10 @@
     {#if totalItems}
         <h1>Cart</h1>
 
-        <button id="checkout-button">Checkout</button>
+        <a id="checkout-button" href="/cart/checkout" use:link>Checkout&nbsp;<ArrowRight /></a>
         <h2>Order total: £{totalPrice}</h2>
 
-        {#each items as [key, item]}
+        {#each items as [_, item]}
             <div class="basket-item">
                 <BasketItem item={item}/>
             </div>
@@ -85,7 +85,9 @@
         justify-content: center;
         align-items: center;
 
-        text-shadow: 0 1px 0.5px rgba($color-dark, 0.3);;
+        text-shadow: 0 1px 0.5px rgba($color-dark, 0.3);
+        text-decoration: none;
+        font-size: $font-size-p;
 
         border: 0 solid transparent;
         border-radius: 9999px;

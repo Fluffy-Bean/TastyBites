@@ -101,6 +101,7 @@
     #map {
         min-width: 550px;
         border-radius: $border-radius-normal;
+        box-shadow: 0 1px 0.5px rgba(#000, 0.3);
     }
 
     #contact {

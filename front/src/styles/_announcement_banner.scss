@@ -1,10 +1,11 @@
 .announcement-banner {
     position: relative;
 
-    border-radius: $border-radius-normal;
+    border-radius: $border-radius-large;
     background-color: $color-light;
     color: $color-on-light;
 
+    box-shadow: 0 1px 0.5px rgba(#000, 0.3);
     overflow: hidden;
 
     img {
@@ -13,7 +14,6 @@
 
         display: block;
 
-        //aspect-ratio: 16 / 7;
         object-fit: cover;
     }
 }
@@ -26,7 +26,6 @@
 
         img {
             height: 250px;
-            //aspect-ratio: 16 / 9;
             aspect-ratio: unset;
         }
     }
