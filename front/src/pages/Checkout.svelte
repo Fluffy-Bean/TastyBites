@@ -2,7 +2,7 @@
     import { link } from "svelte-spa-router";
     import { ArrowLeft, SealWarning, ArrowRight } from "phosphor-svelte";
 
-    import { type Checkout } from '../lib/types';
+    import { type CartItem, type Checkout } from '../lib/types';
     import Cart from "../lib/cart";
 
     const CheckoutData: Checkout = {
@@ -22,8 +22,12 @@
     $: emailValid = CheckoutData.personal.email.length > 1
     $: phoneValid = isNaN(CheckoutData.personal.phone)
 
-    $: items = Cart.getEntries();
-    $: totalPrice = Cart.getTotalPrice();
+    let items: [string, CartItem][];
+    let totalPrice: number;
+    Cart.subscribe(() => {
+        items = Cart.getEntries();
+        totalPrice = Cart.getTotalPrice();
+    });
 
     let unavailableItems = false;
     Cart.getEntries().forEach(([_, item]) => {
@@ -238,7 +242,7 @@
         font-size: $font-size-p;
         text-decoration: none;
 
-        border-radius: $border-radius-circle;
+        border-radius: $border-radius-large;
         border: 0 solid transparent;
         background-color: $color-primary;
         color: $color-on-primary;
