@@ -40,11 +40,11 @@ const routes = {
         conditions: [],
         userData: { showNavBar: true, fullWidth: false },
     }),
-    "/cart/checkout/:progress?": wrap({
+    "/cart/checkout": wrap({
         asyncComponent: () => import("./pages/Checkout.svelte"),
         loadingComponent: PageLoading,
         conditions: [],
-        userData: { showNavBar: true, fullWidth: false },
+        userData: { showNavBar: true, fullWidth: true },
     }),
     "/booking": wrap({
         asyncComponent: () => import("./pages/Booking.svelte"),

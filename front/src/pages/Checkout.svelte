@@ -1,72 +1,179 @@
 <script lang="ts">
     import { link } from "svelte-spa-router";
-    import { ArrowLeft, ArrowRight, Basket } from "phosphor-svelte";
+    import { ArrowLeft, SealWarning, ArrowRight } from "phosphor-svelte";
 
-    import PaymentForm from "./Checkout/PaymentForm.svelte";
-    import LeFinal from "./Checkout/LeFinal.svelte";
+    import { type Checkout } from '../lib/types';
+    import Cart from "../lib/cart";
 
-    export let params: {
-        progress?: string;
-    };
+    const CheckoutData: Checkout = {
+        personal: {
+            name: "",
+            email: "",
+        },
+        address: {
+            line1: "",
+            line2: "",
+            town: "",
+            postcode: "",
+        },
+    }
+
+    $: nameValid = CheckoutData.personal.name.length > 1
+    $: emailValid = CheckoutData.personal.email.length > 1
+    $: phoneValid = isNaN(CheckoutData.personal.phone)
+
+    $: items = Cart.getEntries();
+    $: totalPrice = Cart.getTotalPrice();
+
+    let unavailableItems = false;
+    Cart.getEntries().forEach(([_, item]) => {
+        if (!item.data.availability) unavailableItems = true;
+    });
+
+    function onSubmit() {
+        console.log(CheckoutData);
+    }
 </script>
 
-<div id="checkoutHeader">
-    <a href="/cart" use:link id="cancel-button"><ArrowLeft />&nbsp;Cancel</a>
-</div>
+<a href="/cart" use:link id="cancel-button"><ArrowLeft />&nbsp;Cancel</a>
+<div class="spacer half" />
+<div class="checkout">
+    <div id="form-container">
+        <h2>Checkout</h2>
+        <form on:submit|preventDefault={onSubmit} id="form">
+            <div class="form-element">
+                <label class="form-label" for="name">Name</label>
+                <input
+                        bind:value={CheckoutData.personal.name}
+                        type="text"
+                        id="name"
+                        class="form-input"
+                />
+                <span class="form-notice error">
+                    {#if !nameValid}Enter a name{/if}
+                </span>
+            </div>
+            <div class="spacer half" />
+            <div class="form-element">
+                <label class="form-label" for="email">Email</label>
+                <input
+                        bind:value={CheckoutData.personal.email}
+                        type="text"
+                        id="email"
+                        class="form-input"
+                />
+                <span class="form-notice error">
+                    {#if !emailValid}Email not valid{/if}
+                </span>
+            </div>
+            <div class="spacer half" />
+            <div class="form-element">
+                <label class="form-label" for="phone">Phone Number</label>
+                <input
+                        bind:value={CheckoutData.personal.phone}
+                        type="number"
+                        id="phone"
+                        class="form-input"
+                />
+                <span class="form-notice error">
+                    {#if !phoneValid}Phone Number not valid{/if}
+                </span>
+            </div>
 
-{#if params.progress === "1"}
-    <PaymentForm />
-    <div id="checkoutFooter">
-        <div />
-        <a href="/cart/checkout/2" use:link id="navigation-button">Order&nbsp;<ArrowRight /></a>
+            <div class="spacer" />
+            <div class="spacer" />
+
+            <div class="form-element">
+                <label class="form-label" for="line1">Address Line 1</label>
+                <input
+                        bind:value={CheckoutData.address.line1}
+                        type="text"
+                        id="line1"
+                        class="form-input"
+                />
+                <span class="form-notice error">Line 1 required</span>
+            </div>
+            <div class="spacer half" />
+            <div class="form-element">
+                <label class="form-label" for="line2">Address Line 2</label>
+                <input
+                        bind:value={CheckoutData.address.line2}
+                        type="text"
+                        id="line2"
+                        class="form-input"
+                />
+                <span class="form-notice error"></span>
+            </div>
+            <div class="spacer half" />
+            <div class="form-element">
+                <label class="form-label" for="town">Town</label>
+                <input
+                        bind:value={CheckoutData.address.town}
+                        type="text"
+                        id="town"
+                        class="form-input"
+                />
+                <span class="form-notice error">Town name required</span>
+            </div>
+            <div class="spacer half" />
+            <div class="spacer half" />
+            <div class="form-element">
+                <label class="form-label" for="postcode">Postcode</label>
+                <input
+                        bind:value={CheckoutData.address.postcode}
+                        type="text"
+                        id="postcode"
+                        class="form-input"
+                />
+                <span class="form-notice error">Postcode required</span>
+            </div>
+            <div class="spacer half" />
+        </form>
     </div>
-{:else if params.progress === "2"}
-    <LeFinal />
-    <div id="checkoutFooter">
-        <a href="/cart/checkout/1" use:link id="navigation-button"><ArrowLeft />&nbsp;Payment</a>
-        <a href="/cart/checkout/3" use:link id="navigation-button">Confirm Purchase&nbsp;<ArrowRight /></a>
+    <div class="spacer" />
+    <div id="cart">
+        <div class="container">
+            {#if unavailableItems}
+                <div class="unavailable-items-banner">
+                    <SealWarning weight="fill" />&nbsp;&nbsp;<span>Order contains unavailable items</span>
+                </div>
+            {/if}
+            <div class="header">
+                <h2>Cart Total: ${totalPrice}</h2>
+            </div>
+            <hr>
+            <div class="section">
+                <div class="table">
+                    <table>
+                        <tr><th>Price</th><th>Item Name</th><th>Amount</th></tr>
+                        {#each items as [_, item]}
+                            <tr class:table-row-error={!item.data.availability}>
+                                <td>£{item.data.price * item.amount} (£{item.data.price})</td>
+                                <td>{item.data.name}</td>
+                                <td>{item.amount}</td>
+                            </tr>
+                        {/each}
+                    </table>
+                </div>
+            </div>
+            <hr>
+            <div class="section">
+                <p>To make any changes to your order, <a href="/cart" use:link>return to the cart</a>.</p>
+            </div>
+        </div>
+        <div class="spacer half" />
+        <button id="checkout-button" form="form">Checkout&nbsp;<ArrowRight /></button>
     </div>
-{:else}
-    <div id="checkoutLost">
-        <h1>Something went wrong!&nbsp;<Basket weight="fill" /></h1>
-        <p>Return <a href="/cart/checkout/1" use:link>to checkout</a>.</p>
-    </div>
-{/if}
+</div>
 
 <style lang="scss">
     @import "../styles/vars";
 
-    #checkoutHeader {
-        padding-bottom: $spacing-normal;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        > p {
-            padding: 0 $spacing-small;
-
-            width: max-content;
-            height: 30px;
-
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-
-            font-size: $font-size-p;
-        }
-    }
-
-    #checkoutFooter {
-        padding-top: $spacing-normal;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
+    #name { width: 300px; }
+    #email { width: 300px; }
+    #line1, #line2 { width: 400px; }
+    #town { width: 250px; }
+    #postcode { width: 200px; }
 
     #cancel-button {
         padding: 0 $spacing-small;
@@ -82,7 +189,7 @@
         font-size: $font-size-p;
         text-decoration: none;
 
-        border-radius: 9999px;
+        border-radius: $border-radius-circle;
         background-color: transparent;
         color: $color-on-background;
 
@@ -91,31 +198,8 @@
             color: $color-on-error;
         }
     }
-    #navigation-button {
-        padding: 0 $spacing-small;
 
-        width: max-content;
-        height: 30px;
-
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-
-        font-size: $font-size-p;
-        text-decoration: none;
-
-        border-radius: 9999px;
-        background-color: $color-light;
-        color: $color-on-light;
-
-        &:hover {
-            background-color: $color-dark;
-            color: $color-on-dark;
-        }
-    }
-
-    #checkoutLost {
+    #checkoutError {
         margin-left: auto;
         margin-right: auto;
 
@@ -140,16 +224,33 @@
         }
     }
 
-    .notice {
-        margin-right: auto;
-        margin-bottom: $spacing-large;
-        margin-left: auto;
+    #checkout-button {
+        padding: 0 $spacing-normal;
 
-        max-width: $sizing-default-width;
-        height: 40px;
+        width: 100%;
+        height: 35px;
 
-        position: sticky;
-        top: calc($spacing-small + $sizing-navigation-height);
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        font-size: $font-size-p;
+        text-decoration: none;
+
+        border-radius: $border-radius-circle;
+        border: 0 solid transparent;
+        background-color: $color-primary;
+        color: $color-on-primary;
+
+        &:hover {
+            background-color: $color-dark;
+            color: $color-on-dark;
+        }
+    }
+
+    .unavailable-items-banner {
+        height: 30px;
 
         display: flex;
         justify-content: center;
@@ -157,15 +258,88 @@
 
         font-size: $font-size-p;
 
-        border-radius: $border-radius-large;
-        background: $color-dark;
-        color: $color-on-dark;
+        background: $color-error;
+        color: $color-on-error;
 
-        box-shadow: 0 1px 0.5px rgba(#000, 0.3);
+        box-shadow: 0 1px 0.5px rgba(#000, 0.2);
+    }
 
-        &.error {
-            background: $color-error;
-            color: $color-on-error;
+    .table {
+        border-radius: $border-radius-normal;
+        border: 1px solid rgba($color-dark, 0.2);
+        background-color: $color-light;
+
+        overflow: hidden;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            tr {
+                border-bottom: 1px solid rgba($color-dark, 0.2);
+
+                &:last-of-type {
+                    border: 0 solid transparent;
+                }
+
+                &.table-row-error {
+                    background-color: $color-error;
+                    color: $color-on-error;
+                }
+
+                th, td {
+                    padding: $spacing-xsmall $spacing-small;
+                    font-size: $font-size-small;
+                    border-right: 1px solid rgba($color-dark, 0.2);
+
+                    &:last-of-type {
+                        border: 0 solid transparent;
+                    }
+                }
+
+                th {
+                    font-weight: $font-weight-bolder;
+                }
+                td {
+                    font-weight: $font-weight-normal;
+                }
+            }
+        }
+    }
+
+    .checkout {
+        display: flex;
+        flex-direction: row;
+        justify-content: normal;
+        align-items: flex-start;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+
+    #form-container {
+        width: 100%;
+        position: relative;
+    }
+
+    #cart {
+        min-width: calc(400px - $spacing-normal);
+        width: 100%;
+        max-width: calc(400px - $spacing-normal);
+
+        position: sticky;
+        top: calc($sizing-navigation-height + $spacing-normal);
+    }
+
+    @media only screen and (max-width: 900px) {
+        .checkout {
+            flex-direction: column;
+        }
+
+        #cart {
+            max-width: unset;
+            position: unset;
         }
     }
 </style>

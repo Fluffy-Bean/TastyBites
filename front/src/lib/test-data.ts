@@ -19,7 +19,7 @@ const TestData: Item[] = [
     },
     {
         uuid: "brick",
-        availability: true,
+        availability: false,
         name: "Brick",
         price: 0,
         description: `Example`,
@@ -44,14 +44,14 @@ const TestData: Item[] = [
     {
         uuid: "mouldy_bread",
         availability: true,
-        name: "half eaten mouldy bread",
+        name: "Singular slice of bread",
         price: 0.39,
         description: `Example`,
         labels: [Labels.nut],
     },
     {
         uuid: "cup_cake_leg",
-        availability: false,
+        availability: true,
         name: "Eated Cupcake",
         price: 1.69,
         description: `
@@ -68,15 +68,15 @@ Contains:
             "/item_images/cupcake.jpg",
         ],
     },
-    {
-        uuid: "gwagwa",
-        availability: false,
-        name: "GwaGwa",
-        price: 69,
-        description: `Example`,
-        labels: [Labels.nut],
-        images: ["/item_images/dab.jpg"],
-    },
+    // {
+    //     uuid: "gwagwa",
+    //     availability: false,
+    //     name: "GwaGwa",
+    //     price: 69,
+    //     description: `Example`,
+    //     labels: [Labels.nut],
+    //     images: ["/item_images/dab.jpg"],
+    // },
     {
         uuid: "hogmelon",
         availability: true,

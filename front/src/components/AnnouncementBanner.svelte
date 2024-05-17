@@ -27,8 +27,13 @@
 
         border-radius: $border-radius-large;
 
-        background: linear-gradient(to right, $color-background 8%, rgba($color-dark, 0.3) 38%, $color-background 54%);
-        background-size: 1000px 100%;
+        background: linear-gradient(
+                        to right,
+                        rgba($color-dark, 0) 8%,
+                        rgba($color-dark, 0.3) 38%,
+                        rgba($color-dark, 0) 54%
+        ) no-repeat;
+        background-size: 1500px 100%;
         animation: loading 1s infinite linear;
 
         overflow: hidden;
@@ -43,7 +48,10 @@
             left: $padding;
 
             border-radius: calc($border-radius-large - $padding);
-            background-color: rgba($color-background, 0.9);
+            background-color: darken($color-background, 10%);
+            background-image: url("/assets/Noise.png");
+
+            opacity: 0.9;
         }
     }
 
@@ -57,10 +65,10 @@
 
     @keyframes loading{
         0%{
-            background-position: -500px 0
+            background-position: -750px 0
         }
         100%{
-            background-position: 500px 0
+            background-position: 750px 0
         }
     }
 </style>

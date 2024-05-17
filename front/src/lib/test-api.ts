@@ -12,7 +12,7 @@ export async function getAnnouncements(): Promise<{ image: string }> {
         cache["announcement_banner"] = {
             image: "/banner_images/BannerExampleImage.jpg",
         };
-        await fakeDelay(200);
+        await fakeDelay(2000);
     }
     return cache["announcement_banner"];
 }
@@ -20,7 +20,7 @@ export async function getAnnouncements(): Promise<{ image: string }> {
 export async function getPopularToday(): Promise<Item[]> {
     if (cache["popular_today"] === undefined) {
         cache["popular_today"] = TestData;
-        await fakeDelay(200);
+        await fakeDelay(2000);
     }
     return cache["popular_today"];
 }
@@ -58,7 +58,7 @@ export async function getItemsByUUID(items: string[]): Promise<Item[]> {
 
     if (data.length === 0) throw new Error("Resource could not be found");
 
-    await fakeDelay(200);
+    await fakeDelay(2000);
     return data;
 }
 
@@ -74,7 +74,7 @@ export async function postContactEmail(
     reason: string,
     message: string
 ): Promise<string> {
-    await fakeDelay(200);
+    await fakeDelay(2000);
 
     if (!name) throw new Error("Name missing");
     if (!email) throw new Error("Email missing");

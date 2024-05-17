@@ -23,6 +23,20 @@ export type CartItem = {
 
 export type CartRecord = Record<string, CartItem>;
 
+export type Checkout = {
+    personal: {
+        name: string;
+        email: string;
+        phone?: number;
+    };
+    address: {
+        line1: string;
+        line2?: string;
+        town: string;
+        postcode: string;
+    }
+};
+
 export type JSONResponse = {
     data?: {
         item: Item[]; // Todo Make this not just item type
