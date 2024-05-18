@@ -12,12 +12,15 @@
     let items = getPopularToday();
 
     onMount(() => {
-        const maxZoom = 20;
-        const attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
-        const map = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom, attribution}).addTo(map);
-        L.marker([50.82304922105467, -0.432780150496344]).addTo(map);
+        const leafletMap = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
+        L.tileLayer(
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                maxZoom: 20,
+                attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
+            },
+        ).addTo(leafletMap);
+        L.marker([50.82304922105467, -0.432780150496344]).addTo(leafletMap);
 
     });
 </script>

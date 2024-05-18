@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { link } from "svelte-spa-router";
     import { ArrowLeft, SealWarning, ArrowRight } from "phosphor-svelte";
-    import L from "leaflet";
+    import L, { type Map } from "leaflet";
 
     import { type CartItem, type Checkout } from '../lib/types';
     import { expandOnTyping } from "../lib/utils";
@@ -14,7 +14,7 @@
             email: "",
         },
         message: "",
-        delivery: false,
+        delivery: true,
         address: {
             line1: "",
             line2: "",
@@ -30,28 +30,33 @@
 
     let items: [string, CartItem][];
     let totalPrice: number;
-    let unavailableItems = false;
-
+    let unavailableItems: boolean;
     Cart.subscribe(() => {
         items = Cart.getEntries();
         totalPrice = Cart.getTotalPrice();
-        Cart.getEntries().forEach(([_, item]) => {
-            if (!item.data.availability) unavailableItems = true;
-        });
+        unavailableItems = Cart.getEntries().some(([_, item]) => item.data.availability === false);
     });
+
+    let leafletMap: Map;
+    onMount(() => {
+        leafletMap = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
+        L.tileLayer(
+            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                maxZoom: 20,
+                attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
+            },
+        ).addTo(leafletMap);
+        L.marker([50.82304922105467, -0.432780150496344]).addTo(leafletMap);
+    });
+    $: if (!CheckoutData.delivery) {
+        // Rendering maybe off-centered since map was initialized when div was hidden
+        setTimeout(() => { leafletMap.invalidateSize() }, 1);
+    }
 
     function onSubmit() {
         console.log(CheckoutData);
     }
-
-    onMount(() => {
-        const maxZoom = 20;
-        const attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
-        const map = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom, attribution}).addTo(map);
-        L.marker([50.82304922105467, -0.432780150496344]).addTo(map);
-    });
 </script>
 
 <a href="/cart" use:link id="cancel-button"><ArrowLeft />&nbsp;Cancel</a>
