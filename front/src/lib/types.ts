@@ -29,13 +29,14 @@ export type Checkout = {
         email: string;
         phone?: number;
     };
+    message: string;
+    delivery: boolean;
     address: {
         line1: string;
         line2?: string;
         town: string;
         postcode: string;
     };
-    message: string;
 };
 
 export type JSONResponse = {

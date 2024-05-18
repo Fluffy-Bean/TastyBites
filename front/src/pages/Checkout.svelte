@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { link } from "svelte-spa-router";
     import { ArrowLeft, SealWarning, ArrowRight } from "phosphor-svelte";
+    import L from "leaflet";
 
     import { type CartItem, type Checkout } from '../lib/types';
     import { expandOnTyping } from "../lib/utils";
@@ -11,13 +13,14 @@
             name: "",
             email: "",
         },
+        message: "",
+        delivery: false,
         address: {
             line1: "",
             line2: "",
             town: "",
             postcode: "",
         },
-        message: "",
     }
 
     $: nameValid = CheckoutData.personal.name.length > 1
@@ -27,19 +30,28 @@
 
     let items: [string, CartItem][];
     let totalPrice: number;
+    let unavailableItems = false;
+
     Cart.subscribe(() => {
         items = Cart.getEntries();
         totalPrice = Cart.getTotalPrice();
-    });
-
-    let unavailableItems = false;
-    Cart.getEntries().forEach(([_, item]) => {
-        if (!item.data.availability) unavailableItems = true;
+        Cart.getEntries().forEach(([_, item]) => {
+            if (!item.data.availability) unavailableItems = true;
+        });
     });
 
     function onSubmit() {
         console.log(CheckoutData);
     }
+
+    onMount(() => {
+        const maxZoom = 20;
+        const attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>";
+        const map = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom, attribution}).addTo(map);
+        L.marker([50.82304922105467, -0.432780150496344]).addTo(map);
+    });
 </script>
 
 <a href="/cart" use:link id="cancel-button"><ArrowLeft />&nbsp;Cancel</a>
@@ -116,52 +128,76 @@
             <hr>
             <div class="spacer" />
 
-            <h2>Address</h2>
+            <h2>Delivery or Pick Up</h2>
             <p>Where would you want your food to be delivered?</p>
+
             <div class="spacer half" />
-            <div class="form-element">
-                <label class="form-label" for="line1">Address Line 1</label>
-                <input
-                        bind:value={CheckoutData.address.line1}
-                        type="text"
-                        id="line1"
-                        class="form-input"
-                />
-                <span class="form-notice error">Line 1 required</span>
-            </div>
+
+            <ul id="delivery-option">
+                <li class:checked={CheckoutData.delivery}>
+                    <button on:click={() => { CheckoutData.delivery = true }} type="button">
+                        Deliver
+                    </button>
+                </li>
+                <li class:checked={!CheckoutData.delivery}>
+                    <button on:click={() => { CheckoutData.delivery = false }} type="button">
+                        Pick Up
+                    </button>
+                </li>
+            </ul>
+
             <div class="spacer half" />
-            <div class="form-element">
-                <label class="form-label" for="line2">Address Line 2</label>
-                <input
-                        bind:value={CheckoutData.address.line2}
-                        type="text"
-                        id="line2"
-                        class="form-input"
-                />
-                <span class="form-notice error"></span>
-            </div>
-            <div class="spacer half" />
-            <div class="form-element">
-                <label class="form-label" for="town">Town</label>
-                <input
-                        bind:value={CheckoutData.address.town}
-                        type="text"
-                        id="town"
-                        class="form-input"
-                />
-                <span class="form-notice error">Town name required</span>
-            </div>
-            <div class="spacer half" />
-            <div class="form-element">
-                <label class="form-label" for="postcode">Postcode</label>
-                <input
-                        bind:value={CheckoutData.address.postcode}
-                        type="text"
-                        id="postcode"
-                        class="form-input"
-                />
-                <span class="form-notice error">Postcode required</span>
-            </div>
+
+            {#if CheckoutData.delivery}
+                <div class="form-element">
+                    <label class="form-label" for="line1">Address Line 1</label>
+                    <input
+                            bind:value={CheckoutData.address.line1}
+                            type="text"
+                            id="line1"
+                            class="form-input"
+                    />
+                    <span class="form-notice error">Line 1 required</span>
+                </div>
+                <div class="spacer half" />
+                <div class="form-element">
+                    <label class="form-label" for="line2">Address Line 2</label>
+                    <input
+                            bind:value={CheckoutData.address.line2}
+                            type="text"
+                            id="line2"
+                            class="form-input"
+                    />
+                    <span class="form-notice error"></span>
+                </div>
+                <div class="spacer half" />
+                <div class="form-element">
+                    <label class="form-label" for="town">Town</label>
+                    <input
+                            bind:value={CheckoutData.address.town}
+                            type="text"
+                            id="town"
+                            class="form-input"
+                    />
+                    <span class="form-notice error">Town name required</span>
+                </div>
+                <div class="spacer half" />
+                <div class="form-element">
+                    <label class="form-label" for="postcode">Postcode</label>
+                    <input
+                            bind:value={CheckoutData.address.postcode}
+                            type="text"
+                            id="postcode"
+                            class="form-input"
+                    />
+                    <span class="form-notice error">Postcode required</span>
+                </div>
+            {:else}
+                <p>You'll receive an email and text reminding you of your order, once it's ready to be picked up!</p>
+                <div class="spacer half" />
+            {/if}
+            <!-- As leaflet needs the map element to exist while its loading, we must render it always -->
+            <div id="map" class:show-map={!CheckoutData.delivery}></div>
 
             <div class="spacer" />
             <hr>
@@ -248,28 +284,75 @@
         }
     }
 
-    #checkoutError {
-        margin-left: auto;
-        margin-right: auto;
+    #delivery-option {
+        padding: 0;
 
-        max-width: $sizing-default-width;
-        height: 400px;
+        width: max-content;
 
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        flex-direction: row;
 
-        > h1 {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        > li {
+            list-style: none;
 
-            font-size: $font-size-very-fucking-big;
-            text-align: center;
+            border-radius: 0;
+            border: 1px solid rgba($color-dark, 0.1);
+            background-color: $color-light;
+            color: $color-on-light;
+
+            overflow: hidden;
+
+            button {
+                padding: 0 $spacing-large;
+
+                width: 100%;
+                height: 35px;
+
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+
+                font-size: $font-size-p;
+                text-decoration: none;
+
+                border: 0 solid transparent;
+                background-color: transparent;
+                color: inherit;
+            }
+
+            &.checked {
+                background-color: $color-dark;
+                color: $color-on-dark;
+            }
+
+            &:first-of-type {
+                border-top-left-radius: $border-radius-normal;
+                border-bottom-left-radius: $border-radius-normal;
+            }
+            &:last-of-type {
+                border-top-right-radius: $border-radius-normal;
+                border-bottom-right-radius: $border-radius-normal;
+            }
+            &:hover {
+                background-color: $color-primary;
+                color: $color-on-primary;
+            }
         }
-        > p {
-            text-align: center;
+    }
+
+    #map {
+        width: 100%;
+        max-width: 550px;
+        height: 400px;
+
+        display: none;
+
+        border-radius: $border-radius-normal;
+        box-shadow: 0 1px 0.5px rgba(#000, 0.3);
+
+        &.show-map {
+            display: block;
         }
     }
 
