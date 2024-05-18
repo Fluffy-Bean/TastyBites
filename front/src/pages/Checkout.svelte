@@ -3,6 +3,7 @@
     import { ArrowLeft, SealWarning, ArrowRight } from "phosphor-svelte";
 
     import { type CartItem, type Checkout } from '../lib/types';
+    import { expandOnTyping } from "../lib/utils";
     import Cart from "../lib/cart";
 
     const CheckoutData: Checkout = {
@@ -16,11 +17,13 @@
             town: "",
             postcode: "",
         },
+        message: "",
     }
 
     $: nameValid = CheckoutData.personal.name.length > 1
     $: emailValid = CheckoutData.personal.email.length > 1
     $: phoneValid = isNaN(CheckoutData.personal.phone)
+    $: messageValid = messageValid = CheckoutData.message.length <= 200;
 
     let items: [string, CartItem][];
     let totalPrice: number;
@@ -43,8 +46,11 @@
 <div class="spacer half" />
 <div class="checkout">
     <div id="form-container">
-        <h2>Checkout</h2>
+        <h1>Checkout</h1>
         <form on:submit|preventDefault={onSubmit} id="form">
+            <h2>Contact Information</h2>
+            <p>This is for updates on your order</p>
+            <div class="spacer half" />
             <div class="form-element">
                 <label class="form-label" for="name">Name</label>
                 <input
@@ -85,8 +91,34 @@
             </div>
 
             <div class="spacer" />
+            <hr>
             <div class="spacer" />
 
+            <h2>Special Requests</h2>
+            <p>Have a noisy dog, and don't want us to knock? Let us know here!</p>
+            <div class="spacer half" />
+            <div class="form-element">
+                <label class="form-label" for="message">Message</label>
+                <textarea
+                        bind:value={CheckoutData.message}
+                        use:expandOnTyping
+                        rows="1"
+                        id="message"
+                        name="message"
+                        class="form-input"
+                />
+                <span class="form-notice" class:error={!messageValid}>
+                    ({CheckoutData.message.length}/{200})
+                </span>
+            </div>
+
+            <div class="spacer" />
+            <hr>
+            <div class="spacer" />
+
+            <h2>Address</h2>
+            <p>Where would you want your food to be delivered?</p>
+            <div class="spacer half" />
             <div class="form-element">
                 <label class="form-label" for="line1">Address Line 1</label>
                 <input
@@ -120,7 +152,6 @@
                 <span class="form-notice error">Town name required</span>
             </div>
             <div class="spacer half" />
-            <div class="spacer half" />
             <div class="form-element">
                 <label class="form-label" for="postcode">Postcode</label>
                 <input
@@ -131,7 +162,13 @@
                 />
                 <span class="form-notice error">Postcode required</span>
             </div>
-            <div class="spacer half" />
+
+            <div class="spacer" />
+            <hr>
+            <div class="spacer" />
+
+            <h2>Payment</h2>
+            <p>Currently, we only do payment in person, as our online payment system isn't setup yet.</p>
         </form>
     </div>
     <div class="spacer" />
@@ -143,30 +180,32 @@
                 </div>
             {/if}
             <div class="header">
-                <h2>Cart Total: ${totalPrice}</h2>
+                <h2>Total: ${totalPrice}</h2>
             </div>
-            <hr>
-            <div class="section">
-                <div class="table">
-                    <table>
-                        <tr><th>Price</th><th>Item Name</th><th>Amount</th></tr>
-                        {#each items as [_, item]}
-                            <tr class:table-row-error={!item.data.availability}>
-                                <td>£{item.data.price * item.amount} (£{item.data.price})</td>
-                                <td>{item.data.name}</td>
-                                <td>{item.amount}</td>
-                            </tr>
-                        {/each}
-                    </table>
-                </div>
+            <div class="table">
+                <table>
+                    <tr><th>Price (each)</th><th>Item Name</th><th>#</th></tr>
+                    {#each items as [_, item]}
+                        <tr class:table-row-error={!item.data.availability}>
+                            <td>£{item.data.price * item.amount} (£{item.data.price})</td>
+                            <td>{item.data.name}</td>
+                            <td>{item.amount}</td>
+                        </tr>
+                    {/each}
+                </table>
             </div>
-            <hr>
             <div class="section">
-                <p>To make any changes to your order, <a href="/cart" use:link>return to the cart</a>.</p>
+                <p>To make any changes, <a href="/cart" use:link>return to the cart</a>.</p>
             </div>
         </div>
         <div class="spacer half" />
-        <button id="checkout-button" form="form">Checkout&nbsp;<ArrowRight /></button>
+        <div class="container">
+            <div class="section">
+                <p>By pressing "Checkout" you agree to our terms of service</p>
+                <div class="spacer half" />
+                <button id="checkout-button" form="form">Checkout&nbsp;<ArrowRight /></button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -178,6 +217,12 @@
     #line1, #line2 { width: 400px; }
     #town { width: 250px; }
     #postcode { width: 200px; }
+    #message {
+        width: 400px;
+        max-width: calc(100vw - calc(2 * $spacing-normal));
+        resize: none;
+        overflow: hidden;
+    }
 
     #cancel-button {
         padding: 0 $spacing-small;
@@ -269,7 +314,7 @@
     }
 
     .table {
-        border-radius: $border-radius-normal;
+        //border-radius: $border-radius-normal;
         border: 1px solid rgba($color-dark, 0.2);
         background-color: $color-light;
 

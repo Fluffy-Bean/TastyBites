@@ -35,6 +35,7 @@ export type Checkout = {
         town: string;
         postcode: string;
     };
+    message: string;
 };
 
 export type JSONResponse = {
