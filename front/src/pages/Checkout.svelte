@@ -33,7 +33,8 @@
     let unavailableItems: boolean;
     Cart.subscribe(() => {
         items = Cart.getEntries();
-        totalPrice = Cart.getTotalPrice();
+        totalPrice = 1.50 + Cart.getTotalPrice();
+        if (CheckoutData.delivery) totalPrice += 3.00
         unavailableItems = Cart.getEntries().some(([_, item]) => item.data.availability === false);
     });
 
@@ -49,9 +50,14 @@
         ).addTo(leafletMap);
         L.marker([50.82304922105467, -0.432780150496344]).addTo(leafletMap);
     });
+
+    $: if (CheckoutData.delivery) {
+        totalPrice = 1.50 + 3.00 + Cart.getTotalPrice();
+    }
     $: if (!CheckoutData.delivery) {
         // Rendering maybe off-centered since map was initialized when div was hidden
         setTimeout(() => { leafletMap.invalidateSize() }, 1);
+        totalPrice = 1.50 + Cart.getTotalPrice();
     }
 
     function onSubmit() {
@@ -233,6 +239,18 @@
                             <td>{item.amount}</td>
                         </tr>
                     {/each}
+                    <tr class="table-row-border">
+                        <td>£1.50</td>
+                        <td>Online order Fee</td>
+                        <td></td>
+                    </tr>
+                    {#if CheckoutData.delivery}
+                        <tr>
+                            <td>£3.00</td>
+                            <td>Delivery fee</td>
+                            <td></td>
+                        </tr>
+                    {/if}
                 </table>
             </div>
             <div class="section">
@@ -422,6 +440,10 @@
                 &.table-row-error {
                     background-color: $color-error;
                     color: $color-on-error;
+                }
+
+                &.table-row-border {
+                    border-top: 2px solid rgba($color-dark, 0.4);
                 }
 
                 th, td {
