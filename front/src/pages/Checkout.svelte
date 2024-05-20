@@ -434,7 +434,8 @@
     }
 
     .table {
-        //border-radius: $border-radius-normal;
+        margin: 0 $spacing-normal;
+        border-radius: $border-radius-normal;
         border: 1px solid rgba($color-dark, 0.2);
         background-color: $color-light;
 

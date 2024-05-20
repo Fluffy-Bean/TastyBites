@@ -1,25 +1,8 @@
 <script lang="ts">
-    import { link, push, querystring } from 'svelte-spa-router';
-    import { SealWarning, CaretDown, ArrowRight, ArrowLeft } from "phosphor-svelte";
+    import {SealWarning, CaretDown, ArrowRight} from "phosphor-svelte";
 
     import { expandOnTyping } from "../lib/utils";
     import Calendar from "../components/Calendar.svelte";
-
-    let progress = 1;
-    querystring.subscribe((params) => {
-        const url = new URLSearchParams(params);
-        const parsed = parseInt(url.get("progress"));
-
-        progress = 1;
-
-        if (url.has("progress") && !isNaN(parsed)) {
-            progress = parsed;
-        }
-        if ([1, 2, 3].indexOf(progress) === -1) {
-            progress = 1;
-            push("/booking?progress=1");
-        }
-    })
 
     const specialRequestsMax = 300;
     const today = new Date();
@@ -29,6 +12,7 @@
     let telephone = "";
     let date: Date;
     let timeSlot = "slot1";
+    let tableSlot = "table1";
     let specialRequests = "";
 
     let nameValid = true;
@@ -41,224 +25,213 @@
     function validateEmail() { emailValid = email.length > 1}
     function validateTelephone() { telephoneValid = telephone.length == 11}
     function validateDate() { dateValid = date > today;}
-    function validateSpecialRequests() { specialRequestsValid = specialRequests.length < 301 }
+    function validateSpecialRequests() { specialRequestsValid = specialRequests.length <= 300 }
 
     function onSubmit(event) {}
 </script>
 
 <h1>Table booking</h1>
 
-<div id="booking-progress">
-    <a href="/booking?progress={progress - 1}" use:link><ArrowLeft /></a>
-    <div
-            class="progress"
-            class:progress-1={progress === 1}
-            class:progress-2={progress === 2}
-            class:progress-3={progress === 3}
-    />
-    <a href="/booking?progress={progress + 1}" use:link><ArrowRight /></a>
-</div>
-
-<div class="spacer" />
-
-{#if progress === 1}
-    <div class="form-element">
-        <p class="form-label">Booking Date</p>
-        <Calendar
-                bind:selectedDate={date}
-                on:selected={validateDate}
-                notBefore={today}
-        />
-        <span class="form-notice error">
-            {#if !dateValid}
-                Must chose date that's tomorrow or later
-            {/if}
-        </span>
-    </div>
-
-    <div class="spacer half" />
-
-    <!-- ToDo: Don't give a fake error for the weekend slots, just for testing  || !dateValid -->
-    {#if date && (date.getDay() === 6 || date.getDay() === 0)}
-        <p class="form-message error"><SealWarning weight="fill" />&nbsp;Time slots not available for this date</p>
-    {:else}
+<div id="booking">
+    <div id="form">
+        <h2>Date and Time</h2>
+        <p>When do you wanna come see us?</p>
+        <div class="spacer half" />
         <div class="form-element">
-            <label class="form-label" for="time-slot">Time Slot</label>
+            <p class="form-label">Booking Date</p>
+            <Calendar
+                    bind:selectedDate={date}
+                    on:selected={validateDate}
+                    notBefore={today}
+            />
+            <span class="form-notice error">
+                    {#if !dateValid}
+                        Must chose date that's tomorrow or later
+                    {/if}
+                </span>
+        </div>
+
+        <div class="spacer half" />
+
+        <!-- ToDo: Don't give a fake error for the weekend slots, just for testing  || !dateValid -->
+        {#if date && (date.getDay() === 6 || date.getDay() === 0)}
+            <p class="form-message error"><SealWarning weight="fill" />&nbsp;Time slots not available for this date</p>
+        {:else}
+            <div class="form-element">
+                <label class="form-label" for="time-slot">Time Slot</label>
+                <div class="select-container">
+                    <select
+                            bind:value={timeSlot}
+                            class="form-input"
+                            id="time-slot"
+                            name="time-slot"
+                    >
+                        <option value="slot0">8am to 10am</option>
+                        <option value="slot1">10am to 12am</option>
+                        <option value="slot2" disabled>12am to 2pm</option>
+                        <option value="slot3">2pm to 4pm</option>
+                        <option value="slot4">4pm to 6pm</option>
+                        <option value="slot5">6pm to 8pm</option>
+                        <option value="slot6">8pm to 10pm</option>
+                    </select>
+                    <div class="select-arrow">
+                        <CaretDown />
+                    </div>
+                </div>
+            </div>
+        {/if}
+
+        <div class="spacer" />
+        <hr>
+        <div class="spacer" />
+
+        <h2>Seating</h2>
+        <p>Where would you like to be seating?</p>
+        <div class="spacer half" />
+        <div class="seating-image">
+            <img src="/assets/SeatingTemporary.png" alt="Birds-eye view of the available seating at the restaurant" />
+        </div>
+        <div class="spacer half" />
+        <div class="form-element">
+            <label class="form-label" for="table-slot">Seat Choice</label>
             <div class="select-container">
                 <select
-                        bind:value={timeSlot}
+                        bind:value={tableSlot}
                         class="form-input"
-                        id="time-slot"
-                        name="time-slot"
+                        id="table-slot"
+                        name="table-slot"
                 >
-                    <option value="slot0">8am to 10am</option>
-                    <option value="slot1">10am to 12am</option>
-                    <option value="slot2" disabled>12am to 2pm</option>
-                    <option value="slot3">2pm to 4pm</option>
-                    <option value="slot4">4pm to 6pm</option>
-                    <option value="slot5">6pm to 8pm</option>
-                    <option value="slot6">8pm to 10pm</option>
+                    <option value="table1">Table 1</option>
+                    <option value="table2">Table 2</option>
+                    <option value="table3">Table 3</option>
                 </select>
                 <div class="select-arrow">
                     <CaretDown />
                 </div>
             </div>
         </div>
-    {/if}
-{:else if progress === 2}
-    <div class="form-element">
-        <label class="form-label" for="message">Message</label>
-        <textarea
-                bind:value={specialRequests}
-                on:input={validateSpecialRequests}
-                on:blur={validateSpecialRequests}
-                use:expandOnTyping
-                rows="1"
-                cols="50"
-                id="message"
-                name="message"
-                class="form-input"
-        />
-        <span class="form-notice" class:error={!specialRequestsValid}>
-            ({specialRequests.length}/{specialRequestsMax})
-        </span>
-    </div>
-{:else if progress === 3}
-    <div class="form-element">
-        <label class="form-label" for="name">Full Name</label>
-        <input
-                bind:value={name}
-                on:blur={validateName}
-                on:input={validateName}
-                type="text"
-                id="name"
-                name="name"
-                class="form-input"
-        />
-        <span class="form-notice error">
-            {#if !nameValid}
-                Enter a name
-            {/if}
-        </span>
-    </div>
 
-    <div class="spacer half" />
+        <div class="spacer" />
+        <hr>
+        <div class="spacer" />
 
-    <div class="form-element">
-        <label class="form-label" for="email">Email</label>
-        <input
-                bind:value={email}
-                on:blur={validateEmail}
-                on:input={validateEmail}
-                type="text"
-                id="email"
-                name="email"
-                class="form-input"
-        />
-        <span class="form-notice error">
-            {#if !emailValid}
-                Email not valid
-            {/if}
-        </span>
+        <h2>Special requests</h2>
+        <p>Wanna make sure we're accessible to your disabilities? Let us know where what todo!</p>
+        <div class="spacer half" />
+        <div class="form-element">
+            <label class="form-label" for="message">Message</label>
+            <textarea
+                    bind:value={specialRequests}
+                    on:input={validateSpecialRequests}
+                    on:blur={validateSpecialRequests}
+                    use:expandOnTyping
+                    rows="1"
+                    cols="50"
+                    id="message"
+                    name="message"
+                    class="form-input"
+            />
+            <span class="form-notice" class:error={!specialRequestsValid}>
+                    ({specialRequests.length}/{specialRequestsMax})
+                </span>
+        </div>
+
+        <div class="spacer" />
+        <hr>
+        <div class="spacer" />
+
+        <h2>Who are you</h2>
+        <p>Just so we can keep you updated on your reservation</p>
+        <div class="spacer half" />
+        <div class="form-element">
+            <label class="form-label" for="name">Full Name</label>
+            <input
+                    bind:value={name}
+                    on:blur={validateName}
+                    on:input={validateName}
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="form-input"
+            />
+            <span class="form-notice error">
+                    {#if !nameValid}
+                        Enter a name
+                    {/if}
+                </span>
+        </div>
+
+        <div class="spacer half" />
+
+        <div class="form-element">
+            <label class="form-label" for="email">Email</label>
+            <input
+                    bind:value={email}
+                    on:blur={validateEmail}
+                    on:input={validateEmail}
+                    type="text"
+                    id="email"
+                    name="email"
+                    class="form-input"
+            />
+            <span class="form-notice error">
+                    {#if !emailValid}
+                        Email not valid
+                    {/if}
+                </span>
+        </div>
+
+        <div class="spacer half" />
+
+        <div class="form-element">
+            <label class="form-label" for="telephone">Telephone</label>
+            <input
+                    bind:value={telephone}
+                    on:blur={validateTelephone}
+                    on:input={validateTelephone}
+                    type="text"
+                    id="telephone"
+                    name="telephone"
+                    class="form-input"
+            />
+            <span class="form-notice error">
+                    {#if !telephoneValid}
+                        Telephone number not valid
+                    {/if}
+                </span>
+        </div>
     </div>
-
-    <div class="spacer half" />
-
-    <div class="form-element">
-        <label class="form-label" for="telephone">Telephone</label>
-        <input
-                bind:value={telephone}
-                on:blur={validateTelephone}
-                on:input={validateTelephone}
-                type="text"
-                id="telephone"
-                name="telephone"
-                class="form-input"
-        />
-        <span class="form-notice error">
-            {#if !telephoneValid}
-                Telephone number not valid
-            {/if}
-        </span>
+    <div class="spacer" />
+    <div id="booking-confirmation">
+        <div class="container">
+            <div class="header">
+                <h2>Booking Confirmation</h2>
+            </div>
+            <hr>
+            <div class="section">
+                <p>
+                    I want to stay at table {tableSlot || "Table 1"}, on {date || "a pleasant day"}, {timeSlot || "during the day"}.
+                    <br><br>
+                    I request "{specialRequests || "a nice stay"}".
+                    <br><br>
+                    If I need to be contacted, my name is {name || "Unknown"},
+                    email {email || "Missing"} or alternatively call me on {telephone || "nothing"}.
+                </p>
+            </div>
+        </div>
+        <div class="spacer half" />
+        <div class="container">
+            <div class="section">
+                <p>By pressing "Book Table" you agree to our terms of service</p>
+                <div class="spacer half" />
+                <button id="book-button" form="form">Book&nbsp;Table&nbsp;<ArrowRight /></button>
+            </div>
+        </div>
     </div>
-{/if}
+</div>
 
 <style lang="scss">
     @import "../styles/vars";
-
-    #booking-progress {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-
-        > a {
-            padding: 0 $spacing-small;
-
-            width: 35px;
-            height: 35px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            font-size: $font-size-p;
-
-            border: 0 solid transparent;
-            border-radius: $border-radius-circle;
-            background-color: $color-light;
-            color: $color-on-light;
-
-            &:hover {
-                background-color: $color-dark;
-                color: $color-on-dark;
-            }
-            &:focus-visible {
-                background-color: $color-dark;
-                color: $color-on-dark;
-                outline: 0 solid transparent;
-            }
-        }
-
-        .progress {
-            margin: 0 $spacing-normal;
-
-            width: 100%;
-            height: 5px;
-
-            position: relative;
-
-            border-radius: $border-radius-circle;
-            background-color: $color-light;
-
-            overflow: hidden;
-
-            &::after {
-                content: '';
-
-                position: absolute;
-                top: 0;
-                left: 0;
-
-                width: 0;
-                height: 100%;
-
-                background-color: $color-dark;
-
-                transition: width 0.5s cubic-bezier(.19,1,.22,1);
-            }
-
-            &.progress-1::after {
-                width: 33%;
-            }
-            &.progress-2::after {
-                width: 66%;
-            }
-            &.progress-3::after {
-                width: 100%;
-            }
-        }
-    }
 
     #name, #email {
         width: 300px;
@@ -304,6 +277,79 @@
             > .select-arrow {
                 transform: translateY(2px);
             }
+        }
+    }
+
+    .container {
+        overflow: hidden;
+    }
+
+    .seating-image {
+        max-width: 550px;
+        border-radius: $border-radius-large;
+        overflow: hidden;
+
+        > img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    #book-button {
+        padding: 0 $spacing-normal;
+
+        width: 100%;
+        height: 35px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        font-size: $font-size-p;
+        text-decoration: none;
+
+        border-radius: $border-radius-large;
+        border: 0 solid transparent;
+        background-color: $color-primary;
+        color: $color-on-primary;
+
+        &:hover {
+            background-color: $color-dark;
+            color: $color-on-dark;
+        }
+    }
+
+    #booking {
+        display: flex;
+        flex-direction: row;
+        justify-content: normal;
+        align-items: flex-start;
+    }
+
+    #form {
+        width: 100%;
+        position: relative;
+    }
+
+    #booking-confirmation {
+        min-width: calc(400px - $spacing-normal);
+        width: 100%;
+        max-width: calc(400px - $spacing-normal);
+
+        position: sticky;
+        top: calc($sizing-navigation-height + $spacing-normal);
+    }
+
+    @media only screen and (max-width: 900px) {
+        #booking {
+            flex-direction: column;
+        }
+
+        #booking-confirmation {
+            max-width: unset;
+            position: unset;
         }
     }
 </style>

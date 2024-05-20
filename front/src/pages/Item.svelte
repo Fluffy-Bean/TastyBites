@@ -54,23 +54,23 @@
     {#await item}
         <div id="images">
             <div class="img-main">
-                <div class="loading image" />
+                <div class="loading-box image" />
             </div>
             <ul class="img-alts">
-                <li><div class="loading image-small" /></li>
-                <li><div class="loading image-small" /></li>
-                <li><div class="loading image-small" /></li>
-                <li><div class="loading image-small" /></li>
-                <li><div class="loading image-small" /></li>
+                <li><div class="loading-box image-small" /></li>
+                <li><div class="loading-box image-small" /></li>
+                <li><div class="loading-box image-small" /></li>
+                <li><div class="loading-box image-small" /></li>
+                <li><div class="loading-box image-small" /></li>
             </ul>
         </div>
 
         <div class="spacer half" />
 
         <div id="info">
-            <div class="loading title" />
-            <div class="loading price" />
-            <div class="loading description" />
+            <div class="loading-box title" />
+            <div class="loading-box price" />
+            <div class="loading-box description" />
         </div>
     {:then item}
         <div id="images">
@@ -174,8 +174,6 @@
 <style lang="scss">
     @import "../styles/vars";
 
-    $padding: 1px;
-
     .notice {
         margin-right: auto;
         margin-bottom: $spacing-large;
@@ -257,7 +255,7 @@
                 background-color: rgba($color-dark, 0.1);
             }
 
-            > .loading.image {
+            > .loading-box.image {
                 width: 100%;
                 height: 100%;
             }
@@ -278,7 +276,7 @@
             > li {
                 list-style: none;
 
-                > .loading.image-small {
+                > .loading-box.image-small {
                     margin-right: $spacing-small;
                     width: 100px;
                     height: 100px;
@@ -504,38 +502,7 @@
         }
     }
 
-    .loading {
-        position: relative;
-
-        border-radius: $border-radius-large;
-
-        background: linear-gradient(
-                        to right,
-                        rgba($color-dark, 0) 8%,
-                        rgba($color-dark, 0.3) 38%,
-                        rgba($color-dark, 0) 54%
-                    ) no-repeat;
-        background-size: 1000px 100%;
-        animation: loading 1s infinite linear;
-
-        overflow: hidden;
-
-        &::after {
-            content: '';
-
-            position: absolute;
-            top: $padding;
-            right: $padding;
-            bottom: $padding;
-            left: $padding;
-
-            border-radius: calc($border-radius-large - $padding);
-            background-color: darken($color-background, 10%);
-            background-image: url("/assets/Noise.png");
-
-            opacity: 0.9;
-        }
-
+    .loading-box {
         &.title {
             margin-bottom: $spacing-small;
             height: calc($font-size-h1 + 10px);
@@ -549,15 +516,6 @@
         &.description {
             height: 300px;
             width: 100%;
-        }
-    }
-
-    @keyframes loading{
-        0%{
-            background-position: -600px 0
-        }
-        100%{
-            background-position: 600px 0
         }
     }
 </style>

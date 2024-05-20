@@ -1,0 +1,43 @@
+$loading-box-padding: 1px;
+
+.loading-box {
+    position: relative;
+
+    border-radius: $border-radius-large;
+
+    background: linear-gradient(
+        to right,
+        rgba($color-dark, 0) 8%,
+        rgba($color-dark, 0.3) 38%,
+        rgba($color-dark, 0) 54%
+    ) no-repeat;
+    background-size: 1500px 100%;
+    animation: loading-box-glow 1s infinite linear;
+
+    overflow: hidden;
+
+    &::after {
+        content: '';
+
+        position: absolute;
+        top: $loading-box-padding;
+        right: $loading-box-padding;
+        bottom: $loading-box-padding;
+        left: $loading-box-padding;
+
+        border-radius: calc($border-radius-large - $loading-box-padding);
+        background-color: darken($color-background, 10%);
+        background-image: url("/assets/Noise.png");
+
+        opacity: 0.9;
+    }
+}
+
+@keyframes loading-box-glow {
+    0%{
+        background-position: -750px 0
+    }
+    100%{
+        background-position: 750px 0
+    }
+}
