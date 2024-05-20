@@ -244,14 +244,12 @@
                     {/each}
                     <tr class="table-row-border">
                         <td>£{1.50.toFixed(2)}</td>
-                        <td>Online order Fee</td>
-                        <td></td>
+                        <td colspan="2">Online order Fee</td>
                     </tr>
                     {#if CheckoutData.delivery}
                         <tr>
                             <td>£{3.00.toFixed(2)}</td>
-                            <td>Delivery fee</td>
-                            <td></td>
+                            <td colspan="2">Delivery fee</td>
                         </tr>
                     {/if}
                 </table>
@@ -458,7 +456,7 @@
                 }
 
                 &.table-row-border {
-                    border-top: 2px solid rgba($color-dark, 0.4);
+                    border-top: 2px solid rgba($color-dark, 0.2);
                 }
 
                 th, td {

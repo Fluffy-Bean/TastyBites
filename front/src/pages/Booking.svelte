@@ -4,6 +4,20 @@
     import { expandOnTyping } from "../lib/utils";
     import Calendar from "../components/Calendar.svelte";
 
+    const timeSlots = {
+        slot0: "8am to 10am",
+        slot1: "10am to 12am",
+        slot2: "12am to 2pm",
+        slot3: "2pm to 4pm",
+        slot4: "4pm to 6pm",
+        slot5: "6pm to 8pm",
+        slot6: "8pm to 10pm",
+    }
+    const tables = {
+        table1: "Table 1",
+        table2: "Table 2",
+        table3: "Table 3",
+    }
     const specialRequestsMax = 300;
     const today = new Date();
 
@@ -20,6 +34,29 @@
     let telephoneValid = true;
     let dateValid = true;
     let specialRequestsValid = true;
+
+    function formatDate(date: Date) {
+        let formattedDate = new Intl.DateTimeFormat(
+                'en-UK',
+                {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }
+            ).format(date);
+
+        // Add the ordinal suffix
+        let day = date.getDate();
+        let suffix = 'th';
+        if (day % 10 === 1 && day !== 11) {
+            suffix = 'st';
+        } else if (day % 10 === 2 && day !== 12) {
+            suffix = 'nd';
+        } else if (day % 10 === 3 && day !== 13) {
+            suffix = 'rd';
+        }
+        return formattedDate.replace(`${day}`, day + suffix);
+    }
 
     function validateName() { nameValid = name.length > 1}
     function validateEmail() { emailValid = email.length > 1}
@@ -210,12 +247,22 @@
             <hr>
             <div class="section">
                 <p>
-                    I want to stay at table {tableSlot || "Table 1"}, on {date || "a pleasant day"}, {timeSlot || "during the day"}.
-                    <br><br>
-                    I request "{specialRequests || "a nice stay"}".
-                    <br><br>
-                    If I need to be contacted, my name is {name || "Unknown"},
-                    email {email || "Missing"} or alternatively call me on {telephone || "nothing"}.
+                    On
+                     <span class="h">{date ? `the ${formatDate(date)}` : "an undecided date"}</span>
+                    at
+                     <span class="h">{timeSlot ? timeSlots[timeSlot] : "an undecided time"}</span>,
+                    I want to be seated at
+                     <span class="h">{tableSlot ? tables[tableSlot] : "a table"}</span>.
+                <br><br>
+                    I request
+                     <span class="h">{specialRequests ? specialRequests : "nothing in particular"}</span>.
+                <br><br>
+                    My name is
+                     <span class="h">{name ? name : "Unknown"}</span>,
+                    in the event I need to be contacted by email, you can do that at
+                     <span class="h">{email ? email : "an empty email"}</span>,
+                    or alternatively call me on
+                     <span class="h">{telephone ? telephone : "an empty phone number"}</span>.
                 </p>
             </div>
         </div>
@@ -294,6 +341,13 @@
             height: auto;
             display: block;
         }
+    }
+
+    .h {
+        padding: 0 $spacing-xsmall;
+        border-radius: $border-radius-normal;
+        background-color: $color-dark;
+        color: $color-on-dark;
     }
 
     #book-button {
