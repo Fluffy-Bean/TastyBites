@@ -98,7 +98,7 @@
 
         <div id="info">
             <h2>{item.name}</h2>
-            <p>£{item.price}</p>
+            <p>£{item.price.toFixed(2)}</p>
 
             <div class="spacer" />
 

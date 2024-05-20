@@ -50,6 +50,6 @@
     </ul>
 
     <a class="menu-item-link" href="/item/{item.uuid}" use:link>View&nbsp;<ArrowUpRight /></a>
-    <ul class="menu-item-detail"><li>£{item.price} | {item.name}</li></ul>
+    <ul class="menu-item-detail"><li>£{item.price.toFixed(2)} | {item.name}</li></ul>
 </div>
 

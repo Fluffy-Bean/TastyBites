@@ -46,7 +46,7 @@
                 <hr>
                 <button class="button evil" on:click={yeet}><Trash /></button>
             </li>
-            <li class="basket-item-price">£{item.data.price * item.amount} (£{item.data.price})</li>
+            <li class="basket-item-price">£{(item.data.price * item.amount).toFixed(2)} (£{item.data.price.toFixed(2)})</li>
         </ul>
 
         <ul class="basket-item-labels">

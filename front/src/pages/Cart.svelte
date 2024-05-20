@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import {ArrowLeft, ArrowRight, Basket} from "phosphor-svelte";
+    import { ArrowRight, Basket } from "phosphor-svelte";
 
     import { type CartItem } from "../lib/types";
     import { getPopularToday } from "../lib/test-api";
@@ -32,7 +32,7 @@
         <h1>Cart</h1>
 
         <a id="checkout-button" href="/cart/checkout" use:link>Checkout&nbsp;<ArrowRight /></a>
-        <h2>Order total: £{totalPrice}</h2>
+        <h2>Order total: £{totalPrice.toFixed(2)}</h2>
 
         {#each items as [_, item]}
             <div class="basket-item">

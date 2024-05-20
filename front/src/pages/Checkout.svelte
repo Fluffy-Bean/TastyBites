@@ -56,7 +56,10 @@
     }
     $: if (!CheckoutData.delivery) {
         // Rendering maybe off-centered since map was initialized when div was hidden
-        setTimeout(() => { leafletMap.invalidateSize() }, 1);
+        setTimeout(() => {
+            leafletMap.invalidateSize();
+            leafletMap.panTo([50.82304922105467, -0.432780150496344]);
+        }, 305);
         totalPrice = 1.50 + Cart.getTotalPrice();
     }
 
@@ -147,7 +150,7 @@
             <ul id="delivery-option">
                 <li class:checked={CheckoutData.delivery}>
                     <button on:click={() => { CheckoutData.delivery = true }} type="button">
-                        Deliver
+                        Delivery
                     </button>
                 </li>
                 <li class:checked={!CheckoutData.delivery}>
@@ -227,26 +230,26 @@
                 </div>
             {/if}
             <div class="header">
-                <h2>Total: ${totalPrice}</h2>
+                <h2>Total: £{totalPrice.toFixed(2)}</h2>
             </div>
             <div class="table">
                 <table>
                     <tr><th>Price (each)</th><th>Item Name</th><th>#</th></tr>
                     {#each items as [_, item]}
                         <tr class:table-row-error={!item.data.availability}>
-                            <td>£{item.data.price * item.amount} (£{item.data.price})</td>
+                            <td>£{(item.data.price * item.amount).toFixed(2)} (£{item.data.price.toFixed(2)})</td>
                             <td>{item.data.name}</td>
                             <td>{item.amount}</td>
                         </tr>
                     {/each}
                     <tr class="table-row-border">
-                        <td>£1.50</td>
+                        <td>£{1.50.toFixed(2)}</td>
                         <td>Online order Fee</td>
                         <td></td>
                     </tr>
                     {#if CheckoutData.delivery}
                         <tr>
-                            <td>£3.00</td>
+                            <td>£{3.00.toFixed(2)}</td>
                             <td>Delivery fee</td>
                             <td></td>
                         </tr>
@@ -367,7 +370,8 @@
     #map {
         width: 100%;
         max-width: 550px;
-        height: 400px;
+        //height: 400px;
+        height: 0;
 
         display: none;
 
@@ -376,6 +380,16 @@
 
         &.show-map {
             display: block;
+            animation: growMap forwards 0.3s;
+        }
+    }
+
+    @keyframes growMap {
+        0% {
+            height: 0;
+        }
+        100% {
+            height: 400px;
         }
     }
 
@@ -499,6 +513,10 @@
         #cart {
             max-width: unset;
             position: unset;
+        }
+
+        #map {
+            max-width: 100%;
         }
     }
 </style>
