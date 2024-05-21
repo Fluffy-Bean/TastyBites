@@ -1,39 +1,30 @@
 <script lang="ts">
-    import {SealWarning, CaretDown, ArrowRight} from "phosphor-svelte";
+    import { SealWarning, CaretDown, ArrowRight } from "phosphor-svelte";
 
+    import { type Booking, TimeSlots, Tables } from "../lib/types";
     import { expandOnTyping } from "../lib/utils";
     import Calendar from "../components/Calendar.svelte";
 
-    const timeSlots = {
-        slot0: "8am to 10am",
-        slot1: "10am to 12am",
-        slot2: "12am to 2pm",
-        slot3: "2pm to 4pm",
-        slot4: "4pm to 6pm",
-        slot5: "6pm to 8pm",
-        slot6: "8pm to 10pm",
-    }
-    const tables = {
-        table1: "Table 1",
-        table2: "Table 2",
-        table3: "Table 3",
-    }
     const specialRequestsMax = 300;
     const today = new Date();
+    const BookingData: Booking = {
+        date: {
+            date: new Date(),
+            slot: TimeSlots.slot0,
+        },
+        table: Tables.table1,
+        message: "",
+        personal: {
+            name: "",
+            email: "",
+        },
+    };
 
-    let name = "";
-    let email = "";
-    let telephone = "";
-    let date: Date;
-    let timeSlot = "slot1";
-    let tableSlot = "table1";
-    let specialRequests = "";
-
-    let nameValid = true;
-    let emailValid = true;
-    let telephoneValid = true;
-    let dateValid = true;
-    let specialRequestsValid = true;
+    $: nameValid = BookingData.personal.name.length > 1;
+    $: emailValid = BookingData.personal.email.length > 1;
+    $: telephoneValid = `${BookingData.personal.phone}`.length == 11;
+    $: dateValid = BookingData.date.date > today;
+    $: specialRequestsValid = BookingData.message.length <= 300 ;
 
     function formatDate(date: Date) {
         let formattedDate = new Intl.DateTimeFormat(
@@ -45,7 +36,6 @@
                 }
             ).format(date);
 
-        // Add the ordinal suffix
         let day = date.getDate();
         let suffix = 'th';
         if (day % 10 === 1 && day !== 11) {
@@ -57,12 +47,6 @@
         }
         return formattedDate.replace(`${day}`, day + suffix);
     }
-
-    function validateName() { nameValid = name.length > 1}
-    function validateEmail() { emailValid = email.length > 1}
-    function validateTelephone() { telephoneValid = telephone.length == 11}
-    function validateDate() { dateValid = date > today;}
-    function validateSpecialRequests() { specialRequestsValid = specialRequests.length <= 300 }
 
     function onSubmit(event) {}
 </script>
@@ -77,8 +61,7 @@
         <div class="form-element">
             <p class="form-label">Booking Date</p>
             <Calendar
-                    bind:selectedDate={date}
-                    on:selected={validateDate}
+                    bind:selectedDate={BookingData.date.date}
                     notBefore={today}
             />
             <span class="form-notice error">
@@ -91,25 +74,25 @@
         <div class="spacer half" />
 
         <!-- ToDo: Don't give a fake error for the weekend slots, just for testing  || !dateValid -->
-        {#if date && (date.getDay() === 6 || date.getDay() === 0)}
+        {#if BookingData.date.date && (BookingData.date.date.getDay() === 6 || BookingData.date.date.getDay() === 0)}
             <p class="form-message error"><SealWarning weight="fill" />&nbsp;Time slots not available for this date</p>
         {:else}
             <div class="form-element">
                 <label class="form-label" for="time-slot">Time Slot</label>
                 <div class="select-container">
                     <select
-                            bind:value={timeSlot}
+                            bind:value={BookingData.date.slot}
                             class="form-input"
                             id="time-slot"
                             name="time-slot"
                     >
-                        <option value="slot0">8am to 10am</option>
-                        <option value="slot1">10am to 12am</option>
-                        <option value="slot2" disabled>12am to 2pm</option>
-                        <option value="slot3">2pm to 4pm</option>
-                        <option value="slot4">4pm to 6pm</option>
-                        <option value="slot5">6pm to 8pm</option>
-                        <option value="slot6">8pm to 10pm</option>
+                        <option value={TimeSlots.slot0}>8am to 10am</option>
+                        <option value={TimeSlots.slot1}>10am to 12am</option>
+                        <option value={TimeSlots.slot2}>12am to 2pm</option>
+                        <option value={TimeSlots.slot3}>2pm to 4pm</option>
+                        <option value={TimeSlots.slot4}>4pm to 6pm</option>
+                        <option value={TimeSlots.slot5}>6pm to 8pm</option>
+                        <option value={TimeSlots.slot6}>8pm to 10pm</option>
                     </select>
                     <div class="select-arrow">
                         <CaretDown />
@@ -133,14 +116,14 @@
             <label class="form-label" for="table-slot">Seat Choice</label>
             <div class="select-container">
                 <select
-                        bind:value={tableSlot}
+                        bind:value={BookingData.table}
                         class="form-input"
                         id="table-slot"
                         name="table-slot"
                 >
-                    <option value="table1">Table 1</option>
-                    <option value="table2">Table 2</option>
-                    <option value="table3">Table 3</option>
+                    <option value={Tables.table1}>Table 1</option>
+                    <option value={Tables.table2}>Table 2</option>
+                    <option value={Tables.table3}>Table 3</option>
                 </select>
                 <div class="select-arrow">
                     <CaretDown />
@@ -158,9 +141,7 @@
         <div class="form-element">
             <label class="form-label" for="message">Message</label>
             <textarea
-                    bind:value={specialRequests}
-                    on:input={validateSpecialRequests}
-                    on:blur={validateSpecialRequests}
+                    bind:value={BookingData.message}
                     use:expandOnTyping
                     rows="1"
                     cols="50"
@@ -169,7 +150,7 @@
                     class="form-input"
             />
             <span class="form-notice" class:error={!specialRequestsValid}>
-                    ({specialRequests.length}/{specialRequestsMax})
+                    ({BookingData.message.length}/{specialRequestsMax})
                 </span>
         </div>
 
@@ -183,9 +164,7 @@
         <div class="form-element">
             <label class="form-label" for="name">Full Name</label>
             <input
-                    bind:value={name}
-                    on:blur={validateName}
-                    on:input={validateName}
+                    bind:value={BookingData.personal.name}
                     type="text"
                     id="name"
                     name="name"
@@ -203,9 +182,7 @@
         <div class="form-element">
             <label class="form-label" for="email">Email</label>
             <input
-                    bind:value={email}
-                    on:blur={validateEmail}
-                    on:input={validateEmail}
+                    bind:value={BookingData.personal.email}
                     type="text"
                     id="email"
                     name="email"
@@ -223,9 +200,7 @@
         <div class="form-element">
             <label class="form-label" for="telephone">Telephone</label>
             <input
-                    bind:value={telephone}
-                    on:blur={validateTelephone}
-                    on:input={validateTelephone}
+                    bind:value={BookingData.personal.phone}
                     type="text"
                     id="telephone"
                     name="telephone"
@@ -248,21 +223,21 @@
             <div class="section">
                 <p>
                     On
-                     <span class="h">{date ? `the ${formatDate(date)}` : "an undecided date"}</span>
+                     <span class="h">{BookingData.date.date ? `the ${formatDate(BookingData.date.date)}` : "an undecided date"}</span>
                     at
-                     <span class="h">{timeSlot ? timeSlots[timeSlot] : "an undecided time"}</span>,
+                     <span class="h">{BookingData.date.slot ? BookingData.date.slot : "an undecided time"}</span>,
                     I want to be seated at
-                     <span class="h">{tableSlot ? tables[tableSlot] : "a table"}</span>.
+                     <span class="h">{BookingData.table ? BookingData.table : "a table"}</span>.
                 <br><br>
                     I request
-                     <span class="h">{specialRequests ? specialRequests : "nothing in particular"}</span>.
+                     <span class="h">{BookingData.message ? BookingData.message : "nothing in particular"}</span>.
                 <br><br>
                     My name is
-                     <span class="h">{name ? name : "Unknown"}</span>,
+                     <span class="h">{BookingData.personal.name ? BookingData.personal.name : "Unknown"}</span>,
                     in the event I need to be contacted by email, you can do that at
-                     <span class="h">{email ? email : "an empty email"}</span>,
+                     <span class="h">{BookingData.personal.email ? BookingData.personal.email : "an empty email"}</span>,
                     or alternatively call me on
-                     <span class="h">{telephone ? telephone : "an empty phone number"}</span>.
+                     <span class="h">{BookingData.personal.phone ? BookingData.personal.phone : "an empty phone number"}</span>.
                 </p>
             </div>
         </div>

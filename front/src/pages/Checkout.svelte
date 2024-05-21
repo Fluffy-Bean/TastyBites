@@ -13,8 +13,8 @@
             name: "",
             email: "",
         },
-        message: "",
         delivery: true,
+        message: "",
         address: {
             line1: "",
             line2: "",
@@ -33,19 +33,24 @@
     let unavailableItems: boolean;
     Cart.subscribe(() => {
         items = Cart.getEntries();
-        totalPrice = 1.50 + Cart.getTotalPrice();
-        if (CheckoutData.delivery) totalPrice += 3.00
-        unavailableItems = Cart.getEntries().some(([_, item]) => item.data.availability === false);
+        if (CheckoutData.delivery) {
+            totalPrice = 3.00 + 1.50 + Cart.getTotalPrice();
+        } else {
+            totalPrice = 1.50 + Cart.getTotalPrice();
+        }
+        unavailableItems = Cart.getEntries().some(([_, item]) => {
+            item.data.availability === false
+        });
     });
 
     let leafletMap: Map;
     onMount(() => {
-        leafletMap = L.map('map').setView([50.82304922105467, -0.432780150496344], 13);
+        leafletMap = L.map("map").setView([50.82304922105467, -0.432780150496344], 13);
         L.tileLayer(
-            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
             {
                 maxZoom: 20,
-                attribution: "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a>",
+                attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
             },
         ).addTo(leafletMap);
         L.marker([50.82304922105467, -0.432780150496344]).addTo(leafletMap);
