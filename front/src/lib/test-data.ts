@@ -6,7 +6,7 @@ const TestData: Item[] = [
         availability: true,
         name: "Bar of Soap",
         price: 2.99,
-        description: `Example`,
+        description: "Example",
         labels: [Labels.vegan, Labels.spicy],
     },
     {
@@ -14,7 +14,7 @@ const TestData: Item[] = [
         availability: true,
         name: "Sock",
         price: 1.99,
-        description: `Example`,
+        description: "Example",
         labels: [Labels.vegan, Labels.fish, Labels.nut, Labels.spicy],
     },
     {
@@ -22,7 +22,7 @@ const TestData: Item[] = [
         availability: false,
         name: "Brick",
         price: 0,
-        description: `Example`,
+        description: "Example",
         labels: [Labels.spicy],
     },
     {
@@ -30,7 +30,7 @@ const TestData: Item[] = [
         availability: true,
         name: "Toast",
         price: 3.49,
-        description: `Example`,
+        description: "Example",
         labels: [Labels.gluten],
     },
     {
@@ -38,7 +38,7 @@ const TestData: Item[] = [
         availability: true,
         name: "water",
         price: 1,
-        description: `Example`,
+        description: "Example",
         labels: [Labels.fish],
     },
     {
@@ -46,7 +46,7 @@ const TestData: Item[] = [
         availability: true,
         name: "Singular slice of bread",
         price: 0.39,
-        description: `Example`,
+        description: "Example",
         labels: [Labels.nut],
     },
     {
