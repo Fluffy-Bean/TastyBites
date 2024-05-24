@@ -38,9 +38,7 @@
         } else {
             totalPrice = 1.50 + Cart.getTotalPrice();
         }
-        unavailableItems = Cart.getEntries().some(([_, item]) => {
-            item.data.availability === false
-        });
+        unavailableItems = Cart.getEntries().some(([_, item]) => !item.data.availability);
     });
 
     let leafletMap: Map;
