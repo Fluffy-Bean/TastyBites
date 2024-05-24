@@ -55,7 +55,14 @@
 
 <h2>About Us</h2>
 <div class="container padding">
-    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At deserunt est quos dicta ipsa! Soluta laudantium dolore temporibus nisi aspernatur expedita vel, unde natus a nulla rerum officiis optio neque.</p>
+    <p>
+        Hello! We're TastyBites, a restaurant opened by young adults with a passion for making food thats healthy and organic.
+        We opened this restaurant as we want others to be consious of where their food came from, and what it really is.
+        <br><br>
+        We've designed the restaurant to have a fun and positive energy, and we're inviting everyone to give it a try!
+        <br><br>
+        Read more on us if you wanna know our full back story...
+    </p>
 </div>
 <a href="/about" use:link>Continue reading <ArrowUpRight /></a>
 
