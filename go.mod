@@ -3,7 +3,7 @@ module github.com/Fluffy-Bean/TastyBites
 go 1.22.1
 
 require (
-	github.com/huandu/go-sqlbuilder v1.27.2
+	github.com/huandu/go-sqlbuilder v1.27.3
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/mattn/go-sqlite3 v1.14.22
 	github.com/rubenv/sql-migrate v1.6.1
