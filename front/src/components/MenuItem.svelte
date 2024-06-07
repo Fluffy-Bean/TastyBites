@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, GrainsSlash } from 'phosphor-svelte';
+    import { Acorn, Fish, Leaf, Pepper, ArrowUpRight, Grains } from 'phosphor-svelte';
 
     import { type Item, Labels} from "../lib/types";
     import LoadingImage from '/assets/MenuItemLoadingAlt.svg';
@@ -41,7 +41,7 @@
                 {:else if label === Labels.nut}
                     <li class="nut"><Acorn weight="fill" /></li>
                 {:else if label === Labels.gluten}
-                    <li class="gluten"><GrainsSlash weight="fill" /></li>
+                    <li class="gluten"><Grains weight="fill" /></li>
                 {:else if label === Labels.spicy}
                     <li class="spicy"><Pepper weight="fill" /></li>
                 {/if}

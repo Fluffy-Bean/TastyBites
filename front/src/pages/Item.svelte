@@ -1,6 +1,6 @@
 <script lang="ts">
     import { link } from 'svelte-spa-router';
-    import { Acorn, Fish, GrainsSlash, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart, SealWarning, ArrowLeft } from "phosphor-svelte";
+    import { Acorn, Fish, Grains, Leaf, Minus, Pepper, Plus, SmileySad, ShoppingCart, SealWarning, ArrowLeft } from "phosphor-svelte";
     import SvelteMarkdown from 'svelte-markdown'
 
     import { Labels } from "../lib/types";
@@ -127,7 +127,7 @@
                     {:else if label === Labels.nut}
                         <li class="nut"><Acorn weight="fill" />&nbsp;&nbsp;Nut</li>
                     {:else if label === Labels.gluten}
-                        <li class="gluten"><GrainsSlash weight="fill" />&nbsp;&nbsp;Gluten Free</li>
+                        <li class="gluten"><Grains weight="fill" />&nbsp;&nbsp;Gluten</li>
                     {:else if label === Labels.spicy}
                         <li class="spicy"><Pepper weight="fill" />&nbsp;&nbsp;Spicy</li>
                     {/if}

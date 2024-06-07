@@ -17,9 +17,9 @@ export async function getAnnouncements(): Promise<{ image: string }> {
     return cache["announcement_banner"];
 }
 
-export async function getPopularToday(): Promise<Item[]> {
+export async function getPopularToday(amount = 5): Promise<Item[]> {
     if (cache["popular_today"] === undefined) {
-        cache["popular_today"] = TestData;
+        cache["popular_today"] = TestData.slice(0, amount || 5);
         await fakeDelay(2000);
     }
     return cache["popular_today"];

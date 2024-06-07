@@ -9,7 +9,7 @@
     import BasketItem from "../components/BasketItem.svelte";
     import DropDown from "../components/DropDown.svelte";
 
-    let popularToday = getPopularToday();
+    let popularToday = getPopularToday(10);
 
     let items: [string, CartItem][];
     let totalPrice: number;
